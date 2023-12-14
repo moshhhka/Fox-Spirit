@@ -110,43 +110,13 @@ namespace gametop
                 newRoom.Show();
             }
 
-                List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
+            List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
 
+            CollisionDetector collisionDetector = new CollisionDetector(player, elementsCopy);
+            collisionDetector.DetectCollisions(goLeft, goRight, goDown, goUp);
 
             foreach (UIElement u in elementsCopy) 
             {
-                if (u is Image image0 && (string)image0.Tag == "box") // Коллизия
-                {
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image0), Canvas.GetTop(image0), image0.Width, image0.Height);
-
-                    if (rect1.IntersectsWith(rect2))
-                    {
-                        if (goLeft)
-                        {
-                            goLeft = false;
-                            Canvas.SetLeft(player, Canvas.GetLeft(player) + speed);
-                        }
-
-                        if (goRight)
-                        {
-                            goRight = false;
-                            Canvas.SetLeft(player, Canvas.GetLeft(player) - speed);
-                        }
-
-                        if (goDown)
-                        {
-                            goDown = false;
-                            Canvas.SetTop(player, Canvas.GetTop(player) - speed);
-                        }
-
-                        if (goUp)
-                        {
-                            goUp = false;
-                            Canvas.SetTop(player, Canvas.GetTop(player) + speed);
-                        }
-                    }
-                }
 
                 if (u is Image image && (string)image.Tag == "coin") // Сбор коинов
                 {
@@ -173,7 +143,7 @@ namespace gametop
                     }
                 }
 
-                if (u is Image image1 && (string)image1.Tag == "zombie") //Движение мобов
+                if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
                 {
                     if (Canvas.GetLeft(player) < Canvas.GetLeft(image1) + image1.ActualWidth &&
                         Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(image1) &&
@@ -206,7 +176,7 @@ namespace gametop
 
                 foreach (UIElement j in elementsCopy)
                 {
-                    if (j is Image image2 && (string)image2.Tag == "bullet" && u is Image image3 && (string)image3.Tag == "zombie") //Убийство мобов
+                    if (j is Image image2 && (string)image2.Tag == "bullet" && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
                     {
                         if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
                         Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
@@ -266,17 +236,6 @@ namespace gametop
                 goDown = true;
                 facing = "down";
                 player.Source = new BitmapImage(new Uri("down.png", UriKind.RelativeOrAbsolute));
-            }
-
-            if (e.Key == Key.LeftShift)
-            {
-                DoubleAnimation animation = new DoubleAnimation();
-                animation.From = 0;
-                animation.To = 100;
-                animation.Duration = new Duration(TimeSpan.FromSeconds(1));
-                TranslateTransform translate = new TranslateTransform();
-                player.RenderTransform = translate;
-                translate.BeginAnimation(TranslateTransform.XProperty, animation);
             }
         }
 
@@ -339,7 +298,7 @@ namespace gametop
         private void MakeZombies() // Создание мобов
         {
             Image zombie = new Image();
-            zombie.Tag = "zombie";
+            zombie.Tag = "mobe";
             zombie.Source = new BitmapImage(new Uri("bos1et.png", UriKind.RelativeOrAbsolute));
             Canvas.SetLeft(zombie, randNum.Next(0, 1595));
             Canvas.SetTop(zombie, randNum.Next(80, 780));
