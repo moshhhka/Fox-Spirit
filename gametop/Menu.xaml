@@ -9,7 +9,7 @@
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" Width="1280" Height="720">
         <Canvas.Background>
-            <ImageBrush ImageSource="/Fon.png" Stretch="Fill"/>
+            <ImageBrush ImageSource="/Fon.png"/>
         </Canvas.Background>
         <Button x:Name="pl" Content="Play" HorizontalAlignment="Center" Height="93" VerticalAlignment="Top" Width="235" FontSize="48" FontFamily="MV Boli" Click="pl_Click" Grid.Column="1" Canvas.Left="876" Canvas.Top="298" BorderBrush="{x:Null}" Background="{x:Null}"/>
         <Button x:Name="ex" Content="Exit" HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="235" Click="ex_Click" FontSize="48" FontFamily="MV Boli" Grid.Column="1" Canvas.Left="876" Canvas.Top="421" BorderBrush="{x:Null}" Background="{x:Null}"/>
