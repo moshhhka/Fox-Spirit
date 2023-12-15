@@ -121,7 +121,6 @@ namespace gametop
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             player1.KeyUp(sender, e);
-           
         }
     }
 }
