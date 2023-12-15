@@ -28,7 +28,6 @@ namespace gametop
         MakeMobe zombie1;
         Player player1;
         bool gameOver;
-        int speed = 20;
         int ammo = 10;
         int zombieSpeed = 3;
         int score, coins;
@@ -72,26 +71,6 @@ namespace gametop
             txtScore.Content = "Kills:" + score;
             txtCoins.Content = "Coins:" + coins;
 
-            //if (goLeft == true && Canvas.GetLeft(player) > 0) // Движения гг
-            //{
-            //    Canvas.SetLeft(player, Canvas.GetLeft(player) - speed);
-            //}
-
-            //if (goRight == true && Canvas.GetLeft(player) + player.Width < myCanvas.Width) 
-            //{
-            //    Canvas.SetLeft(player, Canvas.GetLeft(player) + speed);
-            //}
-
-            //if (goUp == true && Canvas.GetTop(player) > 80)
-            //{
-            //    Canvas.SetTop(player, Canvas.GetTop(player) - speed);           
-            //}
-
-            //if (goDown == true && Canvas.GetTop(player) + player.Height < myCanvas.Height) 
-            //{
-            //    Canvas.SetTop(player, Canvas.GetTop(player) + speed);
-            //}
-
             player1.Movement();
 
             if (Canvas.GetLeft(player) < Canvas.GetLeft(key) + key.ActualWidth &&
@@ -113,6 +92,10 @@ namespace gametop
                 timer.Stop();
                 gotKey = false;
                 newRoom.Show();
+                Player.goLeft = false;
+                Player.goRight = false;
+                Player.goUp = false;
+                Player.goDown = false;
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -151,60 +134,6 @@ namespace gametop
                         ammo += 5;
                     }
                 }
-
-               
-
-                //if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
-                //{
-                //    if (Canvas.GetLeft(player) < Canvas.GetLeft(image1) + image1.ActualWidth &&
-                //        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(image1) &&
-                //        Canvas.GetTop(player) < Canvas.GetTop(image1) + image1.ActualHeight &&
-                //        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(image1))
-                //    {
-                //        playerHealth -= 1;
-                //    }
-
-                //    if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
-                //    {
-                //        Canvas.SetLeft(image1, Canvas.GetLeft(image1) - zombieSpeed);
-                //    }
-
-                //    if (Canvas.GetLeft(image1) < Canvas.GetLeft(player))
-                //    {
-                //        Canvas.SetLeft(image1, Canvas.GetLeft(image1) + zombieSpeed);
-                //    }
-
-                //    if (Canvas.GetTop(image1) > Canvas.GetTop(player))
-                //    {
-                //        Canvas.SetTop(image1, Canvas.GetTop(image1) - zombieSpeed);
-                //    }
-
-                //    if (Canvas.GetTop(image1) < Canvas.GetTop(player))
-                //    {
-                //        Canvas.SetTop(image1, Canvas.GetTop(image1) + zombieSpeed);
-                //    }
-                //}
-
-                //foreach (UIElement j in elementsCopy)
-                //{
-                //    if (j is Image image2 && (string)image2.Tag == "bullet" && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
-                //    {
-                //        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
-                //        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
-                //        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
-                //        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
-                //        {
-                //            score++;
-
-                //            myCanvas.Children.Remove(image2);
-                //            image2.Source = null;
-                //            myCanvas.Children.Remove(image3);
-                //            image3.Source = null;
-                //            zombieList.Remove(image3);
-                //            MakeZombies();
-                //        }
-                //    }
-                //}
             }
 
         }
@@ -221,34 +150,6 @@ namespace gametop
                 this.Close();
             }
 
-            //if (e.Key == Key.A)
-            //{
-            //    goLeft = true;
-            //    facing = "left";
-            //    player.Source = new BitmapImage(new Uri("left.png", UriKind.RelativeOrAbsolute));
-            //}
-
-            //if(e.Key == Key.D)
-            //{
-            //    goRight = true;
-            //    facing = "right";
-            //    player.Source = new BitmapImage(new Uri("right.png", UriKind.RelativeOrAbsolute));
-            //}
-
-            //if(e.Key == Key.W)
-            //{
-            //    goUp = true;
-            //    facing = "up";
-            //    player.Source = new BitmapImage(new Uri("up.png", UriKind.RelativeOrAbsolute));
-            //}
-
-            //if(e.Key == Key.S)
-            //{
-            //    goDown = true;
-            //    facing = "down";
-            //    player.Source = new BitmapImage(new Uri("down.png", UriKind.RelativeOrAbsolute));
-            //}
-
             player1.KeyDown(sender, e);
         }
 
@@ -256,26 +157,6 @@ namespace gametop
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
         {
-            //if (e.Key == Key.A)
-            //{
-            //    goLeft = false;
-            //}
-
-            //if (e.Key == Key.D)
-            //{
-            //    goRight = false;
-            //}
-
-            //if (e.Key == Key.W)
-            //{
-            //    goUp = false;
-            //}
-
-            //if (e.Key == Key.S)
-            //{
-            //    goDown = false;
-            //}
-
             player1.KeyUp(sender, e);
 
             if (e.Key == Key.Space && ammo > 0 && gameOver == false)
@@ -309,24 +190,6 @@ namespace gametop
             shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2));
             shootBullet.MakeBullet(myCanvas);
         }
-
-        
-        //private void MakeZombies() // Создание мобов
-        //{
-        //    Image zombie = new Image();
-        //    zombie.Tag = "mobe";
-        //    zombie.Source = new BitmapImage(new Uri("bos1et.png", UriKind.RelativeOrAbsolute));
-        //    Canvas.SetLeft(zombie, randNum.Next(0, 1595));
-        //    Canvas.SetTop(zombie, randNum.Next(80, 780));
-        //    zombie.Height = 296;
-        //    zombie.Width = 302;
-        //    zombieList.Add(zombie);
-        //    myCanvas.Children.Add(zombie);
-        //    Canvas.SetZIndex(player, 1);
-
-        //}
-
-        
 
         private void MakeBox() // Создание коробок
         {

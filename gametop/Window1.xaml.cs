@@ -23,9 +23,6 @@ namespace gametop
     /// </summary>
     public partial class Window1 : Window
     {
-        //bool goLeft, goRight, goUp, goDown, gameOver;
-        //public int playerHealth;
-        //int speed = 20;
         Player player1;
         private bool cardDrawn = false;
 
@@ -56,25 +53,6 @@ namespace gametop
                 healthBar.Value = Player.playerHealth;
             }
 
-            //if (goLeft == true && Canvas.GetLeft(player) > 0) // Движения гг
-            //{
-            //    Canvas.SetLeft(player, Canvas.GetLeft(player) - speed);
-            //}
-
-            //if (goRight == true && Canvas.GetLeft(player) + player.Width < myCanvas.Width)
-            //{
-            //    Canvas.SetLeft(player, Canvas.GetLeft(player) + speed);
-            //}
-
-            //if (goUp == true && Canvas.GetTop(player) > 80)
-            //{
-            //    Canvas.SetTop(player, Canvas.GetTop(player) - speed);
-            //}
-
-            //if (goDown == true && Canvas.GetTop(player) + player.Height < myCanvas.Height)
-            //{
-            //    Canvas.SetTop(player, Canvas.GetTop(player) + speed);
-            //}
         }
 
 
@@ -87,30 +65,7 @@ namespace gametop
             }
 
             player1.KeyDown(sender, e);
-            //if (e.Key == Key.A)
-            //{
-            //    goLeft = true;
-            //    player.Source = new BitmapImage(new Uri("left.png", UriKind.RelativeOrAbsolute));
-            //}
-
-            //if (e.Key == Key.D)
-            //{
-            //    goRight = true;
-            //    player.Source = new BitmapImage(new Uri("right.png", UriKind.RelativeOrAbsolute));
-            //}
-
-            //if (e.Key == Key.W)
-            //{
-            //    goUp = true;
-            //    player.Source = new BitmapImage(new Uri("up.png", UriKind.RelativeOrAbsolute));
-            //}
-
-            //if (e.Key == Key.S)
-            //{
-            //    goDown = true;
-            //    player.Source = new BitmapImage(new Uri("down.png", UriKind.RelativeOrAbsolute));
-            //}
-
+            
             if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(nps1) + nps1.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(nps1) &&
                 Canvas.GetTop(player) < Canvas.GetTop(nps1) + nps1.ActualHeight &&
@@ -166,25 +121,7 @@ namespace gametop
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             player1.KeyUp(sender, e);
-            //if (e.Key == Key.A)
-            //{
-            //    goLeft = false;
-            //}
-
-            //if (e.Key == Key.D)
-            //{
-            //    goRight = false;
-            //}
-
-            //if (e.Key == Key.W)
-            //{
-            //    goUp = false;
-            //}
-
-            //if (e.Key == Key.S)
-            //{
-            //    goDown = false;
-            //}
+           
         }
     }
 }
