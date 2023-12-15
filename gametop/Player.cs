@@ -13,7 +13,7 @@ namespace gametop
     internal class Player
     {
         public static bool goLeft, goRight, goUp, goDown;
-        private string facing = "up";
+        public static string facing = "up";
         public int speed, ammo;
         public static int playerHealth = 100;
         Image player;

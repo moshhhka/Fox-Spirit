@@ -27,8 +27,7 @@ namespace gametop
     {
         MakeMobe zombie1;
         Player player1;
-        bool goLeft, goRight, goUp, goDown, gameOver;
-        string facing = "up";
+        bool gameOver;
         int speed = 20;
         int ammo = 10;
         int zombieSpeed = 3;
@@ -282,7 +281,7 @@ namespace gametop
             if (e.Key == Key.Space && ammo > 0 && gameOver == false)
             {
                 ammo--;
-                ShootBullet(facing);
+                ShootBullet(Player.facing);
 
 
                 if (ammo < 1)
@@ -400,10 +399,10 @@ namespace gametop
                 MakeBox();
             }
 
-            goUp = false;
-            goLeft = false;
-            goDown = false;
-            goRight = false;
+            Player.goUp = false;
+            Player.goLeft = false;
+            Player.goDown = false;
+            Player.goRight = false;
             gameOver = false;
 
             Player.playerHealth = 100;
