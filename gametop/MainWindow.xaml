@@ -28,7 +28,7 @@
             <Image Tag ="coin" Height="53" Canvas.Left="1477" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1402" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1477" Canvas.Top="514" Width="53" Source="/монета.png" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Image x:Name="key" Height="62" Canvas.Left="1715" Canvas.Top="462" Width="46" Source="/ключ.png"/>
+            <Image x:Name="key" Height="62" Canvas.Left="1715" Canvas.Top="462" Width="46" Source="/ключ.png" Visibility="Hidden"/>
             <Image x:Name="door" Height="214" Canvas.Left="140" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="851" Width="185" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         </Canvas>

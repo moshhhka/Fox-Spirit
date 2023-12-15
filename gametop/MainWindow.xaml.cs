@@ -30,7 +30,7 @@ namespace gametop
         bool gameOver;
         int ammo = 10;
         int zombieSpeed = 3;
-        int score, coins;
+        int coins;
         bool gotKey;
         Random randNum = new Random();
 
@@ -43,7 +43,7 @@ namespace gametop
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, zombieSpeed);
+            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, key, zombieSpeed);
             player1 = new Player(player, myCanvas, healthBar);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
@@ -68,15 +68,15 @@ namespace gametop
             }
 
             txtAmmo.Content = "Ammo:" + ammo;
-            txtScore.Content = "Kills:" + score;
+            txtScore.Content = "Kills:" + zombie1.score;
             txtCoins.Content = "Coins:" + coins;
 
             player1.Movement();
 
-            if (Canvas.GetLeft(player) < Canvas.GetLeft(key) + key.ActualWidth &&
+            if (key.Visibility == Visibility.Visible && (Canvas.GetLeft(player) < Canvas.GetLeft(key) + key.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(key) &&
                 Canvas.GetTop(player) < Canvas.GetTop(key) + key.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(key))
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(key)))
             {
                 gotKey = true;
                 key.Visibility = Visibility.Hidden;
@@ -100,7 +100,7 @@ namespace gametop
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
             zombie1.elementsCopy = elementsCopy;
-            score = zombie1.score;
+
 
             CollisionDetector collisionDetector = new CollisionDetector(player, elementsCopy);
             collisionDetector.DetectCollisions();
@@ -245,7 +245,7 @@ namespace gametop
             if (gotKey == true && key.Visibility == Visibility.Hidden)
             {
                 key.Visibility = Visibility.Visible;
-                    gotKey = false;
+                gotKey = false;
             }
 
             zombieList.Clear();
@@ -269,7 +269,7 @@ namespace gametop
             gameOver = false;
 
             Player.playerHealth = 100;
-            score = 0;
+            zombie1.score = 0;
             ammo = 10;
             coins = 0;
 
