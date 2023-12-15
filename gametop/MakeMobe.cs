@@ -7,21 +7,29 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace gametop
 {
     internal class MakeMobe
     {
 
-        List<Image> zombieList = new List<Image>();
+        List<Image> zombieList;
+        public int zombieSpeed, score;
+        Random randNum = new Random();
+        Image player;
+        Canvas myCanvas;
+        public List<UIElement> elementsCopy;
 
-
-        public MakeMobe()
+        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, int zombieSpeed = 3, int score = 0)
         {
-
+            this.player = player;
+            this.myCanvas = myCanvas;
+            this.zombieSpeed = zombieSpeed;
+            this.score = score;
+            this.elementsCopy = elementsCopy;
+            this.zombieList = zombieList;
         }
-        private void MakeZombies() // Создание мобов
+        public void MakeZombies() // Создание мобов
         {
             Image zombie = new Image();
             zombie.Tag = "mobe";
@@ -47,7 +55,7 @@ namespace gametop
                         Canvas.GetTop(player) < Canvas.GetTop(image1) + image1.ActualHeight &&
                         Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(image1))
                     {
-                        playerHealth -= 1;
+                        Player.playerHealth -= 1;
                     }
 
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))

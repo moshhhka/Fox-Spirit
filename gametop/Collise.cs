@@ -11,16 +11,17 @@ namespace gametop
     class CollisionDetector
     {
         private int speed = 20;
-        private UIElement player;
-        private List<UIElement> elementsCopy;
+        public Image player;
+        public List<UIElement> elementsCopy;
 
-        public CollisionDetector(UIElement player, List<UIElement> elementsCopy)
+        public CollisionDetector(Image player, List<UIElement> elementsCopy, int speed = 20)
         {
             this.player = player;
             this.elementsCopy = elementsCopy;
+            this.speed = speed;
         }
 
-        public void DetectCollisions(bool goLeft, bool goRight, bool goDown, bool goUp)
+        public void DetectCollisions()
         {
             foreach (UIElement u in elementsCopy)
             {
@@ -31,27 +32,27 @@ namespace gametop
 
                     if (rect1.IntersectsWith(rect2))
                     {
-                        if (goLeft)
+                        if (Player.goLeft)
                         {
-                            goLeft = false;
+                            Player.goLeft = false;
                             Canvas.SetLeft(player, Canvas.GetLeft(player) + speed);
                         }
 
-                        if (goRight)
+                        if (Player.goRight)
                         {
-                            goRight = false;
+                           Player.goRight = false;
                             Canvas.SetLeft(player, Canvas.GetLeft(player) - speed);
                         }
 
-                        if (goDown)
+                        if (Player.goDown)
                         {
-                            goDown = false;
+                            Player.goDown = false;
                             Canvas.SetTop(player, Canvas.GetTop(player) - speed);
                         }
 
-                        if (goUp)
+                        if (Player.goUp)
                         {
-                            goUp = false;
+                            Player.goUp = false;
                             Canvas.SetTop(player, Canvas.GetTop(player) + speed);
                         }
                     }

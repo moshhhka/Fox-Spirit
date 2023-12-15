@@ -12,17 +12,17 @@ namespace gametop
 {
     internal class Player
     {
-        private bool goLeft, goRight, goUp, goDown, gameOver;
+        public static bool goLeft, goRight, goUp, goDown;
         private string facing = "up";
-        public int speed, playerHealth, ammo;
+        public int speed, ammo;
+        public static int playerHealth = 100;
         Image player;
         Canvas myCanvas;
         ProgressBar healthBar;
 
-        public Player(Image player, Canvas myCanvas, ProgressBar healthBar, int speed = 20, int playerHealth = 100, int ammo = 10)
+        public Player(Image player, Canvas myCanvas, ProgressBar healthBar, int speed = 20, int ammo = 10)
         {
             this.speed = speed;
-            this.playerHealth = playerHealth;
             this.ammo = ammo;
             this.player = player;
             this.myCanvas = myCanvas;
@@ -31,8 +31,6 @@ namespace gametop
 
         public void KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
-          
-
             if (e.Key == Key.A)
             {
                 goLeft = true;

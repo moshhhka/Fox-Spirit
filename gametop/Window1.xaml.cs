@@ -36,7 +36,6 @@ namespace gametop
             Application.Current.Shutdown();
         }
 
-
         public Window1()
         {
             InitializeComponent();
@@ -52,10 +51,10 @@ namespace gametop
             player1.Movement();
 
 
-            //if (playerHealth > 1)
-            //{
-            //    healthBar.Value = playerHealth;
-            //}
+            if (Player.playerHealth > 1)
+            {
+                healthBar.Value = Player.playerHealth;
+            }
 
             //if (goLeft == true && Canvas.GetLeft(player) > 0) // Движения гг
             //{
