@@ -182,9 +182,6 @@
     <Resource Include="fon1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="charecter\nps1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="charecter\boss3fl.png" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +222,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="f3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\nps1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -79,7 +79,7 @@ namespace gametop
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 10 монет", "Гадалка:", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 50 монет. Если скажешь нет, я готова поторговаться", "Гадалка:", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes && coins > 10)
                 {
                     MessageBox.Show("Вот твоя карта!");
@@ -99,9 +99,9 @@ namespace gametop
                     txtCoins.Content = "Coins:" + coins;
                 }
 
-                else
+                if (result == MessageBoxResult.No)
                 {
-                    MessageBoxResult foodResult = MessageBox.Show("Охх, если нет денег, можешь заплатить едой", "Гадалка:", MessageBoxButton.YesNo);
+                    MessageBoxResult foodResult = MessageBox.Show("Так уж и быть, можешь угостить меня чем-то вкусным", "Гадалка:", MessageBoxButton.YesNo);
                     if (foodResult == MessageBoxResult.Yes && gotFood == true)
                     {
                         MessageBox.Show("Вот твоя карта!");
@@ -125,7 +125,14 @@ namespace gametop
                         MessageBox.Show("Как жаль, но у тебя нет еды для меня");
                         return;
                     }
-                }    
+                }
+
+
+                else
+                {
+                    MessageBox.Show("Как жаль, но у тебя не хватает монет");
+                    return;
+                }
             }
 
             if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(nps) + nps.ActualWidth &&

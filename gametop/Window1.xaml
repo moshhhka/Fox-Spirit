@@ -9,16 +9,16 @@
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Center" Width="1900">
             <Image Height="980" Source="/татамитемно.png" Stretch="Fill" Width="1900" HorizontalAlignment="Center" Canvas.Top="100" VerticalAlignment="Top"/>
-            <Image x:Name="nps1" Height="331" Canvas.Left="429" Source="/charecter/nps2.png" Stretch="Fill" Canvas.Top="317" Width="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image x:Name="nps1" Height="291" Canvas.Left="361" Source="/charecter/nps2.png" Stretch="Fill" Canvas.Top="223" Width="117" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="23" Canvas.Top="44" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label x:Name="txtScore" Content="Kills: 0" Height="54" Canvas.Left="429" Canvas.Top="44" Width="223" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
             <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1402" Canvas.Top="44" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
             <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1580" Canvas.Top="51" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Value="100"/>
             <Label x:Name="txtCoins" Content="Coins: 0" Height="54" Canvas.Left="800" Canvas.Top="44" Width="233" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image x:Name="key" Height="62" Canvas.Left="179" Canvas.Top="655" Width="46" Source="/ключ.png"/>
-            <Image x:Name="nps" Height="364" Canvas.Left="1195" Canvas.Top="248" Width="258" Source="/charecter/nps.png"/>
-            <Image x:Name="player" Height="166" Canvas.Left="908" Canvas.Top="686" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="nps" Height="292" Canvas.Left="1246" Canvas.Top="248" Width="207" Source="/charecter/nps.png"/>
+            <Image x:Name="player" Height="166" Canvas.Left="976" Canvas.Top="603" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="door" Height="196" Canvas.Left="1691" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="588" Width="169"/>
+            <Image x:Name="nps2" Height="276" Canvas.Left="429" Source="/charecter/nps1.png" Stretch="Fill" Canvas.Top="769" Width="262" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Canvas>
     </Viewbox>
 </Window>

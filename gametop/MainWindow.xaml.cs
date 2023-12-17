@@ -111,17 +111,17 @@ namespace gametop
             foreach (UIElement u in elementsCopy) 
             {
 
-                if (u is Image image && (string)image.Tag == "coin") // Сбор коинов
-                {
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.Width, image.Height);
+                //if (u is Image image && (string)image.Tag == "coin") // Сбор коинов
+                //{
+                //    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                //    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.Width, image.Height);
 
-                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
-                    {
-                        u.Visibility = Visibility.Hidden;
-                        coins++;
-                    }
-                }
+                //    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                //    {
+                //        u.Visibility = Visibility.Hidden;
+                //        coins++;
+                //    }
+                //}
 
                 if (u is Image imag1 && (string)imag1.Tag == "food") // Сбор коинов
                 {
@@ -196,8 +196,8 @@ namespace gametop
             food.Height = 110;
             food.Width = 110;
 
-            Canvas.SetLeft(food, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
-            Canvas.SetTop(food, Canvas.GetTop(chest) + randNum.Next(-110, 110));
+            Canvas.SetLeft(food, Canvas.GetLeft(chest) + randNum.Next(-210, 210));
+            Canvas.SetTop(food, Canvas.GetTop(chest) + randNum.Next(-210, 210));
 
             myCanvas.Children.Add(food);
         }
