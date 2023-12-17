@@ -18,10 +18,11 @@ namespace gametop
         Random randNum = new Random();
         Image player;
         Image key;
+        Image chest;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
 
-        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, int zombieSpeed = 3, int score = 0)
+        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, Image chest, int zombieSpeed = 3, int score = 0)
         {
             this.player = player;
             this.myCanvas = myCanvas;
@@ -30,6 +31,7 @@ namespace gametop
             this.elementsCopy = elementsCopy;
             this.zombieList = zombieList;
             this.key = key;
+            this.chest = chest;
         }
         public void MakeZombies() // Создание мобов
         {
@@ -107,6 +109,7 @@ namespace gametop
                             if (score == 15)
                             {
                                 key.Visibility = Visibility.Visible;
+                                chest.Visibility = Visibility.Visible;
                             }
 
                         }

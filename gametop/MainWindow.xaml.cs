@@ -43,7 +43,7 @@ namespace gametop
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, key, zombieSpeed);
+            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, key, chest, zombieSpeed);
             player1 = new Player(player, myCanvas, healthBar);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
@@ -151,9 +151,64 @@ namespace gametop
             }
 
             player1.KeyDown(sender, e);
+
+            if (e.Key == Key.E)
+            {
+                chest.Visibility = Visibility.Hidden;
+
+                for (int i = 0; i < 20; i++)
+                {
+                    CreateCristall();
+                }
+                for (int i = 0; i < 30; i++)
+                {
+                    CreateCoin();
+                }
+
+            }
         }
 
+        //private void CreateItem(string type)
+        //{
+        //    // Создать новый элемент
+        //    Image item = new Image();
+        //    item.Source = new BitmapImage(new Uri("images/" + type + ".png", UriKind.Relative));
 
+        //    // Установить положение элемента на том же месте, где был сундук
+        //    Canvas.SetLeft(item, Canvas.GetLeft(chest));
+        //    Canvas.SetTop(item, Canvas.GetTop(chest));
+
+        //    // Добавить элемент на холст
+        //    myCanvas.Children.Add(item);
+        //}
+
+        private void CreateCoin()
+        {
+
+            Image coin = new Image();
+            coin.Source = new BitmapImage(new Uri("монета.png", UriKind.Relative));
+            coin.Tag = "coin";
+            coin.Height = 40;
+            coin.Width = 40;
+            Canvas.SetLeft(coin, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
+            Canvas.SetTop(coin, Canvas.GetTop(chest) + randNum.Next(-110, 110));
+
+            myCanvas.Children.Add(coin);
+        }
+
+        private void CreateCristall()
+        {
+            
+            Image cristall = new Image();
+            cristall.Source = new BitmapImage(new Uri("cristall.png", UriKind.Relative));
+            cristall.Tag = "cristall";
+            cristall.Height = 50;
+            cristall.Width = 40;
+            Canvas.SetLeft(cristall, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
+            Canvas.SetTop(cristall, Canvas.GetTop(chest) + randNum.Next(-110, 110));
+
+            myCanvas.Children.Add(cristall);
+        }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
         {
@@ -234,6 +289,7 @@ namespace gametop
                 myCanvas.Children.Remove(x);
             }
 
+
             foreach (UIElement u in myCanvas.Children)
             {
                 if (u is Image image && (string)image.Tag == "coin" && u.Visibility == Visibility.Hidden)
@@ -250,7 +306,7 @@ namespace gametop
 
             zombieList.Clear();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 0; i++)
             {
                 zombie1.MakeZombies();
             }
