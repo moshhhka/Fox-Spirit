@@ -251,10 +251,31 @@ namespace gametop
             Image box = new Image();
             box.Tag = "box";
             box.Source = new BitmapImage(new Uri("камень2.png", UriKind.RelativeOrAbsolute));
-            Canvas.SetLeft(box, randNum.Next(0, 1595));
-            Canvas.SetTop(box, randNum.Next(80, 780));
             box.Height = 109;
             box.Width = 105;
+
+            bool isIntersecting; // Проверка на спавн коробок
+            do
+            {
+                isIntersecting = false;
+                Canvas.SetLeft(box, randNum.Next(0, 1595));
+                Canvas.SetTop(box, randNum.Next(80, 780));
+
+                Rect newBoxRect = new Rect(Canvas.GetLeft(box), Canvas.GetTop(box), box.Width, box.Height);
+                foreach (UIElement uiElement in myCanvas.Children)
+                {
+                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "coin" || tag == "key" || tag == "door"))
+                    {
+                        Rect existingElementRect = new Rect(Canvas.GetLeft(uiElement), Canvas.GetTop(uiElement), ((Image)uiElement).Width, ((Image)uiElement).Height);
+                        if (newBoxRect.IntersectsWith(existingElementRect))
+                        {
+                            isIntersecting = true;
+                            break;
+                        }
+                    }
+                }
+            } while (isIntersecting);
+
             boxList.Add(box);
             myCanvas.Children.Add(box);
             Canvas.SetZIndex(player, 1);

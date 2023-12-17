@@ -9,7 +9,7 @@
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920">
             <Image Height="980" Source="/9a98d7a7a3b71d2e5725abfcfeda5be0.jpg" Stretch="Fill" Width="1920" HorizontalAlignment="Center" Canvas.Top="103" VerticalAlignment="Top"/>
-            <Image x:Name="player" Height="166" Canvas.Left="960" Canvas.Top="851" Width="126" Source="/down.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image x:Name="player" Height="166" Canvas.Left="908" Canvas.Top="792" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="23" Canvas.Top="44" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label x:Name="txtScore" Content="Kills: 0" Height="54" Canvas.Left="429" Canvas.Top="44" Width="223" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
             <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1402" Canvas.Top="44" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
@@ -28,8 +28,8 @@
             <Image Tag ="coin" Height="53" Canvas.Left="1477" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1402" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1477" Canvas.Top="514" Width="53" Source="/монета.png" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Image x:Name="key" Height="62" Canvas.Left="1715" Canvas.Top="462" Width="46" Source="/ключ.png" Visibility="Hidden"/>
-            <Image x:Name="door" Height="214" Canvas.Left="140" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="851" Width="185" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="key" Tag ="key" Height="62" Canvas.Left="1715" Canvas.Top="462" Width="46" Source="/ключ.png" Visibility="Hidden"/>
+            <Image x:Name="door" Tag ="door" Height="214" Canvas.Left="140" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="851" Width="185" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="chest" Height="106" Canvas.Left="927" Source="/40345f81a641c415f7d9aafd311957ff-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="522" Width="106"/>
 
         </Canvas>
