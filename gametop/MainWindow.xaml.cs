@@ -30,8 +30,8 @@ namespace gametop
         bool gameOver;
         int ammo = 10;
         int zombieSpeed = 3;
-        int coins;
         bool gotKey;
+        public static int coins;
         Random randNum = new Random();
 
         List<Image> zombieList = new List<Image>();
@@ -154,7 +154,7 @@ namespace gametop
 
             if (e.Key == Key.E)
             {
-                chest.Visibility = Visibility.Hidden;
+                chest.Visibility = Visibility.Hidden; // Сундук
 
                 for (int i = 0; i < 20; i++)
                 {
@@ -264,7 +264,7 @@ namespace gametop
                 Rect newBoxRect = new Rect(Canvas.GetLeft(box), Canvas.GetTop(box), box.Width, box.Height);
                 foreach (UIElement uiElement in myCanvas.Children)
                 {
-                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "coin" || tag == "key" || tag == "door"))
+                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "coin" || tag == "key" || tag == "door" || tag == "ammo"))
                     {
                         Rect existingElementRect = new Rect(Canvas.GetLeft(uiElement), Canvas.GetTop(uiElement), ((Image)uiElement).Width, ((Image)uiElement).Height);
                         if (newBoxRect.IntersectsWith(existingElementRect))

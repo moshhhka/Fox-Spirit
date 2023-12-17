@@ -22,6 +22,7 @@ namespace gametop
     public partial class nachdio1 : Window
     {
         Player player1;
+        bool gotKey;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -52,7 +53,7 @@ namespace gametop
             if (Canvas.GetLeft(player) < Canvas.GetLeft(door) + door.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door) &&
                 Canvas.GetTop(player) < Canvas.GetTop(door) + door.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door))
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door) && gotKey == true)
             {
                 MainWindow newRoom = new MainWindow();
                 this.Hide();
@@ -82,6 +83,7 @@ namespace gametop
                 MessageBox.Show("фраза 1", "Мужчина в маске:");
                 MessageBox.Show("фраза 2", "Мужчина в маске:");
                 MessageBox.Show("фраза 2", "Мужчина в маске:");
+                gotKey = true;
                 door.Visibility = Visibility.Visible;
             }
         }

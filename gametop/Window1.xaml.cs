@@ -25,6 +25,7 @@ namespace gametop
     {
         Player player1;
         private bool cardDrawn = false;
+        public static int coins = MainWindow.coins;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -40,7 +41,6 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-
         }
 
         private void GameTimer(object sender, EventArgs e)
@@ -53,6 +53,7 @@ namespace gametop
                 healthBar.Value = Player.playerHealth;
             }
 
+            txtCoins.Content = "Coins:" + coins;
         }
 
 
@@ -77,7 +78,7 @@ namespace gametop
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту?", "Гадалка:", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 10 монет", "Гадалка:", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     MessageBox.Show("Вот твоя карта!");
@@ -93,6 +94,8 @@ namespace gametop
                     myCanvas.Children.Add(map);
                     Canvas.SetZIndex(player, 1);
                     cardDrawn = true;
+                    coins -= 10;
+                    txtCoins.Content = "Coins:" + coins;
                 }
             }
 
