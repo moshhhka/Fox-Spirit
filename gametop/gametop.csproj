@@ -217,5 +217,14 @@
   <ItemGroup>
     <Resource Include="icons8-клавиша-d-96.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="f1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="f2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="f3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

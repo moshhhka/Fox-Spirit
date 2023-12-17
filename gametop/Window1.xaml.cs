@@ -26,6 +26,7 @@ namespace gametop
         Player player1;
         private bool cardDrawn = false;
         public static int coins = MainWindow.coins;
+        public static bool gotFood = MainWindow.gotFood;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -79,7 +80,7 @@ namespace gametop
                 }
 
                 MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 10 монет", "Гадалка:", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                if (result == MessageBoxResult.Yes && coins > 10)
                 {
                     MessageBox.Show("Вот твоя карта!");
                     Random random = new Random();
@@ -97,6 +98,34 @@ namespace gametop
                     coins -= 10;
                     txtCoins.Content = "Coins:" + coins;
                 }
+
+                else
+                {
+                    MessageBoxResult foodResult = MessageBox.Show("Охх, если нет денег, можешь заплатить едой", "Гадалка:", MessageBoxButton.YesNo);
+                    if (foodResult == MessageBoxResult.Yes && gotFood == true)
+                    {
+                        MessageBox.Show("Вот твоя карта!");
+                        Random random = new Random();
+                        int randomNumber = random.Next(1, 4);
+                        string mapname = "map" + Convert.ToString(randomNumber) + ".png";
+                        Image map = new Image();
+                        map.Source = new BitmapImage(new Uri(mapname, UriKind.RelativeOrAbsolute));
+                        Canvas.SetLeft(map, Canvas.GetLeft(nps1) + 130);
+                        Canvas.SetTop(map, Canvas.GetTop(nps1) + 80);
+                        map.Height = 109;
+                        map.Width = 105;
+                        myCanvas.Children.Add(map);
+                        Canvas.SetZIndex(player, 1);
+                        cardDrawn = true;
+                        gotFood = false;
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Как жаль, но у тебя нет еды для меня");
+                        return;
+                    }
+                }    
             }
 
             if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(nps) + nps.ActualWidth &&

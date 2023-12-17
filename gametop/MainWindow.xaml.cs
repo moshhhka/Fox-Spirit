@@ -31,6 +31,7 @@ namespace gametop
         int ammo = 10;
         int zombieSpeed = 3;
         bool gotKey;
+        public static bool gotFood;
         public static int coins;
         Random randNum = new Random();
 
@@ -122,6 +123,18 @@ namespace gametop
                     }
                 }
 
+                if (u is Image imag1 && (string)imag1.Tag == "food") // Сбор коинов
+                {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(imag1), Canvas.GetTop(imag1), imag1.Width, imag1.Height);
+
+                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                    {
+                        u.Visibility = Visibility.Hidden;
+                        gotFood = true;
+                    }
+                }
+
                 if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
                 {
                     if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
@@ -152,7 +165,10 @@ namespace gametop
 
             player1.KeyDown(sender, e);
 
-            if (e.Key == Key.E)
+            if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
+                Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
             {
                 chest.Visibility = Visibility.Hidden; // Сундук
 
@@ -164,23 +180,27 @@ namespace gametop
                 {
                     CreateCoin();
                 }
+                CreateFood();
 
             }
         }
 
-        //private void CreateItem(string type)
-        //{
-        //    // Создать новый элемент
-        //    Image item = new Image();
-        //    item.Source = new BitmapImage(new Uri("images/" + type + ".png", UriKind.Relative));
+        private void CreateFood()
+        {
 
-        //    // Установить положение элемента на том же месте, где был сундук
-        //    Canvas.SetLeft(item, Canvas.GetLeft(chest));
-        //    Canvas.SetTop(item, Canvas.GetTop(chest));
+            int randomNumber = randNum.Next(1, 4);
+            string foodname = "f" + Convert.ToString(randomNumber) + ".png";
+            Image food = new Image();
+            food.Source = new BitmapImage(new Uri(foodname, UriKind.RelativeOrAbsolute));
+            food.Tag = "food";
+            food.Height = 110;
+            food.Width = 110;
 
-        //    // Добавить элемент на холст
-        //    myCanvas.Children.Add(item);
-        //}
+            Canvas.SetLeft(food, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
+            Canvas.SetTop(food, Canvas.GetTop(chest) + randNum.Next(-110, 110));
+
+            myCanvas.Children.Add(food);
+        }
 
         private void CreateCoin()
         {
@@ -264,7 +284,7 @@ namespace gametop
                 Rect newBoxRect = new Rect(Canvas.GetLeft(box), Canvas.GetTop(box), box.Width, box.Height);
                 foreach (UIElement uiElement in myCanvas.Children)
                 {
-                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "coin" || tag == "key" || tag == "door" || tag == "ammo"))
+                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "coin" || tag == "key" || tag == "door" || tag == "ammo" || tag == "player"))
                     {
                         Rect existingElementRect = new Rect(Canvas.GetLeft(uiElement), Canvas.GetTop(uiElement), ((Image)uiElement).Width, ((Image)uiElement).Height);
                         if (newBoxRect.IntersectsWith(existingElementRect))
@@ -327,7 +347,7 @@ namespace gametop
 
             zombieList.Clear();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 0; i++)
             {
                 zombie1.MakeZombies();
             }
