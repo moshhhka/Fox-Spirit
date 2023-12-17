@@ -54,10 +54,10 @@ namespace gametop
             {
                 if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
                 {
-                    if (Canvas.GetLeft(player) < Canvas.GetLeft(image1) + image1.ActualWidth &&
-                        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(image1) &&
-                        Canvas.GetTop(player) < Canvas.GetTop(image1) + image1.ActualHeight &&
-                        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(image1))
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
+
+                    if (rect1.IntersectsWith(rect2))
                     {
                         Player.playerHealth -= 1;
                     }

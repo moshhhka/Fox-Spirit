@@ -9,17 +9,22 @@
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" HorizontalAlignment="Left" Height="1080" VerticalAlignment="Top" Width="1900">
             <Image Height="1080" Source="/fon1.png" Stretch="Fill" Width="1900"/>
-            <Image x:Name="player" Height="166" Canvas.Left="383" Canvas.Top="607" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image Height="148" Canvas.Left="346" Source="/k1.png" Stretch="Fill" Canvas.Top="221" Width="99" Tag="box" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image Height="148" Canvas.Left="246" Source="/k1.png" Stretch="Fill" Canvas.Top="239" Width="99" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Height="145" Canvas.Left="1666" Source="/k2.png" Stretch="Fill" Canvas.Top="732" Width="97" Tag="box"/>
             <Image Height="175" Canvas.Left="174" Source="/k3.png" Stretch="Fill" Canvas.Top="717" Width="102" Tag="box"/>
             <Image Height="106" Canvas.Left="102" Source="/k1.png" Stretch="Fill" Canvas.Top="698" Width="72" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image Height="612" Canvas.Left="847" Source="/tree.png" Stretch="Fill" Canvas.Top="78" Width="413"/>
-            <Image Height="466" Canvas.Left="1180" Source="/charecter/boss3fl.png" Stretch="Fill" Canvas.Top="388" Width="206" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1402" Canvas.Top="44" Width="150" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-            <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1580" Canvas.Top="51" Width="280" Value="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Image Height="180" Canvas.Left="1506" Source="/z2.png" Stretch="Fill" Canvas.Top="801" Width="257" Tag="box"/>
-            <Image Height="182" Canvas.Left="1506" Source="/z1.png" Stretch="Fill" Canvas.Top="278" Width="128" HorizontalAlignment="Center" VerticalAlignment="Top" Tag="box"/>
+            <Image Height="612" Canvas.Left="985" Source="/tree.png" Stretch="Fill" Canvas.Top="44" Width="412" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image x:Name="scazitel" Height="466" Canvas.Left="1214" Source="/charecter/boss3fl.png" Stretch="Fill" Canvas.Top="338" Width="206" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1542" Canvas.Top="988" Width="280" Value="100" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Image Height="74" Tag="box" Canvas.Left="581" Source="/icons8-ключ-96.png" Stretch="Fill" Canvas.Top="962" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="74" Tag="box" Canvas.Left="656" Source="/icons8-s-ключ-96.png" Stretch="Fill" Canvas.Top="962" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="74" Tag="box" Canvas.Left="1248" Source="/icons8-электронный-ключ-96.png" Stretch="Fill" Canvas.Top="962" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="74" Tag="box" Canvas.Left="656" Source="/icons8-клавиша-w-96.png" Stretch="Fill" Canvas.Top="883" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="74" Tag="box" Canvas.Left="731" Source="/icons8-клавиша-d-96.png" Stretch="Fill" Canvas.Top="962" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Tag="box" Content="Чтобы двигаться используйте:" Height="55" Canvas.Left="200" Canvas.Top="981" Width="346" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Segoe Print" FontSize="20" Foreground="White"/>
+            <Label Tag="box" Content="Чтобы взаимодействовать:" Height="55" Canvas.Left="900" Canvas.Top="981" Width="308" FontFamily="Segoe Print" FontSize="20" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image x:Name="door" Height="196" Canvas.Left="674" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="264" Width="169" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Image x:Name="player" Height="166" Canvas.Left="383" Canvas.Top="607" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Canvas>
     </Viewbox>
 </Window>

@@ -35,7 +35,7 @@ namespace gametop
         {
             if (roomfirst == null)
             {
-                roomfirst = new MainWindow();
+                roomfirst = new nachdio1();
                 roomfirst.Show();
             }
             else

@@ -200,13 +200,22 @@
     <Resource Include="tree.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="z2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="z1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-ключ-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-s-ключ-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-электронный-ключ-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-клавиша-w-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons8-клавиша-d-96.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
