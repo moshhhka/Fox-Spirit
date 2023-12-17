@@ -306,7 +306,7 @@ namespace gametop
 
             zombieList.Clear();
 
-            for (int i = 0; i < 0; i++)
+            for (int i = 0; i < 3; i++)
             {
                 zombie1.MakeZombies();
             }

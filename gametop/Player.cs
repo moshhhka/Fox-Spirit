@@ -13,10 +13,10 @@ namespace gametop
 {
     internal class Player
     {
-        public static bool goLeft, goRight, goUp, goDown, goDash;
+        public static bool goLeft, goRight, goUp, goDown;
         public static string facing = "up";
         public int ammo;
-        public static int speed = 20, dashDistance = 10;
+        public static int speed = 20;
         public static int playerHealth = 100;
         Image player;
         Canvas myCanvas;
@@ -59,12 +59,6 @@ namespace gametop
                 facing = "down";
                 player.Source = new BitmapImage(new Uri("down.png", UriKind.RelativeOrAbsolute));
             }
-
-            if (e.Key == Key.LeftShift)
-            {
-                goDash = true;
-            }
-
         }
 
         public void KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
@@ -89,10 +83,6 @@ namespace gametop
                 goDown = false;
             }
 
-            if (e.Key == Key.LeftShift)
-            {
-                goDash = false;
-            }
         }
 
         public void Movement()
@@ -115,16 +105,6 @@ namespace gametop
             if (goDown == true && Canvas.GetTop(player) + player.Height < myCanvas.Height)
             {
                 Canvas.SetTop(player, Canvas.GetTop(player) + speed);
-            }
-
-            if (goDash == true)
-            {
-                speed += dashDistance;
-            }
-
-            if (goDash != true)
-            {
-                speed = 20;
             }
 
             if (playerHealth > 1)
