@@ -122,24 +122,6 @@
     <Resource Include="coffee-cup-latte-art-top-view-isolated-on-a-transparent-background-png %281%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="down.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="left.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="right.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="up.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="bos1et.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="nps.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="монета.png" />
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Ппп.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="cookie.png" />
@@ -173,9 +152,6 @@
     <Resource Include="map3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="стены.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="9a98d7a7a3b71d2e5725abfcfeda5be0.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +159,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="cristall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\bos1et.png" />
+    <Resource Include="charecter\down.png" />
+    <Resource Include="charecter\left.png" />
+    <Resource Include="charecter\nps.png" />
+    <Resource Include="charecter\right.png" />
+    <Resource Include="charecter\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\nps2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -36,28 +36,28 @@ namespace gametop
             {
                 goLeft = true;
                 facing = "left";
-                player.Source = new BitmapImage(new Uri("left.png", UriKind.RelativeOrAbsolute));
+                player.Source = new BitmapImage(new Uri("charecter\\left.png", UriKind.RelativeOrAbsolute));
             }
 
             if (e.Key == Key.D)
             {
                 goRight = true;
                 facing = "right";
-                player.Source = new BitmapImage(new Uri("right.png", UriKind.RelativeOrAbsolute));
+                player.Source = new BitmapImage(new Uri("charecter\\right.png", UriKind.RelativeOrAbsolute));
             }
 
             if (e.Key == Key.W)
             {
                 goUp = true;
                 facing = "up";
-                player.Source = new BitmapImage(new Uri("up.png", UriKind.RelativeOrAbsolute));
+                player.Source = new BitmapImage(new Uri("charecter\\up.png", UriKind.RelativeOrAbsolute));
             }
 
             if (e.Key == Key.S)
             {
                 goDown = true;
                 facing = "down";
-                player.Source = new BitmapImage(new Uri("down.png", UriKind.RelativeOrAbsolute));
+                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
             }
         }
 

@@ -37,7 +37,7 @@ namespace gametop
         {
             Image zombie = new Image();
             zombie.Tag = "mobe";
-            zombie.Source = new BitmapImage(new Uri("bos1et.png", UriKind.RelativeOrAbsolute));
+            zombie.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
             Canvas.SetLeft(zombie, randNum.Next(0, 1595));
             Canvas.SetTop(zombie, randNum.Next(80, 780));
             zombie.Height = 296;

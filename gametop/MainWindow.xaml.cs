@@ -277,7 +277,7 @@ namespace gametop
 
         private void RestartGame() // Перезапуск игры
         {
-            player.Source = new BitmapImage(new Uri("down.png", UriKind.RelativeOrAbsolute));
+            player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
 
             foreach (Image i in zombieList)
             {
