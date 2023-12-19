@@ -46,7 +46,7 @@ namespace gametop
             sphereTimer.Tick += new EventHandler(SphereTimerEvent);
             sphereTimer.Start();
 
-            disappearTimer.Interval = TimeSpan.FromMilliseconds(350);
+            disappearTimer.Interval = TimeSpan.FromMilliseconds(220);
             disappearTimer.Tick += new EventHandler(DisappearTimerEvent);
             disappearTimer.Start();
         }

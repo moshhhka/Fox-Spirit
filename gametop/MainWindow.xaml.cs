@@ -28,9 +28,9 @@ namespace gametop
         MakeMobe zombie1;
         Player player1;
         bool gameOver;
-        int ammo = 10;
+        int ammo = 5;
         int zombieSpeed = 3;
-        bool gotKey;
+        bool gotKey, isChestOpened;
         public static bool gotFood;
         public static int coins;
         Random randNum = new Random();
@@ -111,17 +111,17 @@ namespace gametop
             foreach (UIElement u in elementsCopy) 
             {
 
-                //if (u is Image image && (string)image.Tag == "coin") // Сбор коинов
-                //{
-                //    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                //    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.Width, image.Height);
+                if (u is Image image && (string)image.Tag == "coin") // Сбор коинов
+                {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.Width, image.Height);
 
-                //    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
-                //    {
-                //        u.Visibility = Visibility.Hidden;
-                //        coins++;
-                //    }
-                //}
+                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                    {
+                        u.Visibility = Visibility.Hidden;
+                        coins++;
+                    }
+                }
 
                 if (u is Image imag1 && (string)imag1.Tag == "food") // Сбор коинов
                 {
@@ -135,18 +135,18 @@ namespace gametop
                     }
                 }
 
-                //if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
-                //{
-                //    if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
-                //        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(imagee) &&
-                //        Canvas.GetTop(player) < Canvas.GetTop(imagee) + imagee.ActualHeight &&
-                //        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(imagee))
-                //    {
-                //        myCanvas.Children.Remove(imagee);
-                //        imagee.Source = null;
-                //        ammo += 5;
-                //    }
-                //}
+                if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
+                {
+                    if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
+                        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(imagee) &&
+                        Canvas.GetTop(player) < Canvas.GetTop(imagee) + imagee.ActualHeight &&
+                        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(imagee))
+                    {
+                        myCanvas.Children.Remove(imagee);
+                        imagee.Source = null;
+                        ammo += 5;
+                    }
+                }
             }
 
         }
@@ -165,11 +165,13 @@ namespace gametop
 
             player1.KeyDown(sender, e);
 
-            if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
+            if (!isChestOpened && e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
                 Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
             {
+                isChestOpened = true;
+
                 chest.Visibility = Visibility.Hidden; // Сундук
 
                 for (int i = 0; i < 20; i++)
@@ -234,26 +236,32 @@ namespace gametop
         {
             player1.KeyUp(sender, e);
 
-            //if (e.Key == Key.Space && ammo > 0 && gameOver == false)
-            //{
-            //    ammo--;
-            //    ShootBullet(Player.facing);
+            if (e.Key == Key.R && ammo > 0 && gameOver == false)
+            {
+                ammo--;
+                ShootBullet(Player.facing);
 
 
-            //    if (ammo < 1)
-            //    {
-            //        DropAmmo();
-            //    }
-            //}
-
-            //if (e.Key == Key.Space && gameOver == false)
-            //{
-            //    ShootSword(Player.facing);
-            //}
+                if (ammo < 1)
+                {
+                    DropAmmo();
+                }
+            }
 
             if (e.Key == Key.Space && gameOver == false)
             {
+                ShootSword(Player.facing);
+            }
+
+            if (e.Key == Key.Q && ammo > 0 && gameOver == false)
+            {
+                ammo--;
                 ShootSphere();
+
+                if (ammo < 1)
+                {
+                    DropAmmo();
+                }
             }
 
             if (e.Key == Key.Enter && gameOver == true)
@@ -267,23 +275,23 @@ namespace gametop
             Application.Current.Shutdown();
         }
 
-        //private void ShootBullet(string direstion) // Появление пуль
-        //{
-        //    Bullet shootBullet = new Bullet();
-        //    shootBullet.direction = direstion;
-        //    shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2));
-        //    shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2));
-        //    shootBullet.MakeBullet(myCanvas);
-        //}
+        private void ShootBullet(string direstion) // Появление пуль
+        {
+            Bullet shootBullet = new Bullet();
+            shootBullet.direction = direstion;
+            shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2));
+            shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2));
+            shootBullet.MakeBullet(myCanvas);
+        }
 
-        //private void ShootSword(string direstion)
-        //{
-        //    Sword shootSword = new Sword();
-        //    shootSword.direction = direstion;
-        //    shootSword.swordLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2) - 70);
-        //    shootSword.swordTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2) - 70);
-        //    shootSword.MakeSword(myCanvas);
-        //}
+        private void ShootSword(string direstion)
+        {
+            Sword shootSword = new Sword();
+            shootSword.direction = direstion;
+            shootSword.swordLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2) - 70);
+            shootSword.swordTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2) - 70);
+            shootSword.MakeSword(myCanvas);
+        }
 
         private void ShootSphere() 
         {
@@ -310,7 +318,7 @@ namespace gametop
                 Rect newBoxRect = new Rect(Canvas.GetLeft(box), Canvas.GetTop(box), box.Width, box.Height);
                 foreach (UIElement uiElement in myCanvas.Children)
                 {
-                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "coin" || tag == "key" || tag == "door" || tag == "ammo" || tag == "player"))
+                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "chest" || tag == "coin" || tag == "key" || tag == "door" || tag == "ammo" || tag == "player"))
                     {
                         Rect existingElementRect = new Rect(Canvas.GetLeft(uiElement), Canvas.GetTop(uiElement), ((Image)uiElement).Width, ((Image)uiElement).Height);
                         if (newBoxRect.IntersectsWith(existingElementRect))
@@ -393,7 +401,7 @@ namespace gametop
 
             Player.playerHealth = 100;
             zombie1.score = 0;
-            ammo = 10;
+            ammo = 5;
             coins = 0;
 
             timer.Start();

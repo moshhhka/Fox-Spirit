@@ -15,16 +15,14 @@ namespace gametop
     {
         public static bool goLeft, goRight, goUp, goDown;
         public static string facing = "up";
-        public int ammo;
         public static int speed = 20;
         public static int playerHealth = 100;
         Image player;
         Canvas myCanvas;
         ProgressBar healthBar;
 
-        public Player(Image player, Canvas myCanvas, ProgressBar healthBar, int ammo = 10)
+        public Player(Image player, Canvas myCanvas, ProgressBar healthBar)
         {
-            this.ammo = ammo;
             this.player = player;
             this.myCanvas = myCanvas;
             this.healthBar = healthBar;

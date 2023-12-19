@@ -33,13 +33,26 @@ namespace gametop
             this.key = key;
             this.chest = chest;
         }
+
         public void MakeZombies() // Создание мобов
         {
             Image zombie = new Image();
             zombie.Tag = "mobe";
             zombie.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
-            Canvas.SetLeft(zombie, randNum.Next(0, 1595));
-            Canvas.SetTop(zombie, randNum.Next(80, 780));
+
+            // Генерируем случайные координаты для зомби
+            double zombieLeft, zombieTop;
+            do
+            {
+                zombieLeft = randNum.Next(0, 1595);
+                zombieTop = randNum.Next(80, 780);
+            }
+            // Проверяем, что зомби не появляется слишком близко к игроку
+            while (Math.Abs(Canvas.GetLeft(player) - zombieLeft) < 600 && Math.Abs(Canvas.GetTop(player) - zombieTop) < 600);
+
+            Canvas.SetLeft(zombie, zombieLeft);
+            Canvas.SetTop(zombie, zombieTop);
+
             zombie.Height = 296;
             zombie.Width = 302;
             zombieList.Add(zombie);

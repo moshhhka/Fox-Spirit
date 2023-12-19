@@ -55,6 +55,7 @@ namespace gametop
             }
 
             txtCoins.Content = "Coins:" + coins;
+
         }
 
 
@@ -90,6 +91,7 @@ namespace gametop
                     map.Source = new BitmapImage(new Uri(mapname, UriKind.RelativeOrAbsolute));
                     Canvas.SetLeft(map, Canvas.GetLeft(nps1) + 130);
                     Canvas.SetTop(map, Canvas.GetTop(nps1) + 80);
+                    map.Tag = mapname;
                     map.Height = 109;
                     map.Width = 105;
                     myCanvas.Children.Add(map);
@@ -112,6 +114,7 @@ namespace gametop
                         map.Source = new BitmapImage(new Uri(mapname, UriKind.RelativeOrAbsolute));
                         Canvas.SetLeft(map, Canvas.GetLeft(nps1) + 130);
                         Canvas.SetTop(map, Canvas.GetTop(nps1) + 80);
+                        map.Tag = mapname;
                         map.Height = 109;
                         map.Width = 105;
                         myCanvas.Children.Add(map);
@@ -128,7 +131,7 @@ namespace gametop
                 }
 
 
-                else
+                if (coins < 10)
                 {
                     MessageBox.Show("Как жаль, но у тебя не хватает монет");
                     return;
