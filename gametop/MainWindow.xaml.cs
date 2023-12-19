@@ -135,18 +135,18 @@ namespace gametop
                     }
                 }
 
-                if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
-                {
-                    if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
-                        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(imagee) &&
-                        Canvas.GetTop(player) < Canvas.GetTop(imagee) + imagee.ActualHeight &&
-                        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(imagee))
-                    {
-                        myCanvas.Children.Remove(imagee);
-                        imagee.Source = null;
-                        ammo += 5;
-                    }
-                }
+                //if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
+                //{
+                //    if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
+                //        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(imagee) &&
+                //        Canvas.GetTop(player) < Canvas.GetTop(imagee) + imagee.ActualHeight &&
+                //        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(imagee))
+                //    {
+                //        myCanvas.Children.Remove(imagee);
+                //        imagee.Source = null;
+                //        ammo += 5;
+                //    }
+                //}
             }
 
         }
@@ -234,16 +234,26 @@ namespace gametop
         {
             player1.KeyUp(sender, e);
 
-            if (e.Key == Key.Space && ammo > 0 && gameOver == false)
+            //if (e.Key == Key.Space && ammo > 0 && gameOver == false)
+            //{
+            //    ammo--;
+            //    ShootBullet(Player.facing);
+
+
+            //    if (ammo < 1)
+            //    {
+            //        DropAmmo();
+            //    }
+            //}
+
+            //if (e.Key == Key.Space && gameOver == false)
+            //{
+            //    ShootSword(Player.facing);
+            //}
+
+            if (e.Key == Key.Space && gameOver == false)
             {
-                ammo--;
-                ShootBullet(Player.facing);
-
-
-                if (ammo < 1)
-                {
-                    DropAmmo();
-                }
+                ShootSphere();
             }
 
             if (e.Key == Key.Enter && gameOver == true)
@@ -257,13 +267,29 @@ namespace gametop
             Application.Current.Shutdown();
         }
 
-        private void ShootBullet(string direstion) // Появление пуль
+        //private void ShootBullet(string direstion) // Появление пуль
+        //{
+        //    Bullet shootBullet = new Bullet();
+        //    shootBullet.direction = direstion;
+        //    shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2));
+        //    shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2));
+        //    shootBullet.MakeBullet(myCanvas);
+        //}
+
+        //private void ShootSword(string direstion)
+        //{
+        //    Sword shootSword = new Sword();
+        //    shootSword.direction = direstion;
+        //    shootSword.swordLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2) - 70);
+        //    shootSword.swordTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2) - 70);
+        //    shootSword.MakeSword(myCanvas);
+        //}
+
+        private void ShootSphere() 
         {
-            Bullet shootBullet = new Bullet();
-            shootBullet.direction = direstion;
-            shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2));
-            shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2));
-            shootBullet.MakeBullet(myCanvas);
+            HitSpace shootSphere = new HitSpace();
+            shootSphere.MakeSphere(myCanvas, player);
+            Canvas.SetZIndex(player, 1);
         }
 
         private void MakeBox() // Создание коробок
@@ -347,7 +373,7 @@ namespace gametop
 
             zombieList.Clear();
 
-            for (int i = 0; i < 0; i++)
+            for (int i = 0; i < 3; i++)
             {
                 zombie1.MakeZombies();
             }

@@ -86,7 +86,7 @@ namespace gametop
                 foreach (UIElement j in elementsCopy)
                 {
                    
-                    if (j is Image image2 && (string)image2.Tag == "bullet" && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
+                    if ((j is Image image2 && ((string)image2.Tag == "bullet" || (string)image2.Tag == "sword" || (string)image2.Tag == "sphere")) && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
                     {
                         if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
                         Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
@@ -95,8 +95,12 @@ namespace gametop
                         {
                             score++;
 
-                            myCanvas.Children.Remove(image2);
-                            image2.Source = null;
+                            if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
+                            {
+                                myCanvas.Children.Remove(image2);
+                                image2.Source = null;
+                            }
+
                             myCanvas.Children.Remove(image3);
                             image3.Source = null;
                             zombieList.Remove(image3);

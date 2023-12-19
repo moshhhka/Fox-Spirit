@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Collise.cs" />
+    <Compile Include="HitSpace.cs" />
     <Compile Include="MakeMobe.cs" />
     <Compile Include="Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
@@ -64,6 +65,7 @@
       <DependentUpon>nachdio1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
+    <Compile Include="Sword.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
@@ -225,6 +227,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="charecter\nps1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="swordr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sp4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sp5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sp6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sp7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sp8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sp9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
