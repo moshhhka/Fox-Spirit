@@ -85,10 +85,10 @@ namespace gametop
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 50 монет. Если скажешь нет, я готова поторговаться", "Гадалка:", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 40 монет. Если скажешь нет, я готова поторговаться", "Гадалка:", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (coins > 50)
+                    if (coins > 40)
                     {
                         MessageBox.Show("Вот твоя карта!");
                         Random random = new Random();
@@ -104,11 +104,11 @@ namespace gametop
                         myCanvas.Children.Add(map);
                         Canvas.SetZIndex(player, 1);
                         cardDrawn = true;
-                        coins -= 50;
+                        coins -= 40;
                         txtCoins.Content = "Coins:" + coins;
                     }
 
-                    if (coins < 50)
+                    else
                     {
                         MessageBox.Show("Как жаль, но у тебя не хватает монет");
                         return;
@@ -118,6 +118,12 @@ namespace gametop
                 if (result == MessageBoxResult.No)
                 {
                     MessageBoxResult foodResult = MessageBox.Show("Так уж и быть, можешь угостить меня чем-то вкусным", "Гадалка:", MessageBoxButton.YesNo);
+                    if (foodResult == MessageBoxResult.No)
+                    {
+                        MessageBox.Show("Прощай");
+                        return;
+                    }
+
                     if (foodResult == MessageBoxResult.Yes && gotFood == true)
                     {
                         MessageBox.Show("Вот твоя карта!");
@@ -137,15 +143,9 @@ namespace gametop
                         gotFood = false;
                     }
 
-                    if (foodResult == MessageBoxResult.Yes && gotFood == false)
-                    {
-                        MessageBox.Show("Как жаль, но у тебя нет еды для меня");
-                        return;
-                    }
-
                     else
                     {
-                        MessageBox.Show("Прощай");
+                        MessageBox.Show("Как жаль, но у тебя нет еды для меня");
                         return;
                     }
                 }
