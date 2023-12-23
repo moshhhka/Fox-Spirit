@@ -23,6 +23,7 @@ namespace gametop
         public List<UIElement> elementsCopy;
         private ProgressBar zombieHealthBar;
 
+
         Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
 
         public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, Image chest, int zombieSpeed = 3, int score = 0)
@@ -133,6 +134,8 @@ namespace gametop
                         ProgressBar zombieHealthBar = zombieBars[image1];
                         Canvas.SetTop(zombieHealthBar, Canvas.GetTop(image1) - zombieHealthBar.Height);
                     }
+
+                    
                 }
 
                 foreach (UIElement j in elementsCopy)

@@ -44,6 +44,7 @@ namespace gametop
 
         }
 
+
         private void BulletTimerEvent(object sender, EventArgs e)
         { 
             if (direction == "left")
@@ -75,6 +76,7 @@ namespace gametop
                 bulletTimer = null;
 
             }
+
         }
     }
 }
