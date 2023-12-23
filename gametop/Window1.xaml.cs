@@ -74,6 +74,11 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(nps1) + nps1.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(nps1)))
             {
+                Player.goLeft = false;
+                Player.goRight = false;
+                Player.goUp = false;
+                Player.goDown = false;
+
                 if (cardDrawn)
                 {
                     MessageBox.Show("Вы уже вытянули карту");
@@ -81,24 +86,33 @@ namespace gametop
                 }
 
                 MessageBoxResult result = MessageBox.Show("Хочешь вытянуть карту? Всего 50 монет. Если скажешь нет, я готова поторговаться", "Гадалка:", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes && coins > 10)
+                if (result == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Вот твоя карта!");
-                    Random random = new Random();
-                    int randomNumber = random.Next(1, 4);
-                    string mapname = "map" + Convert.ToString(randomNumber) + ".png";
-                    Image map = new Image();
-                    map.Source = new BitmapImage(new Uri(mapname, UriKind.RelativeOrAbsolute));
-                    Canvas.SetLeft(map, Canvas.GetLeft(nps1) + 130);
-                    Canvas.SetTop(map, Canvas.GetTop(nps1) + 80);
-                    map.Tag = mapname;
-                    map.Height = 109;
-                    map.Width = 105;
-                    myCanvas.Children.Add(map);
-                    Canvas.SetZIndex(player, 1);
-                    cardDrawn = true;
-                    coins -= 10;
-                    txtCoins.Content = "Coins:" + coins;
+                    if (coins > 50)
+                    {
+                        MessageBox.Show("Вот твоя карта!");
+                        Random random = new Random();
+                        int randomNumber = random.Next(1, 4);
+                        string mapname = "map" + Convert.ToString(randomNumber) + ".png";
+                        Image map = new Image();
+                        map.Source = new BitmapImage(new Uri(mapname, UriKind.RelativeOrAbsolute));
+                        Canvas.SetLeft(map, Canvas.GetLeft(nps1) + 130);
+                        Canvas.SetTop(map, Canvas.GetTop(nps1) + 80);
+                        map.Tag = mapname;
+                        map.Height = 109;
+                        map.Width = 105;
+                        myCanvas.Children.Add(map);
+                        Canvas.SetZIndex(player, 1);
+                        cardDrawn = true;
+                        coins -= 50;
+                        txtCoins.Content = "Coins:" + coins;
+                    }
+
+                    if (coins < 50)
+                    {
+                        MessageBox.Show("Как жаль, но у тебя не хватает монет");
+                        return;
+                    }
                 }
 
                 if (result == MessageBoxResult.No)
@@ -123,18 +137,17 @@ namespace gametop
                         gotFood = false;
                     }
 
-                    else
+                    if (foodResult == MessageBoxResult.Yes && gotFood == false)
                     {
                         MessageBox.Show("Как жаль, но у тебя нет еды для меня");
                         return;
                     }
-                }
 
-
-                if (coins < 10)
-                {
-                    MessageBox.Show("Как жаль, но у тебя не хватает монет");
-                    return;
+                    else
+                    {
+                        MessageBox.Show("Прощай");
+                        return;
+                    }
                 }
             }
 
@@ -143,6 +156,11 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(nps) + nps.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(nps)))
             {
+                Player.goLeft = false;
+                Player.goRight = false;
+                Player.goUp = false;
+                Player.goDown = false;
+
                 MessageBoxResult result = MessageBox.Show("Хочешь печенье?", "Повар:", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {

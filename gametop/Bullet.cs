@@ -26,7 +26,7 @@ namespace gametop
 
         public void MakeBullet(Canvas form)
         {
-            bullet.Source = new BitmapImage(new Uri("bullet1.png", UriKind.RelativeOrAbsolute));
+            bullet.Source = new BitmapImage(new Uri("58c815ff8847615acd95ee46.png", UriKind.RelativeOrAbsolute));
             bullet.Height = 110;
             bullet.Width = 200;
             bullet.Tag = "bullet";
@@ -49,25 +49,21 @@ namespace gametop
             if (direction == "left")
             {
                 Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
-                bullet.Source = new BitmapImage(new Uri("bullet1l.png", UriKind.RelativeOrAbsolute));
             }
 
             if (direction == "right")
             {
                 Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
-                bullet.Source = new BitmapImage(new Uri("bullet1.png", UriKind.RelativeOrAbsolute));
             }
 
             if (direction == "up")
             {
                 Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
-                bullet.Source = new BitmapImage(new Uri("bullet1u.png", UriKind.RelativeOrAbsolute));
             }
 
             if (direction == "down")
             {
                 Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
-                bullet.Source = new BitmapImage(new Uri("bullet1d.png", UriKind.RelativeOrAbsolute));
             }
 
 

@@ -21,6 +21,9 @@ namespace gametop
         Image chest;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
+        private ProgressBar zombieHealthBar;
+
+        Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
 
         public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, Image chest, int zombieSpeed = 3, int score = 0)
         {
@@ -57,9 +60,25 @@ namespace gametop
             zombie.Width = 302;
             zombieList.Add(zombie);
             myCanvas.Children.Add(zombie);
+
+            zombieHealthBar = new ProgressBar();
+            zombieHealthBar.Width = 260;
+            zombieHealthBar.Height = 20;
+            zombieHealthBar.Value = 100; // Устанавливаем здоровье зомби
+            zombieHealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
+
+            // Размещаем ProgressBar над зомби
+            Canvas.SetLeft(zombieHealthBar, zombieLeft);
+            Canvas.SetTop(zombieHealthBar, zombieTop - zombieHealthBar.Height);
+
+            myCanvas.Children.Add(zombieHealthBar); // Добавляем ProgressBar на Canvas
+
+            zombieBars.Add(zombie, zombieHealthBar);
+
             Canvas.SetZIndex(player, 1);
         }
 
+        System.Timers.Timer timer = null;
 
         public void MoveMobe()
         {
@@ -72,27 +91,47 @@ namespace gametop
 
                     if (rect1.IntersectsWith(rect2))
                     {
-                        Player.playerHealth -= 1;
+                       
+                        if (timer == null)
+                        {
+                            timer = new System.Timers.Timer(500);
+                            timer.Elapsed += (sender, e) =>
+                            {
+                                Player.playerHealth -= 5; // Уменьшите здоровье на 5 через секунду
+                                timer.Stop(); // Остановите таймер
+                                timer = null; // Установите таймер в null
+                            };
+                            timer.AutoReset = false; // Установите AutoReset в false, чтобы таймер сработал только один раз
+                            timer.Start(); // Запустите таймер
+                        }
                     }
 
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
                     {
                         Canvas.SetLeft(image1, Canvas.GetLeft(image1) - zombieSpeed);
+                        ProgressBar zombieHealthBar = zombieBars[image1];
+                        Canvas.SetLeft(zombieHealthBar, Canvas.GetLeft(image1));
                     }
 
                     if (Canvas.GetLeft(image1) < Canvas.GetLeft(player))
                     {
                         Canvas.SetLeft(image1, Canvas.GetLeft(image1) + zombieSpeed);
+                        ProgressBar zombieHealthBar = zombieBars[image1];
+                        Canvas.SetLeft(zombieHealthBar, Canvas.GetLeft(image1));
                     }
 
                     if (Canvas.GetTop(image1) > Canvas.GetTop(player))
                     {
                         Canvas.SetTop(image1, Canvas.GetTop(image1) - zombieSpeed);
+                        ProgressBar zombieHealthBar = zombieBars[image1];
+                        Canvas.SetTop(zombieHealthBar, Canvas.GetTop(image1) - zombieHealthBar.Height);
                     }
 
                     if (Canvas.GetTop(image1) < Canvas.GetTop(player))
                     {
                         Canvas.SetTop(image1, Canvas.GetTop(image1) + zombieSpeed);
+                        ProgressBar zombieHealthBar = zombieBars[image1];
+                        Canvas.SetTop(zombieHealthBar, Canvas.GetTop(image1) - zombieHealthBar.Height);
                     }
                 }
 
@@ -106,27 +145,36 @@ namespace gametop
                         Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
                         Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
                         {
-                            score++;
 
+                            int damage = (string)image2.Tag == "sphere" ? 50 : 30;
                             if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
                             {
                                 myCanvas.Children.Remove(image2);
                                 image2.Source = null;
                             }
 
-                            myCanvas.Children.Remove(image3);
-                            image3.Source = null;
-                            zombieList.Remove(image3);
+                            ProgressBar zombieHealthBar = zombieBars[image3];
+                            zombieHealthBar.Value -= damage;
 
-                            if (score <= 12)
+                            if (zombieHealthBar.Value < 1)
                             {
-                                MakeZombies();
-                            }
+                                myCanvas.Children.Remove(image3);
+                                image3.Source = null;
+                                zombieList.Remove(image3);
+                                myCanvas.Children.Remove(zombieHealthBar);
+                                zombieBars.Remove(image3);
+                                score++;
 
-                            if (score == 15)
-                            {
-                                key.Visibility = Visibility.Visible;
-                                chest.Visibility = Visibility.Visible;
+                                if (score <= 12)
+                                {
+                                    MakeZombies();
+                                }
+
+                                if (score == 15)
+                                {
+                                    key.Visibility = Visibility.Visible;
+                                    chest.Visibility = Visibility.Visible;
+                                }
                             }
 
                         }

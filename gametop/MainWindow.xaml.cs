@@ -165,7 +165,7 @@ namespace gametop
 
             player1.KeyDown(sender, e);
 
-            if (!isChestOpened && e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
+            if (!isChestOpened && e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
                 Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
@@ -236,7 +236,7 @@ namespace gametop
         {
             player1.KeyUp(sender, e);
 
-            if (e.Key == Key.R && ammo > 0 && gameOver == false)
+            if (e.Key == Key.E && ammo > 0 && gameOver == false)
             {
                 ammo--;
                 ShootBullet(Player.facing);
