@@ -107,7 +107,7 @@ namespace gametop
 
             zombie1.MoveMobe();
 
-            foreach (UIElement u in elementsCopy) 
+            foreach (UIElement u in elementsCopy)
             {
 
                 if (u is Image image && (string)image.Tag == "coin") // Сбор коинов
@@ -132,6 +132,23 @@ namespace gametop
                         myCanvas.Children.Remove(imagee);
                         imagee.Source = null;
                         ammo += 5;
+                    }
+                }
+
+                foreach (UIElement j in elementsCopy)
+                {
+
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player") //Урон по персонажу пулями
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
+                            Player.playerHealth -= 2; // Уменьшите здоровье игрока на 5
+                            myCanvas.Children.Remove(image2); // Удалите пулю из канвы
+                            image2.Source = null;
+                        }
                     }
                 }
             }
@@ -278,6 +295,21 @@ namespace gametop
             foreach (Image i in zombieList)
             {
                 myCanvas.Children.Remove(i);
+            }
+
+
+            // Создайте список для ProgressBar, которые нужно удалить
+            List<ProgressBar> barsToRemove = new List<ProgressBar>();
+
+            foreach (ProgressBar zombieHealthBar in MakeMobe.zombieBars.Values)
+            {
+                barsToRemove.Add(zombieHealthBar);
+            }
+
+            // Удалите ProgressBar из Canvas
+            foreach (ProgressBar bar in barsToRemove)
+            {
+                myCanvas.Children.Remove(bar);
             }
 
             foreach (Image x in boxList)

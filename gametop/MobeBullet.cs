@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
-using Microsoft.Win32;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace gametop
 {
-    internal class Bullet
+    internal class MobeBullet
     {
         public string direction;
         public int bulletLeft;
@@ -24,12 +21,12 @@ namespace gametop
 
 
 
-        public void MakeBullet(Canvas form)
+        public void MakeMobeBullet(Canvas form)
         {
-            bullet.Source = new BitmapImage(new Uri("playerbullet.png", UriKind.RelativeOrAbsolute));
+            bullet.Source = new BitmapImage(new Uri("mobebullet.png", UriKind.RelativeOrAbsolute));
             bullet.Height = 80;
             bullet.Width = 80;
-            bullet.Tag = "bullet";
+            bullet.Tag = "mobebullet";
             Canvas.SetLeft(bullet, bulletLeft);
             Canvas.SetTop(bullet, bulletTop);
             Canvas.SetZIndex(bullet, 1);
@@ -38,15 +35,15 @@ namespace gametop
 
 
             bulletTimer.Interval = TimeSpan.FromMilliseconds(speed);
-            bulletTimer.Tick += new EventHandler(BulletTimerEvent);
+            bulletTimer.Tick += new EventHandler(MobeBulletTimerEvent);
             bulletTimer.Start();
 
 
         }
 
 
-        private void BulletTimerEvent(object sender, EventArgs e)
-        { 
+        private void MobeBulletTimerEvent(object sender, EventArgs e)
+        {
             if (direction == "left")
             {
                 Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);

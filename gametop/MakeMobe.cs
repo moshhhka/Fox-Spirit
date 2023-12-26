@@ -22,10 +22,10 @@ namespace gametop
         Image key;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
-        private ProgressBar zombieHealthBar;
+        public ProgressBar zombieHealthBar;
 
 
-        Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
+        public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
         DispatcherTimer shootTimer = new DispatcherTimer();
 
 
@@ -81,7 +81,7 @@ namespace gametop
 
             Canvas.SetZIndex(player, 1);
 
-            shootTimer.Interval = TimeSpan.FromMilliseconds(1500);
+            shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
             shootTimer.Tick += new EventHandler(shootTimerEvent);
             shootTimer.Start();
         }
@@ -92,14 +92,26 @@ namespace gametop
         {
             foreach (UIElement u in elementsCopy)
             {
+                if (Player.playerHealth <= 0)
+                {
+                    shootTimer.Stop();
+                    return; // Выход из метода
+                }
+
+                // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
+                if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
+                {
+                    shootTimer.Start();
+                }
+
                 if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
                 {
                     string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
-                    Bullet shootBullet = new Bullet();
+                    MobeBullet shootBullet = new MobeBullet();
                     shootBullet.direction = direction;
                     shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
                     shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-                    shootBullet.MakeBullet(myCanvas);
+                    shootBullet.MakeMobeBullet(myCanvas);
                 }
             }
         }
@@ -166,7 +178,7 @@ namespace gametop
                             timer = new System.Timers.Timer(500);
                             timer.Elapsed += (sender, e) =>
                             {
-                                Player.playerHealth -= 5; // Уменьшите здоровье на 5 через секунду
+                                Player.playerHealth -= 3; // Уменьшите здоровье на 5 через секунду
                                 timer.Stop(); // Остановите таймер
                                 timer = null; // Установите таймер в null
                             };
@@ -207,65 +219,64 @@ namespace gametop
                 }
 
 
-                //foreach (UIElement j in elementsCopy)
-                //{
+                foreach (UIElement j in elementsCopy)
+                {
 
-                //    if ((j is Image image2 && ((string)image2.Tag == "bullet" || (string)image2.Tag == "sword" || (string)image2.Tag == "sphere")) && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
-                //    {
-                //        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
-                //        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
-                //        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
-                //        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
-                //        {
+                    if ((j is Image image2 && ((string)image2.Tag == "bullet" || (string)image2.Tag == "sword" || (string)image2.Tag == "sphere")) && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
 
-                //            ProgressBar zombieHealthBar = zombieBars[image3];
+                            ProgressBar zombieHealthBar = zombieBars[image3];
 
-                //            int damage = 0;
-                //            if ((string)image2.Tag == "sphere")
-                //            {
-                //                damage = 50;
-                //            }
-                //            else if ((string)image2.Tag == "sword")
-                //            {
-                //                damage = 35;
-                //            }
-                //            else if ((string)image2.Tag == "bullet")
-                //            {
-                //                damage = 15;
-                //            }
+                            int damage = 0;
+                            if ((string)image2.Tag == "sphere")
+                            {
+                                damage = 50;
+                            }
+                            else if ((string)image2.Tag == "sword")
+                            {
+                                damage = 35;
+                            }
+                            else if ((string)image2.Tag == "bullet")
+                            {
+                                damage = 15;
+                            }
 
-                //            if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
-                //            {
-                //                myCanvas.Children.Remove(image2);
-                //                image2.Source = null;
-                //            }
+                            if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
+                            {
+                                myCanvas.Children.Remove(image2);
+                                image2.Source = null;
+                            }
 
-                            
-                //            zombieHealthBar.Value -= damage;
+                            zombieHealthBar.Value -= damage;
 
-                //            if (zombieHealthBar.Value < 1)
-                //            {
-                //                myCanvas.Children.Remove(image3);
-                //                image3.Source = null;
-                //                zombieList.Remove(image3);
-                //                myCanvas.Children.Remove(zombieHealthBar);
-                //                zombieBars.Remove(image3);
-                //                score++;
+                            if (zombieHealthBar.Value < 1)
+                            {
+                                myCanvas.Children.Remove(image3);
+                                image3.Source = null;
+                                zombieList.Remove(image3);
+                                myCanvas.Children.Remove(zombieHealthBar);
+                                zombieBars.Remove(image3);
+                                score++;
 
-                //                if (score <= 12)
-                //                {
-                //                    MakeZombies();
-                //                }
+                                if (score <= 12)
+                                {
+                                    MakeZombies();
+                                }
 
-                //                if (score == 15)
-                //                {
-                //                    key.Visibility = Visibility.Visible;
-                //                }
-                //            }
+                                if (score == 15)
+                                {
+                                    key.Visibility = Visibility.Visible;
+                                }
+                            }
 
-                //        }
-                //    }
-                //}
+                        }
+                    }
+                }
             }
         }
 
