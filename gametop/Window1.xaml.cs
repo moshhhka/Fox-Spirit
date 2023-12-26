@@ -25,8 +25,8 @@ namespace gametop
     {
         Player player1;
         private bool cardDrawn = false;
-        public static int coins = MainWindow.coins;
-        public static bool gotFood = MainWindow.gotFood;
+        public static int coins { get; set; }
+        public static bool gotFood = Room2.gotFood;
 
         DispatcherTimer timer = new DispatcherTimer();
 

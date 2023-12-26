@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace gametop
 {
@@ -15,18 +16,20 @@ namespace gametop
 
         List<Image> zombieList;
         public int zombieSpeed, score;
+        public string direction;
         Random randNum = new Random();
         Image player;
         Image key;
-        Image chest;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
         private ProgressBar zombieHealthBar;
 
 
         Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
+        DispatcherTimer shootTimer = new DispatcherTimer();
 
-        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, Image chest, int zombieSpeed = 3, int score = 0)
+
+        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, int zombieSpeed = 3, int score = 0)
         {
             this.player = player;
             this.myCanvas = myCanvas;
@@ -35,8 +38,8 @@ namespace gametop
             this.elementsCopy = elementsCopy;
             this.zombieList = zombieList;
             this.key = key;
-            this.chest = chest;
         }
+
 
         public void MakeZombies() // Создание мобов
         {
@@ -77,9 +80,74 @@ namespace gametop
             zombieBars.Add(zombie, zombieHealthBar);
 
             Canvas.SetZIndex(player, 1);
+
+            shootTimer.Interval = TimeSpan.FromMilliseconds(1500);
+            shootTimer.Tick += new EventHandler(shootTimerEvent);
+            shootTimer.Start();
         }
 
         System.Timers.Timer timer = null;
+
+        private void shootTimerEvent(object sender, EventArgs e)
+        {
+            foreach (UIElement u in elementsCopy)
+            {
+                if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
+                {
+                    string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
+                    Bullet shootBullet = new Bullet();
+                    shootBullet.direction = direction;
+                    shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
+                    shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
+                    shootBullet.MakeBullet(myCanvas);
+                }
+            }
+        }
+
+        public string CalculateDirection(double zombieLeft, double zombieTop, double playerLeft, double playerTop)
+        {
+            // Вычислите разницу между координатами зомби и игрока
+            double deltaX = playerLeft - zombieLeft;
+            double deltaY = playerTop - zombieTop;
+
+            // Вычислите угол между зомби и игроком
+            double angle = Math.Atan2(deltaY, deltaX);
+
+            // Определите направление от зомби к игроку
+            if (angle >= -Math.PI / 8 && angle < Math.PI / 8)
+            {
+                return "right";
+            }
+            else if (angle >= Math.PI / 8 && angle < 3 * Math.PI / 8)
+            {
+                return "downright";
+            }
+            else if (angle >= 3 * Math.PI / 8 && angle < 5 * Math.PI / 8)
+            {
+                return "down";
+            }
+            else if (angle >= 5 * Math.PI / 8 && angle < 7 * Math.PI / 8)
+            {
+                return "downleft";
+            }
+            else if (angle >= 7 * Math.PI / 8 || angle < -7 * Math.PI / 8)
+            {
+                return "left";
+            }
+            else if (angle >= -7 * Math.PI / 8 && angle < -5 * Math.PI / 8)
+            {
+                return "upleft";
+            }
+            else if (angle >= -5 * Math.PI / 8 && angle < -3 * Math.PI / 8)
+            {
+                return "up";
+            }
+            else // angle >= -3 * Math.PI / 8 && angle < -Math.PI / 8
+            {
+                return "upright";
+            }
+        }
+
 
         public void MoveMobe()
         {
@@ -106,6 +174,7 @@ namespace gametop
                             timer.Start(); // Запустите таймер
                         }
                     }
+
 
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
                     {
@@ -135,55 +204,72 @@ namespace gametop
                         Canvas.SetTop(zombieHealthBar, Canvas.GetTop(image1) - zombieHealthBar.Height);
                     }
 
-                    
                 }
 
-                foreach (UIElement j in elementsCopy)
-                {
-                   
-                    if ((j is Image image2 && ((string)image2.Tag == "bullet" || (string)image2.Tag == "sword" || (string)image2.Tag == "sphere")) && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
-                    {
-                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
-                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
-                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
-                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
-                        {
 
-                            int damage = (string)image2.Tag == "sphere" ? 50 : 30;
-                            if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
-                            {
-                                myCanvas.Children.Remove(image2);
-                                image2.Source = null;
-                            }
+                //foreach (UIElement j in elementsCopy)
+                //{
 
-                            ProgressBar zombieHealthBar = zombieBars[image3];
-                            zombieHealthBar.Value -= damage;
+                //    if ((j is Image image2 && ((string)image2.Tag == "bullet" || (string)image2.Tag == "sword" || (string)image2.Tag == "sphere")) && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
+                //    {
+                //        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                //        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                //        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                //        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                //        {
 
-                            if (zombieHealthBar.Value < 1)
-                            {
-                                myCanvas.Children.Remove(image3);
-                                image3.Source = null;
-                                zombieList.Remove(image3);
-                                myCanvas.Children.Remove(zombieHealthBar);
-                                zombieBars.Remove(image3);
-                                score++;
+                //            ProgressBar zombieHealthBar = zombieBars[image3];
 
-                                if (score <= 12)
-                                {
-                                    MakeZombies();
-                                }
+                //            int damage = 0;
+                //            if ((string)image2.Tag == "sphere")
+                //            {
+                //                damage = 50;
+                //            }
+                //            else if ((string)image2.Tag == "sword")
+                //            {
+                //                damage = 35;
+                //            }
+                //            else if ((string)image2.Tag == "bullet")
+                //            {
+                //                damage = 15;
+                //            }
 
-                                if (score == 15)
-                                {
-                                    key.Visibility = Visibility.Visible;
-                                    chest.Visibility = Visibility.Visible;
-                                }
-                            }
+                //            if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
+                //            {
+                //                myCanvas.Children.Remove(image2);
+                //                image2.Source = null;
+                //            }
 
-                        }
-                    }
-                }
+                            
+                //            zombieHealthBar.Value -= damage;
+
+                //            if (zombieHealthBar.Value < 1)
+                //            {
+                //                myCanvas.Children.Remove(image3);
+                //                image3.Source = null;
+                //                zombieList.Remove(image3);
+                //                myCanvas.Children.Remove(zombieHealthBar);
+                //                zombieBars.Remove(image3);
+                //                score++;
+
+                //                if (score <= 12)
+                //                {
+                //                    MakeZombies();
+                //                }
+
+                //                if (score == 15)
+                //                {
+                //                    key.Visibility = Visibility.Visible;
+                //                }
+                //            }
+
+                //        }
+                //    }
+                //}
             }
         }
+
+
+        
     }
 }

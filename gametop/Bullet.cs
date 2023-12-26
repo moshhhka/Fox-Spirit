@@ -67,6 +67,30 @@ namespace gametop
                 Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
             }
 
+            if (direction == "upleft")
+            {
+                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
+                Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
+            }
+
+            if (direction == "upright")
+            {
+                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
+                Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
+            }
+
+            if (direction == "downleft")
+            {
+                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
+                Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
+            }
+
+            if (direction == "downright")
+            {
+                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
+                Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
+            }
+
 
             if (Canvas.GetLeft(bullet) < 10 || Canvas.GetLeft(bullet) > 1800 || Canvas.GetTop(bullet) < 10 || Canvas.GetTop(bullet) > 980)
             {
