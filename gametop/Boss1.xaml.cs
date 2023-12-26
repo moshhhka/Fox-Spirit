@@ -16,30 +16,27 @@ using System.Windows.Threading;
 namespace gametop
 {
     /// <summary>
-    /// Логика взаимодействия для Room2.xaml
+    /// Логика взаимодействия для Boss1.xaml
     /// </summary>
-    public partial class Room2 : Window
+    public partial class Boss1 : Window
     {
-        MakeMobe zombie1;
+        MakeBoss boss1;
         Player player1;
         bool gameOver;
         int ammo = 5;
-        int zombieSpeed = 3;
-        bool gotKey, isChestOpened;
-        public static bool gotFood;
-        public static int coins { get; set; }
+        bool gotKey;
+        public static int coins;
         Random randNum = new Random();
 
-        List<Image> zombieList = new List<Image>();
         List<Image> boxList = new List<Image>();
 
         DispatcherTimer timer = new DispatcherTimer();
 
-        public Room2()
+        public Boss1()
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, key, zombieSpeed);
+            boss1 = new MakeBoss(player, elementsCopy, myCanvas, key, bossHealthBar, boss1r);
             player1 = new Player(player, myCanvas, healthBar);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
@@ -61,14 +58,13 @@ namespace gametop
                 gameOver = true;
                 player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));
                 timer.Stop();
-                
             }
 
             txtAmmo.Content = "Ammo:" + ammo;
-            txtScore.Content = "Kills:" + zombie1.score;
             txtCoins.Content = "Coins:" + coins;
 
             player1.Movement();
+
 
             if (key.Visibility == Visibility.Visible && (Canvas.GetLeft(player) < Canvas.GetLeft(key) + key.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(key) &&
@@ -84,8 +80,8 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(door) + door.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door) && gotKey)
             {
-                Boss1 newRoom = new Boss1();
-                Boss1.coins = coins;
+                Window1 newRoom = new Window1();
+                Window1.coins = coins;
                 this.Hide();
                 timer.Stop();
                 gotKey = false;
@@ -97,13 +93,13 @@ namespace gametop
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1.elementsCopy = elementsCopy;
+            boss1.elementsCopy = elementsCopy;
 
 
             CollisionDetector collisionDetector = new CollisionDetector(player, elementsCopy);
             collisionDetector.DetectCollisions();
 
-            zombie1.MoveMobe();
+            boss1.MoveBoss();
 
             foreach (UIElement u in elementsCopy)
             {
@@ -120,18 +116,6 @@ namespace gametop
                     }
                 }
 
-                if (u is Image imag1 && (string)imag1.Tag == "food") // Сбор коинов
-                {
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(imag1), Canvas.GetTop(imag1), imag1.Width, imag1.Height);
-
-                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
-                    {
-                        u.Visibility = Visibility.Hidden;
-                        gotFood = true;
-                    }
-                }
-
                 if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
                 {
                     if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
@@ -144,11 +128,23 @@ namespace gametop
                         ammo += 5;
                     }
                 }
-            }
 
-            if (zombie1.score == 15 && !isChestOpened) // Добавить !isChestOpened
-            {
-                chest.Visibility = Visibility.Visible;
+                foreach (UIElement j in elementsCopy)
+                {
+
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player") //Урон по персонажу пулями
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
+                            Player.playerHealth -= 2; // Уменьшите здоровье игрока на 5
+                            myCanvas.Children.Remove(image2); // Удалите пулю из канвы
+                            image2.Source = null;
+                        }
+                    }
+                }
             }
 
         }
@@ -166,72 +162,6 @@ namespace gametop
             }
 
             player1.KeyDown(sender, e);
-
-            if (!isChestOpened && e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
-                Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
-            {
-                isChestOpened = true;
-
-                chest.Visibility = Visibility.Hidden; // Сундук
-
-                for (int i = 0; i < 20; i++)
-                {
-                    CreateCristall();
-                }
-                for (int i = 0; i < 30; i++)
-                {
-                    CreateCoin();
-                }
-                CreateFood();
-
-            }
-        }
-
-        private void CreateFood()
-        {
-
-            int randomNumber = randNum.Next(1, 4);
-            string foodname = "f" + Convert.ToString(randomNumber) + ".png";
-            Image food = new Image();
-            food.Source = new BitmapImage(new Uri(foodname, UriKind.RelativeOrAbsolute));
-            food.Tag = "food";
-            food.Height = 110;
-            food.Width = 110;
-
-            Canvas.SetLeft(food, Canvas.GetLeft(chest) + randNum.Next(-210, 210));
-            Canvas.SetTop(food, Canvas.GetTop(chest) + randNum.Next(-210, 210));
-
-            myCanvas.Children.Add(food);
-        }
-
-        private void CreateCoin()
-        {
-
-            Image coin = new Image();
-            coin.Source = new BitmapImage(new Uri("монета.png", UriKind.Relative));
-            coin.Tag = "coin";
-            coin.Height = 40;
-            coin.Width = 40;
-            Canvas.SetLeft(coin, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
-            Canvas.SetTop(coin, Canvas.GetTop(chest) + randNum.Next(-110, 110));
-
-            myCanvas.Children.Add(coin);
-        }
-
-        private void CreateCristall()
-        {
-
-            Image cristall = new Image();
-            cristall.Source = new BitmapImage(new Uri("cristall.png", UriKind.Relative));
-            cristall.Tag = "cristall";
-            cristall.Height = 50;
-            cristall.Width = 40;
-            Canvas.SetLeft(cristall, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
-            Canvas.SetTop(cristall, Canvas.GetTop(chest) + randNum.Next(-110, 110));
-
-            myCanvas.Children.Add(cristall);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
@@ -360,10 +290,6 @@ namespace gametop
         {
             player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
 
-            foreach (Image i in zombieList)
-            {
-                myCanvas.Children.Remove(i);
-            }
 
             foreach (Image x in boxList)
             {
@@ -385,13 +311,6 @@ namespace gametop
                 gotKey = false;
             }
 
-            zombieList.Clear();
-
-            for (int i = 0; i < 3; i++)
-            {
-                zombie1.MakeZombies();
-            }
-
             boxList.Clear();
 
             for (int i = 0; i < 3; i++)
@@ -405,7 +324,8 @@ namespace gametop
             Player.goRight = false;
             gameOver = false;
 
-            zombie1.score = 0;
+            Player.playerHealth = 100;
+            MakeBoss.bossHealth = 1000;
             ammo = 5;
             coins = 0;
 

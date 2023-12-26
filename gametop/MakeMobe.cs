@@ -81,40 +81,40 @@ namespace gametop
 
             Canvas.SetZIndex(player, 1);
 
-            shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
-            shootTimer.Tick += new EventHandler(shootTimerEvent);
-            shootTimer.Start();
+            //shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
+            //shootTimer.Tick += new EventHandler(shootTimerEvent);
+            //shootTimer.Start();
         }
 
-        System.Timers.Timer timer = null;
+        
 
-        private void shootTimerEvent(object sender, EventArgs e)
-        {
-            foreach (UIElement u in elementsCopy)
-            {
-                if (Player.playerHealth <= 0)
-                {
-                    shootTimer.Stop();
-                    return; // Выход из метода
-                }
+        //private void shootTimerEvent(object sender, EventArgs e)
+        //{
+        //    foreach (UIElement u in elementsCopy)
+        //    {
+        //        if (Player.playerHealth <= 0)
+        //        {
+        //            shootTimer.Stop();
+        //            return; // Выход из метода
+        //        }
 
-                // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
-                if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
-                {
-                    shootTimer.Start();
-                }
+        //        // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
+        //        if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
+        //        {
+        //            shootTimer.Start();
+        //        }
 
-                if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
-                {
-                    string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
-                    MobeBullet shootBullet = new MobeBullet();
-                    shootBullet.direction = direction;
-                    shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
-                    shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-                    shootBullet.MakeMobeBullet(myCanvas);
-                }
-            }
-        }
+        //        if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
+        //        {
+        //            string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
+        //            MobeBullet shootBullet = new MobeBullet();
+        //            shootBullet.direction = direction;
+        //            shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
+        //            shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
+        //            shootBullet.MakeMobeBullet(myCanvas);
+        //        }
+        //    }
+        //}
 
         public string CalculateDirection(double zombieLeft, double zombieTop, double playerLeft, double playerTop)
         {
@@ -160,6 +160,7 @@ namespace gametop
             }
         }
 
+        System.Timers.Timer timer = null;
 
         public void MoveMobe()
         {
@@ -235,11 +236,16 @@ namespace gametop
                             int damage = 0;
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 50;
+                                // Предположим, что у вас есть экземпляр класса HitSpace с именем hitSpace
+                                HitSpace hitSpace = new HitSpace();
+
+                                // Теперь вы можете вызвать метод ApplySphereDamage() через этот экземпляр
+                                hitSpace.ApplySphereDamage();
+                                damage = 10;
                             }
                             else if ((string)image2.Tag == "sword")
                             {
-                                damage = 35;
+                                damage = 25;
                             }
                             else if ((string)image2.Tag == "bullet")
                             {

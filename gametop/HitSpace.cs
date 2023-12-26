@@ -25,6 +25,10 @@ namespace gametop
         public int currentDownImageIndex = 0;
 
 
+        // Добавленные переменные
+        private int sphereDamageCount = 0;
+        private int maxSphereDamageCount = 5; // Максимальное количество урона, которое может нанести сфера
+
         public void MakeSphere(Canvas form, Image player)
         {
             this.player = player;
@@ -64,6 +68,16 @@ namespace gametop
             sphere.Source = null;
             sphereTimer = null;
             disappearTimer = null;
+            sphereDamageCount = 0; // Сбросить счетчик урона при исчезновении сферы
+        }
+
+        public void ApplySphereDamage()
+        {
+            sphereDamageCount++;
+            if (sphereDamageCount >= maxSphereDamageCount)
+            {
+                DisappearTimerEvent(null, null);
+            }
         }
     }
 }
