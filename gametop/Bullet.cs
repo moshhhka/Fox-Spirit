@@ -69,7 +69,6 @@ namespace gametop
             if (Canvas.GetLeft(bullet) < 10 || Canvas.GetLeft(bullet) > 1800 || Canvas.GetTop(bullet) < 10 || Canvas.GetTop(bullet) > 980)
             {
                 bulletTimer.Stop();
-                bulletTimer.Stop();
                 bullet.Source = null;
                 bulletTimer = null;
 

@@ -66,9 +66,21 @@ namespace gametop
             zombieList.Add(zombie);
             myCanvas.Children.Add(zombie);
 
-            ProgressBar zombieHealthBar = CreateZombieHealthBar(zombieLeft, zombieTop);
+            zombieHealthBar = new ProgressBar();
+            zombieHealthBar.Width = 260;
+            zombieHealthBar.Height = 20;
+            zombieHealthBar.Value = 100; // Устанавливаем здоровье зомби
+            zombieHealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
 
+            Canvas.SetLeft(zombieHealthBar, zombieLeft);
+            Canvas.SetTop(zombieHealthBar, zombieTop - zombieHealthBar.Height);
+            myCanvas.Children.Add(zombieHealthBar); // Добавляем ProgressBar на Canvas
             zombieBars.Add(zombie, zombieHealthBar);
+
+
+            //ProgressBar zombieHealthBar = CreateZombieHealthBar(zombieLeft, zombieTop);
+
+            //zombieBars.Add(zombie, zombieHealthBar);
 
 
             Canvas.SetZIndex(player, 1);
@@ -181,7 +193,7 @@ namespace gametop
 
                     if (rect1.IntersectsWith(rect2))
                     {
-                       
+
                         if (timer == null)
                         {
                             timer = new System.Timers.Timer(500);
@@ -249,7 +261,7 @@ namespace gametop
 
                                     // Теперь вы можете вызвать метод ApplySphereDamage() через этот экземпляр
                                     hitSpace.ApplySphereDamage();
-                                    damage = 10;
+                                    damage = 5;
                                 }
                                 else if ((string)image2.Tag == "sword")
                                 {
@@ -295,20 +307,10 @@ namespace gametop
                                 ProgressBar newZombieHealthBar = CreateZombieHealthBar(Canvas.GetLeft(image3), Canvas.GetTop(image3));
                                 zombieBars.Add(image3, newZombieHealthBar);
                             }
-
-
-
-
-
-
-                        }
-
                         }
                     }
                 }
             }
         }
-
-
-        
     }
+}
