@@ -17,6 +17,7 @@ namespace gametop
         Image player;
         Image boss;
         Image key;
+        Image chest;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
         public static int bossSpeed = 2;
@@ -27,7 +28,7 @@ namespace gametop
         DispatcherTimer shootTimer = new DispatcherTimer();
 
 
-        public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image key, ProgressBar bossHealthBar, Image boss)
+        public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image key, Image chest, ProgressBar bossHealthBar, Image boss)
         {
             this.player = player;
             this.myCanvas = myCanvas;
@@ -35,6 +36,7 @@ namespace gametop
             this.key = key;
             this.bossHealthBar = bossHealthBar;
             this.boss = boss;
+            this.chest = chest;
 
             shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
             shootTimer.Tick += new EventHandler(shootTimerEvent);
@@ -224,7 +226,7 @@ namespace gametop
                                 myCanvas.Children.Remove(bossHealthBar);
 
                                 key.Visibility = Visibility.Visible;
-                                
+                                chest.Visibility = Visibility.Visible;
                             }
 
                         }

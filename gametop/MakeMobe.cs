@@ -22,10 +22,11 @@ namespace gametop
         Image key;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
+
         public ProgressBar zombieHealthBar;
-
-
         public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
+
+
         DispatcherTimer shootTimer = new DispatcherTimer();
 
 
@@ -71,16 +72,11 @@ namespace gametop
             zombieHealthBar.Height = 20;
             zombieHealthBar.Value = 100; // Устанавливаем здоровье зомби
             zombieHealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
-
+            // Размещаем ProgressBar над зомби
             Canvas.SetLeft(zombieHealthBar, zombieLeft);
             Canvas.SetTop(zombieHealthBar, zombieTop - zombieHealthBar.Height);
             myCanvas.Children.Add(zombieHealthBar); // Добавляем ProgressBar на Canvas
             zombieBars.Add(zombie, zombieHealthBar);
-
-
-            //ProgressBar zombieHealthBar = CreateZombieHealthBar(zombieLeft, zombieTop);
-
-            //zombieBars.Add(zombie, zombieHealthBar);
 
 
             Canvas.SetZIndex(player, 1);
@@ -90,22 +86,7 @@ namespace gametop
             //shootTimer.Start();
         }
 
-        public ProgressBar CreateZombieHealthBar(double left, double top)
-        {
-            ProgressBar zombieHealthBar = new ProgressBar();
-            zombieHealthBar.Width = 260;
-            zombieHealthBar.Height = 20;
-            zombieHealthBar.Value = 100; // Устанавливаем здоровье зомби
-            zombieHealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
-
-            // Размещаем ProgressBar над зомби
-            Canvas.SetLeft(zombieHealthBar, left);
-            Canvas.SetTop(zombieHealthBar, top - zombieHealthBar.Height);
-
-            myCanvas.Children.Add(zombieHealthBar); // Добавляем ProgressBar на Canvas
-
-            return zombieHealthBar;
-        }
+        
 
 
         //private void shootTimerEvent(object sender, EventArgs e)
@@ -250,9 +231,8 @@ namespace gametop
                         Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
                         Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
                         {
-                            if (zombieBars.TryGetValue(image3, out ProgressBar zombieHealthBar))
-                            {
-                                // Теперь вы можете использовать zombieHealthBar
+
+                            // Теперь вы можете использовать zombieHealthBar
                                 int damage = 0;
                                 if ((string)image2.Tag == "sphere")
                                 {
@@ -278,35 +258,30 @@ namespace gametop
                                     image2.Source = null;
                                 }
 
-                                zombieHealthBar.Value -= damage;
-
-                                if (zombieHealthBar.Value < 1)
+                                if (zombieBars.ContainsKey(image3))
                                 {
-                                    myCanvas.Children.Remove(image3);
-                                    image3.Source = null;
-                                    zombieList.Remove(image3);
-                                    myCanvas.Children.Remove(zombieHealthBar);
-                                    zombieBars.Remove(image3);
-                                    score++;
-
-                                    if (score <= 12)
+                                    ProgressBar zombieHealthBar = zombieBars[image3];
+                                    zombieHealthBar.Value -= damage;
+                                    if (zombieHealthBar.Value < 1)
                                     {
-                                        MakeZombies();
-                                    }
-
-                                    if (score == 15)
-                                    {
-                                        key.Visibility = Visibility.Visible;
+                                        myCanvas.Children.Remove(image3);
+                                        image3.Source = null;
+                                        zombieList.Remove(image3);
+                                        myCanvas.Children.Remove(zombieHealthBar);
+                                        zombieBars.Remove(image3);
+                                        score++;
+                                        if (score <= 12)
+                                        {
+                                            MakeZombies();
+                                        }
+                                        if (score == 15)
+                                        {
+                                            key.Visibility = Visibility.Visible;
+                                        }
                                     }
                                 }
-                            }
 
-                            else
-                            {
-                                // Если зомби нет в словаре, добавляем его
-                                ProgressBar newZombieHealthBar = CreateZombieHealthBar(Canvas.GetLeft(image3), Canvas.GetTop(image3));
-                                zombieBars.Add(image3, newZombieHealthBar);
-                            }
+
                         }
                     }
                 }

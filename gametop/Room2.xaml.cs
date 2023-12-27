@@ -26,7 +26,6 @@ namespace gametop
         int ammo = 5;
         int zombieSpeed = 3;
         bool gotKey, isChestOpened;
-        public static bool gotFood;
         public static int coins { get; set; }
         Random randNum = new Random();
 
@@ -120,18 +119,6 @@ namespace gametop
                     }
                 }
 
-                if (u is Image imag1 && (string)imag1.Tag == "food") // Сбор коинов
-                {
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(imag1), Canvas.GetTop(imag1), imag1.Width, imag1.Height);
-
-                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
-                    {
-                        u.Visibility = Visibility.Hidden;
-                        gotFood = true;
-                    }
-                }
-
                 if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
                 {
                     if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
@@ -148,7 +135,7 @@ namespace gametop
 
             if (zombie1.score == 15 && !isChestOpened) // Добавить !isChestOpened
             {
-                chest.Visibility = Visibility.Visible;
+                heal.Visibility = Visibility.Visible;
             }
 
         }
@@ -167,72 +154,19 @@ namespace gametop
 
             player1.KeyDown(sender, e);
 
-            if (!isChestOpened && e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
-                Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
+            if (e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(heal) + heal.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(heal) &&
+                Canvas.GetTop(player) < Canvas.GetTop(heal) + heal.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(heal)))
             {
                 isChestOpened = true;
 
-                chest.Visibility = Visibility.Hidden; // Сундук
-
-                for (int i = 0; i < 20; i++)
-                {
-                    CreateCristall();
-                }
-                for (int i = 0; i < 30; i++)
-                {
-                    CreateCoin();
-                }
-                CreateFood();
+                heal.Visibility = Visibility.Hidden; // Сундук
+                Player.playerHealth = 100;
 
             }
         }
 
-        private void CreateFood()
-        {
-
-            int randomNumber = randNum.Next(1, 4);
-            string foodname = "f" + Convert.ToString(randomNumber) + ".png";
-            Image food = new Image();
-            food.Source = new BitmapImage(new Uri(foodname, UriKind.RelativeOrAbsolute));
-            food.Tag = "food";
-            food.Height = 110;
-            food.Width = 110;
-
-            Canvas.SetLeft(food, Canvas.GetLeft(chest) + randNum.Next(-210, 210));
-            Canvas.SetTop(food, Canvas.GetTop(chest) + randNum.Next(-210, 210));
-
-            myCanvas.Children.Add(food);
-        }
-
-        private void CreateCoin()
-        {
-
-            Image coin = new Image();
-            coin.Source = new BitmapImage(new Uri("монета.png", UriKind.Relative));
-            coin.Tag = "coin";
-            coin.Height = 40;
-            coin.Width = 40;
-            Canvas.SetLeft(coin, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
-            Canvas.SetTop(coin, Canvas.GetTop(chest) + randNum.Next(-110, 110));
-
-            myCanvas.Children.Add(coin);
-        }
-
-        private void CreateCristall()
-        {
-
-            Image cristall = new Image();
-            cristall.Source = new BitmapImage(new Uri("cristall.png", UriKind.Relative));
-            cristall.Tag = "cristall";
-            cristall.Height = 50;
-            cristall.Width = 40;
-            Canvas.SetLeft(cristall, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
-            Canvas.SetTop(cristall, Canvas.GetTop(chest) + randNum.Next(-110, 110));
-
-            myCanvas.Children.Add(cristall);
-        }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
         {
@@ -344,7 +278,7 @@ namespace gametop
         private void DropAmmo() // Создание боеприпасов
         {
             Image ammo = new Image();
-            ammo.Source = new BitmapImage(new Uri("coffee-cup-latte-art-top-view-isolated-on-a-transparent-background-png (1).png", UriKind.RelativeOrAbsolute));
+            ammo.Source = new BitmapImage(new Uri("ammo.png", UriKind.RelativeOrAbsolute));
             ammo.Height = 80;
             ammo.Width = 80;
             Canvas.SetLeft(ammo, randNum.Next(10, Convert.ToInt32(myCanvas.Width - ammo.Width)));

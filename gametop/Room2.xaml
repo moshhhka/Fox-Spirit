@@ -30,7 +30,7 @@
             <Image Tag ="coin" Height="52" Canvas.Left="1428" Canvas.Top="311" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="key" Tag ="key" Height="62" Canvas.Left="226" Canvas.Top="672" Width="46" Source="/ключ.png" Visibility="Hidden"/>
             <Image x:Name="door" Tag ="door" Height="214" Canvas.Left="1580" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="768" Width="185" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image x:Name="chest" Tag ="chest" Height="106" Canvas.Left="927" Source="/40345f81a641c415f7d9aafd311957ff-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="522" Width="106" Visibility="Hidden"/>
+            <Image x:Name="heal" Height="107" Canvas.Left="916" Source="/heal.png" Stretch="Fill" Canvas.Top="560" Width="126" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
 
         </Canvas>
     </Viewbox>

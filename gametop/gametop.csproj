@@ -144,9 +144,6 @@
     <Resource Include="300px-Codex_Death.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="coffee-cup-latte-art-top-view-isolated-on-a-transparent-background-png %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="монета.png" />
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +273,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="boss1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ammo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="heal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

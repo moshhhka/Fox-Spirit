@@ -276,7 +276,7 @@ namespace gametop
         private void DropAmmo() // Создание боеприпасов
         {
             Image ammo = new Image();
-            ammo.Source = new BitmapImage(new Uri("coffee-cup-latte-art-top-view-isolated-on-a-transparent-background-png (1).png", UriKind.RelativeOrAbsolute));
+            ammo.Source = new BitmapImage(new Uri("ammo.png", UriKind.RelativeOrAbsolute));
             ammo.Height = 80;
             ammo.Width = 80;
             Canvas.SetLeft(ammo, randNum.Next(10, Convert.ToInt32(myCanvas.Width - ammo.Width)));

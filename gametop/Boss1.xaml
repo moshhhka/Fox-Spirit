@@ -18,7 +18,7 @@
             <Image x:Name="door" Tag ="door" Height="214" Canvas.Left="134" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="407" Width="185" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="boss1r" Tag = "boss" Height="408" Canvas.Left="810" Source="/boss1.png" Stretch="Fill" Canvas.Top="336" Width="300"/>
             <ProgressBar x:Name="bossHealthBar" Height="40" Canvas.Left="214" Canvas.Top="1005" Width="1492" Value="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Maximum="1000"/>
-
+            <Image x:Name="chest" Tag ="chest" Height="106" Canvas.Left="927" Source="/40345f81a641c415f7d9aafd311957ff-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="522" Width="106" Visibility="Hidden"/>
 
         </Canvas>
     </Viewbox>
