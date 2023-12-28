@@ -24,8 +24,7 @@ namespace gametop
         Player player1;
         bool gameOver;
         int ammo = 5;
-        int zombieSpeed = 3;
-        bool gotKey, isChestOpened;
+        bool isChestOpened;
         public static int coins { get; set; }
         Random randNum = new Random();
 
@@ -38,7 +37,7 @@ namespace gametop
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, key, zombieSpeed);
+            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas, healthBar);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
@@ -69,25 +68,15 @@ namespace gametop
 
             player1.Movement();
 
-            if (key.Visibility == Visibility.Visible && (Canvas.GetLeft(player) < Canvas.GetLeft(key) + key.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(key) &&
-                Canvas.GetTop(player) < Canvas.GetTop(key) + key.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(key)))
-            {
-                gotKey = true;
-                key.Visibility = Visibility.Hidden;
-            }
-
-            if (Canvas.GetLeft(player) < Canvas.GetLeft(door) + door.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door) &&
-                Canvas.GetTop(player) < Canvas.GetTop(door) + door.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door) && gotKey)
+            if (door1.Visibility == Visibility.Visible && Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door1) &&
+                Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
                 Boss1 newRoom = new Boss1();
                 Boss1.coins = coins;
                 this.Hide();
                 timer.Stop();
-                gotKey = false;
                 newRoom.Show();
                 Player.goLeft = false;
                 Player.goRight = false;
@@ -205,7 +194,6 @@ namespace gametop
                 MainWindow newRoom = new MainWindow();
                 this.Hide();
                 timer.Stop();
-                gotKey = false;
                 newRoom.Show();
             }
         }
@@ -311,12 +299,6 @@ namespace gametop
                 {
                     u.Visibility = Visibility.Visible;
                 }
-            }
-
-            if (gotKey == true && key.Visibility == Visibility.Hidden)
-            {
-                key.Visibility = Visibility.Visible;
-                gotKey = false;
             }
 
             zombieList.Clear();

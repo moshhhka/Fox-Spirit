@@ -16,7 +16,7 @@ namespace gametop
         public string direction;
         Image player;
         Image boss;
-        Image key;
+        Image door1;
         Image chest;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
@@ -28,12 +28,12 @@ namespace gametop
         DispatcherTimer shootTimer = new DispatcherTimer();
 
 
-        public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image key, Image chest, ProgressBar bossHealthBar, Image boss)
+        public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, ProgressBar bossHealthBar, Image boss)
         {
             this.player = player;
             this.myCanvas = myCanvas;
             this.elementsCopy = elementsCopy;
-            this.key = key;
+            this.door1 = door1;
             this.bossHealthBar = bossHealthBar;
             this.boss = boss;
             this.chest = chest;
@@ -225,7 +225,7 @@ namespace gametop
                                 image3.Source = null;
                                 myCanvas.Children.Remove(bossHealthBar);
 
-                                key.Visibility = Visibility.Visible;
+                                door1.Visibility = Visibility.Visible;
                                 chest.Visibility = Visibility.Visible;
                             }
 

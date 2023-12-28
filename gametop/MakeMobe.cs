@@ -19,7 +19,8 @@ namespace gametop
         public string direction;
         Random randNum = new Random();
         Image player;
-        Image key;
+        Image stenka;
+        Image door1;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
 
@@ -30,7 +31,7 @@ namespace gametop
         DispatcherTimer shootTimer = new DispatcherTimer();
 
 
-        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image key, int zombieSpeed = 3, int score = 0)
+        public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image door1, Image stenka, int zombieSpeed = 3, int score = 0)
         {
             this.player = player;
             this.myCanvas = myCanvas;
@@ -38,7 +39,8 @@ namespace gametop
             this.score = score;
             this.elementsCopy = elementsCopy;
             this.zombieList = zombieList;
-            this.key = key;
+            this.door1 = door1;
+            this.stenka = stenka;
         }
 
 
@@ -80,6 +82,7 @@ namespace gametop
 
 
             Canvas.SetZIndex(player, 1);
+            Canvas.SetZIndex(stenka, 1);
 
             //shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
             //shootTimer.Tick += new EventHandler(shootTimerEvent);
@@ -276,7 +279,7 @@ namespace gametop
                                         }
                                         if (score == 15)
                                         {
-                                            key.Visibility = Visibility.Visible;
+                                            door1.Visibility = Visibility.Visible;
                                         }
                                     }
                                 }

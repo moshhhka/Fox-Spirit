@@ -42,7 +42,7 @@ namespace gametop
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, key);
+            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas, healthBar);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
@@ -72,19 +72,12 @@ namespace gametop
 
             player1.Movement();
 
-            if (key.Visibility == Visibility.Visible && (Canvas.GetLeft(player) < Canvas.GetLeft(key) + key.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(key) &&
-                Canvas.GetTop(player) < Canvas.GetTop(key) + key.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(key)))
-            {
-                gotKey = true;
-                key.Visibility = Visibility.Hidden;
-            }
+            
 
-            if (Canvas.GetLeft(player) < Canvas.GetLeft(door) + door.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door) &&
-                Canvas.GetTop(player) < Canvas.GetTop(door) + door.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door) && gotKey)
+            if (door1.Visibility == Visibility.Visible && Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door1) &&
+                Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
                 Room2 newRoom = new Room2();
                 Room2.coins = coins;
@@ -326,11 +319,7 @@ namespace gametop
                 }
             }
 
-            if (gotKey == true && key.Visibility == Visibility.Hidden)
-            {
-                key.Visibility = Visibility.Visible;
-                gotKey = false;
-            }
+            
 
             zombieList.Clear();
 

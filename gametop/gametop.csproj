@@ -150,19 +150,10 @@
     <Resource Include="камень2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ключ.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Fon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="cookie.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="татамитемно.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="map1.png" />
@@ -172,9 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="map3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="9a98d7a7a3b71d2e5725abfcfeda5be0.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="40345f81a641c415f7d9aafd311957ff-PhotoRoom.png-PhotoRoom.png" />
@@ -210,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="tree.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons8-ключ-96.png" />
@@ -279,6 +264,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="heal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="фон_стены_тень.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="стена_внизу.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="дверь_закрытая_вверху.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="дверь_открытая_вверху.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="свет_маленький.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

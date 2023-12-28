@@ -100,7 +100,7 @@ namespace gametop
                 Canvas.SetTop(player, Canvas.GetTop(player) - speed);
             }
 
-            if (goDown == true && Canvas.GetTop(player) + player.Height < myCanvas.Height)
+            if (goDown == true && Canvas.GetTop(player) + player.Height + 120 < myCanvas.Height)
             {
                 Canvas.SetTop(player, Canvas.GetTop(player) + speed);
             }
