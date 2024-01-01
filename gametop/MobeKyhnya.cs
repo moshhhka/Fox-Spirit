@@ -235,11 +235,17 @@ namespace gametop
 
                             // Теперь вы можете использовать zombieHealthBar
                             int damage = 0;
+
                             if ((string)image2.Tag == "sphere")
                             {
-                                
-                                damage = 5;
+                                // Если урон еще не был нанесен, нанесите урон
+                                if (!HitSpace.hasSphereDealtDamage)
+                                {
+                                    damage = 50;
+                                    HitSpace.hasSphereDealtDamage = true;
+                                }
                             }
+
                             else if ((string)image2.Tag == "sword")
                             {
                                 damage = 25;

@@ -24,12 +24,14 @@ namespace gametop
         public List<string> downImages = new List<string> { "sp4.png", "sp5.png", "sp6.png", "sp7.png", "sp8.png", "sp9.png" };
         public int currentDownImageIndex = 0;
 
+        private bool animationCompleted = false;
+
 
         // Добавленные переменные
         private int sphereDamageCount = 0;
         private int maxSphereDamageCount = 50; // Максимальное количество урона, которое может нанести сфера
 
-        public bool hasSphereDealtDamage = false;
+        public static bool hasSphereDealtDamage = false;
 
         public void MakeSphere(Canvas form, Image player)
         {
@@ -48,13 +50,10 @@ namespace gametop
             form.Children.Add(sphere);
 
 
-            sphereTimer.Interval = TimeSpan.FromMilliseconds(50);
+            sphereTimer.Interval = TimeSpan.FromMilliseconds(20);
             sphereTimer.Tick += new EventHandler(SphereTimerEvent);
             sphereTimer.Start();
 
-            disappearTimer.Interval = TimeSpan.FromMilliseconds(180);
-            disappearTimer.Tick += new EventHandler(DisappearTimerEvent);
-            disappearTimer.Start();
 
             hasSphereDealtDamage = false;
 
@@ -62,20 +61,29 @@ namespace gametop
 
         private void SphereTimerEvent(object sender, EventArgs e)
         {
-            sphere.Source = new BitmapImage(new Uri(downImages[currentDownImageIndex], UriKind.RelativeOrAbsolute));
-            currentDownImageIndex = (currentDownImageIndex + 1) % downImages.Count;
+            if (!animationCompleted)
+            {
+                sphere.Source = new BitmapImage(new Uri(downImages[currentDownImageIndex], UriKind.RelativeOrAbsolute));
+
+                // Если это первая картинка и урон еще не был нанесен, нанесите урон
+                if (currentDownImageIndex == 0 && !hasSphereDealtDamage)
+                {
+                    // Нанесите урон здесь
+                    hasSphereDealtDamage = true;
+                }
+
+
+                currentDownImageIndex = (currentDownImageIndex + 1) % downImages.Count;
+
+                // Если мы прошли через все изображения, установите animationCompleted в true
+                if (currentDownImageIndex == 0)
+                {
+                    animationCompleted = true;
+                    Canvas form = (Canvas)sphere.Parent;
+                    form.Children.Remove(sphere);
+                }
+            }
         }
 
-        private void DisappearTimerEvent(object sender, EventArgs e)
-        {
-            Canvas form = (Canvas)sphere.Parent;
-            form.Children.Remove(sphere);
-            sphereTimer.Stop();
-            disappearTimer.Stop();
-            sphere.Source = null;
-            sphereTimer = null;
-            disappearTimer = null;
-            sphereDamageCount = 0; // Сбросить счетчик урона при исчезновении сферы
-        }
     }
 }

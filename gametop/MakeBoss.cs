@@ -266,14 +266,17 @@ namespace gametop
 
                             if ((string)image2.Tag == "sphere")
                             {
-                                
-                                damage = 50;
-                                
+                                // Если урон еще не был нанесен, нанесите урон
+                                if (!HitSpace.hasSphereDealtDamage)
+                                {
+                                    damage = 50;
+                                    HitSpace.hasSphereDealtDamage = true;
+                                }
                             }
 
                             else if ((string)image2.Tag == "sword")
                             {
-                                damage = 25;
+                                damage = 50;
                             }
                             else if ((string)image2.Tag == "bullet")
                             {
