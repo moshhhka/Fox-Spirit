@@ -57,6 +57,7 @@ namespace gametop
             disappearTimer.Start();
 
             hasSphereDealtDamage = false;
+
         }
 
         private void SphereTimerEvent(object sender, EventArgs e)
@@ -67,6 +68,8 @@ namespace gametop
 
         private void DisappearTimerEvent(object sender, EventArgs e)
         {
+            Canvas form = (Canvas)sphere.Parent;
+            form.Children.Remove(sphere);
             sphereTimer.Stop();
             disappearTimer.Stop();
             sphere.Source = null;
