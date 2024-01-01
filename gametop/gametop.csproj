@@ -60,12 +60,16 @@
     </Compile>
     <Compile Include="Collise.cs" />
     <Compile Include="HitSpace.cs" />
+    <Compile Include="Kyhnya1.xaml.cs">
+      <DependentUpon>Kyhnya1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MakeBoss.cs" />
     <Compile Include="MakeMobe.cs" />
     <Compile Include="Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
     <Compile Include="MobeBullet.cs" />
+    <Compile Include="MobeKyhnya.cs" />
     <Compile Include="nachdio1.xaml.cs">
       <DependentUpon>nachdio1.xaml</DependentUpon>
     </Compile>
@@ -78,6 +82,10 @@
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="Boss1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kyhnya1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +290,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="кухня.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="стена_внизу_кухня.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="двери_вверху_сфоном_кухня.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Remove-bg.ai_1703863482146.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\downr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\leftr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\rightr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\upr.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

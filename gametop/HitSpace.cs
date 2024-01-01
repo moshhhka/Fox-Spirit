@@ -27,9 +27,9 @@ namespace gametop
 
         // Добавленные переменные
         private int sphereDamageCount = 0;
-        private int maxSphereDamageCount = 5; // Максимальное количество урона, которое может нанести сфера
+        private int maxSphereDamageCount = 50; // Максимальное количество урона, которое может нанести сфера
 
-        private bool hasSphereDealtDamage = false;
+        public bool hasSphereDealtDamage = false;
 
         public void MakeSphere(Canvas form, Image player)
         {
@@ -52,7 +52,7 @@ namespace gametop
             sphereTimer.Tick += new EventHandler(SphereTimerEvent);
             sphereTimer.Start();
 
-            disappearTimer.Interval = TimeSpan.FromMilliseconds(220);
+            disappearTimer.Interval = TimeSpan.FromMilliseconds(180);
             disappearTimer.Tick += new EventHandler(DisappearTimerEvent);
             disappearTimer.Start();
 
@@ -73,21 +73,6 @@ namespace gametop
             sphereTimer = null;
             disappearTimer = null;
             sphereDamageCount = 0; // Сбросить счетчик урона при исчезновении сферы
-        }
-
-        public void ApplySphereDamage()
-        {
-            // Проверьте, нанесла ли сфера уже урон
-            if (!hasSphereDealtDamage)
-            {
-                sphereDamageCount++;
-                hasSphereDealtDamage = true; // Установите переменную в true после нанесения урона
-            }
-
-            if (sphereDamageCount >= maxSphereDamageCount)
-            {
-                DisappearTimerEvent(null, null);
-            }
         }
     }
 }

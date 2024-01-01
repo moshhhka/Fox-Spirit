@@ -9,8 +9,8 @@
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920">
             <Image Height="1080" Source="/фон_стены_тень.png" Stretch="Fill" Width="1920"/>
-            <Image x:Name="player" Tag ="player" Height="166" Canvas.Left="898" Canvas.Top="826" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="485" Canvas.Top="292" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="player" Tag ="player" Height="166" Canvas.Left="897" Canvas.Top="826" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1170" Canvas.Top="292" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
             <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1580" Canvas.Top="51" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Value="100"/>
             <Label x:Name="txtCoins" Content="Coins: 0" Height="54" Canvas.Left="810" Canvas.Top="282" Width="233" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>

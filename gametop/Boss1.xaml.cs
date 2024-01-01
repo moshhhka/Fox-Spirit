@@ -302,7 +302,6 @@ namespace gametop
             HitSpace shootSphere = new HitSpace();
             shootSphere.MakeSphere(myCanvas, player);
             Canvas.SetZIndex(player, 1);
-            Canvas.SetZIndex(stenka, 1);
         }
 
         private void MakeBox() // Создание коробок
@@ -347,13 +346,12 @@ namespace gametop
             ammo.Height = 80;
             ammo.Width = 80;
             Canvas.SetLeft(ammo, randNum.Next(10, Convert.ToInt32(myCanvas.Width - ammo.Width)));
-            Canvas.SetTop(ammo, randNum.Next(80, Convert.ToInt32(myCanvas.Height - ammo.Height)));
+            Canvas.SetTop(ammo, randNum.Next(80, Convert.ToInt32(myCanvas.Height - ammo.Height - 160)));
             ammo.Tag = "ammo";
             myCanvas.Children.Add(ammo);
 
             Canvas.SetZIndex(ammo, 1);
             Canvas.SetZIndex(player, 1);
-            Canvas.SetZIndex(stenka, 1);
         }
 
         private void RestartGame() // Перезапуск игры
@@ -381,6 +379,9 @@ namespace gametop
             {
                 MakeBox();
             }
+
+            Canvas.SetZIndex(stenka, 1);
+            Canvas.SetZIndex(bossHealthBar, 1);
 
             Player.goUp = false;
             Player.goLeft = false;

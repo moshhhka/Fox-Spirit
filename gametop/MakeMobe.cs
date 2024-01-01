@@ -239,11 +239,7 @@ namespace gametop
                                 int damage = 0;
                                 if ((string)image2.Tag == "sphere")
                                 {
-                                    // Предположим, что у вас есть экземпляр класса HitSpace с именем hitSpace
-                                    HitSpace hitSpace = new HitSpace();
-
-                                    // Теперь вы можете вызвать метод ApplySphereDamage() через этот экземпляр
-                                    hitSpace.ApplySphereDamage();
+                                    
                                     damage = 5;
                                 }
                                 else if ((string)image2.Tag == "sword")
