@@ -315,5 +315,17 @@
   <ItemGroup>
     <Resource Include="charecter\upr.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="дверь_к_открытая_вверху.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="стена_к_внизу.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="фон_подвал.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\bosskyhnya.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

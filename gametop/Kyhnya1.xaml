@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:gametop"
         mc:Ignorable="d"
-        Title="Kyhnya1" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None">
+        Title="Kyhnya1" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed">
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" Height="1080" Width="1920">
             <Image Height="1080" Source="/кухня.png" Stretch="Fill" Width="1920"/>

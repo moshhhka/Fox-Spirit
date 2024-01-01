@@ -20,7 +20,7 @@ namespace gametop
     /// </summary>
     public partial class Kyhnya1 : Window
     {
-        MakeMobe zombie1;
+        MobeKyhnya zombie1;
         Player player1;
         bool gameOver;
         int ammo = 5;
@@ -37,7 +37,7 @@ namespace gametop
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
+            zombie1 = new MobeKyhnya(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas, healthBar);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
@@ -66,7 +66,6 @@ namespace gametop
             txtCoins.Content = "Coins:" + coins;
 
             player1.Movement();
-
 
 
             if (door1.Visibility == Visibility.Visible && Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
@@ -192,10 +191,7 @@ namespace gametop
 
             if (e.Key == Key.Enter && gameOver == true)
             {
-                MainWindow newRoom = new MainWindow();
-                this.Hide();
-                timer.Stop();
-                newRoom.Show();
+                RestartGame();
             }
         }
 
@@ -339,7 +335,7 @@ namespace gametop
             Player.goRight = false;
             gameOver = false;
 
-
+            Player.playerHealth = 100;
             zombie1.score = 0;
             ammo = 5;
             coins = 0;

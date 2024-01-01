@@ -56,6 +56,22 @@ namespace gametop
 
             txtCoins.Content = "Coins:" + coins;
 
+            if (door1.Visibility == Visibility.Visible && Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door1) &&
+                Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
+            {
+                Kyhnya1 newRoom = new Kyhnya1();
+                Kyhnya1.coins = coins;
+                this.Hide();
+                timer.Stop();
+                newRoom.Show();
+                Player.goLeft = false;
+                Player.goRight = false;
+                Player.goUp = false;
+                Player.goDown = false;
+            }
+
         }
 
 

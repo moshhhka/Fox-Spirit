@@ -8,7 +8,7 @@
         Title="MainWindow" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed"  >
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920">
-            <Image Height="1080" Source="/фон_стены_тень.png" Stretch="Fill" Width="1920"/>
+            <Image Height="1080" Source="/фон_подвал.png" Stretch="Fill" Width="1920"/>
             <Image x:Name="player" Tag ="player" Height="166" Canvas.Left="908" Canvas.Top="792" Width="126" Source="/charecter/down.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="23" Canvas.Top="44" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label x:Name="txtScore" Content="Kills: 0" Height="54" Canvas.Left="429" Canvas.Top="44" Width="223" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
@@ -29,10 +29,8 @@
             <Image Tag ="coin" Height="52" Canvas.Left="1402" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1477" Canvas.Top="514" Width="53" Source="/монета.png" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Image x:Name="door" Tag="door" Height="182" Canvas.Left="874" Source="/дверь_закрытая_вверху.png" Stretch="Fill" Width="180" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10"/>
-            <Image x:Name="door1" Tag="door" Height="182" Canvas.Left="785" Source="/дверь_открытая_вверху.png" Stretch="Fill" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10" Visibility="Hidden"/>
-            <Image Tag="box" Height="83" Canvas.Left="1149" Source="/свет_маленький.png" Stretch="Fill" Canvas.Top="127" Width="58" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Image Tag="box" Height="83" Canvas.Left="715" Source="/свет_маленький.png" Stretch="Fill" Canvas.Top="115" Width="58" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image x:Name="stenka" Height="175" Source="/стена_внизу.png" Stretch="Fill" Canvas.Top="905" Width="1920"/>
+            <Image x:Name="door1" Tag="door" Height="182" Canvas.Left="785" Source="/дверь_к_открытая_вверху.png" Stretch="Fill" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10" Visibility="Hidden"/>
+            <Image x:Name="stenka" Height="488" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="592" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         </Canvas>
     </Viewbox>

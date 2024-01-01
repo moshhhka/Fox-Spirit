@@ -47,7 +47,7 @@ namespace gametop
 
             Image zombie = new Image();
             zombie.Tag = "mobe";
-            zombie.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+            zombie.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
 
             // Генерируем случайные координаты для зомби
             double zombieLeft, zombieTop;
@@ -82,41 +82,39 @@ namespace gametop
             Canvas.SetZIndex(player, 1);
             Canvas.SetZIndex(stenka, 1);
 
-            //shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
-            //shootTimer.Tick += new EventHandler(shootTimerEvent);
-            //shootTimer.Start();
+            shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
+            shootTimer.Tick += new EventHandler(shootTimerEvent);
+            shootTimer.Start();
         }
 
 
+        private void shootTimerEvent(object sender, EventArgs e)
+        {
+            foreach (UIElement u in elementsCopy)
+            {
+                if (Player.playerHealth <= 0)
+                {
+                    shootTimer.Stop();
+                    return; // Выход из метода
+                }
 
+                // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
+                if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
+                {
+                    shootTimer.Start();
+                }
 
-        //private void shootTimerEvent(object sender, EventArgs e)
-        //{
-        //    foreach (UIElement u in elementsCopy)
-        //    {
-        //        if (Player.playerHealth <= 0)
-        //        {
-        //            shootTimer.Stop();
-        //            return; // Выход из метода
-        //        }
-
-        //        // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
-        //        if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
-        //        {
-        //            shootTimer.Start();
-        //        }
-
-        //        if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
-        //        {
-        //            string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
-        //            MobeBullet shootBullet = new MobeBullet();
-        //            shootBullet.direction = direction;
-        //            shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
-        //            shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-        //            shootBullet.MakeMobeBullet(myCanvas);
-        //        }
-        //    }
-        //}
+                if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
+                {
+                    string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
+                    MobeBullet shootBullet = new MobeBullet();
+                    shootBullet.direction = direction;
+                    shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
+                    shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
+                    shootBullet.MakeMobeBullet(myCanvas);
+                }
+            }
+        }
 
         public string CalculateDirection(double zombieLeft, double zombieTop, double playerLeft, double playerTop)
         {
@@ -172,23 +170,6 @@ namespace gametop
                 {
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
-
-                    if (rect1.IntersectsWith(rect2))
-                    {
-
-                        if (timer == null)
-                        {
-                            timer = new System.Timers.Timer(500);
-                            timer.Elapsed += (sender, e) =>
-                            {
-                                Player.playerHealth -= 3; // Уменьшите здоровье на 5 через секунду
-                                timer.Stop(); // Остановите таймер
-                                timer = null; // Установите таймер в null
-                            };
-                            timer.AutoReset = false; // Установите AutoReset в false, чтобы таймер сработал только один раз
-                            timer.Start(); // Запустите таймер
-                        }
-                    }
 
 
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))

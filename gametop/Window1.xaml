@@ -17,7 +17,7 @@
             <Label x:Name="txtCoins" Content="Coins: 0" Height="54" Canvas.Left="800" Canvas.Top="44" Width="233" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image x:Name="nps" Height="292" Canvas.Left="1246" Canvas.Top="248" Width="207" Source="/charecter/nps.png"/>
             <Image x:Name="player" Height="166" Canvas.Left="976" Canvas.Top="603" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image x:Name="door" Height="196" Canvas.Left="1691" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="588" Width="169"/>
+            <Image x:Name="door1" Height="196" Canvas.Left="1691" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="588" Width="169"/>
             <Image x:Name="nps2" Height="276" Canvas.Left="429" Source="/charecter/nps1.png" Stretch="Fill" Canvas.Top="769" Width="262" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Canvas>
     </Viewbox>
