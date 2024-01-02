@@ -82,7 +82,7 @@ namespace gametop
             Canvas.SetZIndex(player, 1);
             Canvas.SetZIndex(stenka, 1);
 
-            shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
+            shootTimer.Interval = TimeSpan.FromMilliseconds(2800);
             shootTimer.Tick += new EventHandler(shootTimerEvent);
             shootTimer.Start();
         }
@@ -171,7 +171,6 @@ namespace gametop
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
 
-
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
                     {
                         Canvas.SetLeft(image1, Canvas.GetLeft(image1) - zombieSpeed);
@@ -246,6 +245,7 @@ namespace gametop
                             {
                                 ProgressBar zombieHealthBar = zombieBars[image3];
                                 zombieHealthBar.Value -= damage;
+
                                 if (zombieHealthBar.Value < 1)
                                 {
                                     myCanvas.Children.Remove(image3);

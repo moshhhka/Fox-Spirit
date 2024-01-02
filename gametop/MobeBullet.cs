@@ -15,7 +15,7 @@ namespace gametop
         public int bulletLeft;
         public int bulletTop;
 
-        private int speed = 20;
+        private int speed = 10;
         private Image bullet = new Image();
         DispatcherTimer bulletTimer = new DispatcherTimer();
 
@@ -89,7 +89,7 @@ namespace gametop
             }
 
 
-            if (Canvas.GetLeft(bullet) < 10 || Canvas.GetLeft(bullet) > 1800 || Canvas.GetTop(bullet) < 10 || Canvas.GetTop(bullet) > 980)
+            if (Canvas.GetLeft(bullet) < 10 || Canvas.GetLeft(bullet) > 1200 || Canvas.GetTop(bullet) < 10 || Canvas.GetTop(bullet) > 680)
             {
                 bulletTimer.Stop();
                 bulletTimer.Stop();

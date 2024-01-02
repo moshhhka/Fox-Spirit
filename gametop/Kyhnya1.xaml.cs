@@ -284,7 +284,6 @@ namespace gametop
                 myCanvas.Children.Remove(i);
             }
 
-
             // Создайте список для ProgressBar, которые нужно удалить
             List<ProgressBar> barsToRemove = new List<ProgressBar>();
 
@@ -312,7 +311,6 @@ namespace gametop
                     u.Visibility = Visibility.Visible;
                 }
             }
-
 
 
             zombieList.Clear();
