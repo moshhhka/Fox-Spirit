@@ -132,22 +132,7 @@ namespace gametop
                     }
                 }
 
-                foreach (UIElement j in elementsCopy)
-                {
 
-                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player") //Урон по персонажу пулями
-                    {
-                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
-                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
-                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
-                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
-                        {
-                            Player.playerHealth -= 2; // Уменьшите здоровье игрока на 5
-                            myCanvas.Children.Remove(image2); // Удалите пулю из канвы
-                            image2.Source = null;
-                        }
-                    }
-                }
             }
 
         }
