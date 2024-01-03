@@ -104,7 +104,7 @@ namespace gametop
                     shootTimer.Start();
                 }
 
-                if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
+                if (u is Image image1 && (string)image1.Tag == "mobe" && zombieBars.ContainsKey(image1) && zombieBars[image1].Value > 0) //Движение мобов
                 {
                     string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
                     MobeBullet shootBullet = new MobeBullet();
@@ -113,6 +113,7 @@ namespace gametop
                     shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
                     shootBullet.MakeMobeBullet(myCanvas);
                 }
+
             }
         }
 
@@ -170,6 +171,7 @@ namespace gametop
                 {
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
+
 
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
                     {
@@ -248,17 +250,26 @@ namespace gametop
 
                                 if (zombieHealthBar.Value < 1)
                                 {
+                                    foreach (UIElement bullet in elementsCopy)
+                                    {
+                                        if (bullet is Image bulletImage && (string)bulletImage.Tag == "mobebullet")
+                                        {
+                                            myCanvas.Children.Remove(bullet);
+                                        }
+                                    }
+
+
                                     myCanvas.Children.Remove(image3);
                                     image3.Source = null;
                                     zombieList.Remove(image3);
                                     myCanvas.Children.Remove(zombieHealthBar);
                                     zombieBars.Remove(image3);
                                     score++;
-                                    if (score <= 12)
+                                    if (score <= 10)
                                     {
                                         MakeZombies();
                                     }
-                                    if (score == 15)
+                                    if (score == 12)
                                     {
                                         door1.Visibility = Visibility.Visible;
                                     }

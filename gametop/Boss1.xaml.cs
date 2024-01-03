@@ -26,7 +26,7 @@ namespace gametop
         int ammo = 5;
         bool isChestOpened;
         public static bool gotFood;
-        public static int coins;
+        public static int coins, crist;
         Random randNum = new Random();
 
         List<Image> boxList = new List<Image>();
@@ -61,8 +61,9 @@ namespace gametop
                 timer.Stop();
             }
 
-            txtAmmo.Content = "Ammo:" + ammo;
-            txtCoins.Content = "Coins:" + coins;
+            txtAmmo.Content = ammo;
+            txtCoins.Content = coins;
+            txtCrist.Content = crist;
 
             player1.Movement();
 
@@ -107,6 +108,18 @@ namespace gametop
                     }
                 }
 
+                if (u is Image image1 && (string)image1.Tag == "cristall") // Сбор кристаллов
+                {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.Width, image1.Height);
+
+                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                    {
+                        u.Visibility = Visibility.Hidden;
+                        crist++;
+                    }
+                }
+
                 if (u is Image imag1 && (string)imag1.Tag == "food") // Сбор коинов
                 {
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
@@ -132,7 +145,23 @@ namespace gametop
                     }
                 }
 
-                
+                foreach (UIElement j in elementsCopy)
+                {
+
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player") //Урон по персонажу пулями
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
+                            Player.playerHealth -= 2; // Уменьшите здоровье игрока на 5
+                            myCanvas.Children.Remove(image2); // Удалите пулю из канвы
+                            image2.Source = null;
+                        }
+                    }
+                }
+
             }
 
         }
@@ -193,15 +222,22 @@ namespace gametop
         private void CreateCoin()
         {
 
-            Image coin = new Image();
-            coin.Source = new BitmapImage(new Uri("монета.png", UriKind.Relative));
-            coin.Tag = "coin";
-            coin.Height = 40;
-            coin.Width = 40;
-            Canvas.SetLeft(coin, Canvas.GetLeft(chest) + randNum.Next(-110, 110));
-            Canvas.SetTop(coin, Canvas.GetTop(chest) + randNum.Next(-110, 110));
+            int coinSize = 40;
+            int offset = randNum.Next(-110, 110);
+            int[,] positions = new int[,] { { 0, 0 }, { coinSize, 0 }, { 0, coinSize }, { coinSize, coinSize } };
 
-            myCanvas.Children.Add(coin);
+            for (int i = 0; i < 4; i++)
+            {
+                Image coin = new Image();
+                coin.Source = new BitmapImage(new Uri("монета.png", UriKind.Relative));
+                coin.Tag = "coin";
+                coin.Height = coinSize;
+                coin.Width = coinSize;
+                Canvas.SetLeft(coin, Canvas.GetLeft(chest) + offset + positions[i, 0]);
+                Canvas.SetTop(coin, Canvas.GetTop(chest) + offset + positions[i, 1]);
+
+                myCanvas.Children.Add(coin);
+            }
         }
 
         private void CreateCristall()

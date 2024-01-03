@@ -9,17 +9,18 @@
     <Viewbox Stretch="Fill">
         <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920">
             <Image Height="1080" Source="/фон_подвал.png" Stretch="Fill" Width="1920"/>
-            <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="485" Canvas.Top="292" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="player" Tag ="player" Height="166" Canvas.Left="897" Canvas.Top="826" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1170" Canvas.Top="292" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
-            <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1580" Canvas.Top="51" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Value="100"/>
-            <Label x:Name="txtCoins" Content="Coins: 0" Height="54" Canvas.Left="810" Canvas.Top="282" Width="233" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="door" Tag="door" Height="182" Canvas.Left="874" Source="/дверь_закрытая_вверху.png" Stretch="Fill" Width="180" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10"/>
             <Image x:Name="door1" Tag="door" Height="182" Canvas.Left="785" Source="/дверь_к_открытая_вверху.png" Stretch="Fill" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10" Visibility="Hidden"/>
             <Image x:Name="boss1r" Tag = "boss" Height="408" Canvas.Left="810" Source="/boss1.png" Stretch="Fill" Canvas.Top="336" Width="300"/>
             <Image x:Name="chest" Tag ="chest" Height="106" Canvas.Left="927" Source="/40345f81a641c415f7d9aafd311957ff-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="522" Width="106" Visibility="Hidden"/>
             <Image x:Name="stenka" Height="488" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="592" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <ProgressBar x:Name="bossHealthBar" Height="40" Canvas.Left="207" Canvas.Top="997" Width="1506" Value="1000" HorizontalAlignment="Left" VerticalAlignment="Top" Maximum="1000"/>
+            <Image Height="174" Source="/доска2.png" Stretch="Fill" Width="346" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1564" Canvas.Top="14"/>
+            <ProgressBar x:Name="healthBar" Height="28" Canvas.Left="1636" Canvas.Top="137" Width="266" HorizontalAlignment="Left" VerticalAlignment="Top" Value="100"/>
+            <Label x:Name="txtAmmo" Content="0" Height="56" Canvas.Left="1643" Canvas.Top="11" Width="64" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label x:Name="txtCoins" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="11" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="txtCrist" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="70" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
 

@@ -1,0 +1,17 @@
+﻿<Window x:Class="gametop.deathwind"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gametop"
+        mc:Ignorable="d"
+        Title="deathwind" Height="450" Width="350" WindowStartupLocation="CenterScreen" >
+    <Viewbox Stretch="Fill">
+        <Canvas Height="450" Width="350">
+            <Label Content="Вы умерли" Height="52" Canvas.Left="65" Canvas.Top="76" Width="220" FontSize="24"/>
+            <Button Content="Продолжить" Height="48" Canvas.Left="55" Canvas.Top="201" Width="240" Click="Button_Click_1"/>
+            <Button Content="Выход" Height="48" Canvas.Left="55" Canvas.Top="283" Width="240" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Button_Click"/>
+
+        </Canvas>
+    </Viewbox>
+</Window>

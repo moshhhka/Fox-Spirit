@@ -16,9 +16,9 @@ using System.Windows.Threading;
 namespace gametop
 {
     /// <summary>
-    /// Логика взаимодействия для Kyhnya1.xaml
+    /// Логика взаимодействия для Kyhnya2.xaml
     /// </summary>
-    public partial class Kyhnya1 : Window, IGameWindow
+    public partial class Kyhnya2 : Window, IGameWindow
     {
         MobeKyhnya zombie1;
         Player player1;
@@ -33,7 +33,7 @@ namespace gametop
 
         DispatcherTimer timer = new DispatcherTimer();
 
-        public Kyhnya1()
+        public Kyhnya2()
         {
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -77,8 +77,8 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
-                Kyhnya2 newRoom = new Kyhnya2();
-                Kyhnya2.coins = coins;
+                Room2 newRoom = new Room2();
+                Room2.coins = coins;
                 this.Hide();
                 timer.Stop();
                 gotKey = false;
@@ -325,7 +325,7 @@ namespace gametop
                 zombie1.MakeZombies();
             }
 
-            
+
 
             boxList.Clear();
 

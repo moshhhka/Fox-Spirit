@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -61,17 +63,77 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
+                Player.goLeft = false;
+                Player.goRight = false;
+                Player.goUp = false;
+                Player.goDown = false;
                 Kyhnya1 newRoom = new Kyhnya1();
                 Kyhnya1.coins = coins;
                 this.Hide();
                 timer.Stop();
                 newRoom.Show();
-                Player.goLeft = false;
-                Player.goRight = false;
-                Player.goUp = false;
-                Player.goDown = false;
+                
             }
 
+            List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
+
+            foreach (UIElement x in elementsCopy)
+            {
+                if (x is Image image && (string)image.Tag == "map1.png")
+                { // Проверяем, что Tag начинается с "map"
+
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.ActualWidth, image.ActualHeight);
+
+                    if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
+                    {
+                        myCanvas.Children.Remove(x);
+                        healthBar.Maximum = 150;
+                        MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
+                        Player.goLeft = false;
+                        Player.goRight = false;
+                        Player.goUp = false;
+                        Player.goDown = false;
+                    }
+                }
+
+                if (x is Image image1 && (string)image1.Tag == "map2.png")
+                { // Проверяем, что Tag начинается с "map"
+
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.ActualWidth, image1.ActualHeight);
+
+                    if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
+                    {
+                        myCanvas.Children.Remove(x);
+                        Player.speed = 30;
+                        MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
+                        Player.goLeft = false;
+                        Player.goRight = false;
+                        Player.goUp = false;
+                        Player.goDown = false;
+                    }
+                }
+
+                if (x is Image image2 && (string)image2.Tag == "map3.png")
+                { // Проверяем, что Tag начинается с "map"
+
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image2), Canvas.GetTop(image2), image2.ActualWidth, image2.ActualHeight);
+
+                    if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
+                    {
+                        myCanvas.Children.Remove(x);
+                        Player.playerHealth -= 10;
+                        MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
+                        Player.goLeft = false;
+                        Player.goRight = false;
+                        Player.goUp = false;
+                        Player.goDown = false;
+                    }
+                }
+
+            }
         }
 
 
@@ -84,7 +146,7 @@ namespace gametop
             }
 
             player1.KeyDown(sender, e);
-            
+
             if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(nps1) + nps1.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(nps1) &&
                 Canvas.GetTop(player) < Canvas.GetTop(nps1) + nps1.ActualHeight &&
@@ -200,3 +262,4 @@ namespace gametop
         }
     }
 }
+
