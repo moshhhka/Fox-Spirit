@@ -59,9 +59,6 @@
       <DependentUpon>Boss1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Collise.cs" />
-    <Compile Include="deathwind.xaml.cs">
-      <DependentUpon>deathwind.xaml</DependentUpon>
-    </Compile>
     <Compile Include="HitSpace.cs" />
     <Compile Include="Kyhnya1.xaml.cs">
       <DependentUpon>Kyhnya1.xaml</DependentUpon>
@@ -88,10 +85,6 @@
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="Boss1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="deathwind.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

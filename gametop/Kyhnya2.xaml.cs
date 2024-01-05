@@ -18,7 +18,7 @@ namespace gametop
     /// <summary>
     /// Логика взаимодействия для Kyhnya2.xaml
     /// </summary>
-    public partial class Kyhnya2 : Window, IGameWindow
+    public partial class Kyhnya2 : Window
     {
         MobeKyhnya zombie1;
         Player player1;
@@ -59,9 +59,8 @@ namespace gametop
                 gameOver = true;
                 player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));
                 timer.Stop();
-                var deathWind = new deathwind(this);
-                deathWind.Show();
 
+                MessageBoxResult result = MessageBox.Show("Вы погибли! Если хотите выйти из игры, нажмите Esc, если хотите начать сначала, нажмите Enter", "Game Over", MessageBoxButton.OK);
 
             }
 
@@ -148,9 +147,9 @@ namespace gametop
 
         private void Window_KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
-            if (gameOver == true)
+            if (gameOver == false)
             {
-                return;
+                player1.KeyDown(sender, e);
             }
 
             if (e.Key == Key.Escape)
@@ -158,7 +157,6 @@ namespace gametop
                 this.Close();
             }
 
-            player1.KeyDown(sender, e);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
@@ -340,7 +338,7 @@ namespace gametop
             Player.goRight = false;
             gameOver = false;
 
-            Player.playerHealth = 100;
+            
             zombie1.score = 0;
             ammo = 5;
             coins = 0;

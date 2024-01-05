@@ -66,6 +66,8 @@ namespace gametop
                 player.Height = 180;
                 player.Width = 220;
                 timer.Stop();
+
+                MessageBoxResult result = MessageBox.Show("Вы погибли! Если хотите выйти из игры, нажмите Esc, если хотите начать сначала, нажмите Enter", "Game Over", MessageBoxButton.OK);
             }
 
             txtAmmo.Content = "Ammo:" + ammo;
@@ -152,9 +154,9 @@ namespace gametop
 
         private void Window_KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
-            if (gameOver == true)
+            if (gameOver == false)
             {
-                return;
+                player1.KeyDown(sender, e);
             }
 
             if (e.Key == Key.Escape)
@@ -162,7 +164,6 @@ namespace gametop
                 this.Close();
             }
 
-            player1.KeyDown(sender, e);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл

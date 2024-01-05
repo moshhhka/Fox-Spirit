@@ -28,6 +28,8 @@ namespace gametop
             this.healthBar = healthBar;
         }
 
+        
+
         public void KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
             if (e.Key == Key.A)

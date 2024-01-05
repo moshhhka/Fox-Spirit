@@ -59,7 +59,9 @@ namespace gametop
                 gameOver = true;
                 player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));
                 timer.Stop();
-                
+
+                MessageBoxResult result = MessageBox.Show("Вы погибли! Если хотите выйти из игры, нажмите Esc, если хотите начать сначала, нажмите Enter", "Game Over", MessageBoxButton.OK);
+
             }
 
             txtAmmo.Content = "Ammo:" + ammo;
@@ -131,28 +133,26 @@ namespace gametop
 
         private void Window_KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
-            if (gameOver == true)
+            if (gameOver == false)
             {
-                return;
+                player1.KeyDown(sender, e);
+
+                if (e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(heal) + heal.ActualWidth &&
+                    Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(heal) &&
+                    Canvas.GetTop(player) < Canvas.GetTop(heal) + heal.ActualHeight &&
+                    Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(heal)))
+                {
+                    isChestOpened = true;
+
+                    heal.Visibility = Visibility.Hidden; // Сундук
+                    Player.playerHealth = 100;
+
+                }
             }
 
             if (e.Key == Key.Escape)
             {
                 this.Close();
-            }
-
-            player1.KeyDown(sender, e);
-
-            if (e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(heal) + heal.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(heal) &&
-                Canvas.GetTop(player) < Canvas.GetTop(heal) + heal.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(heal)))
-            {
-                isChestOpened = true;
-
-                heal.Visibility = Visibility.Hidden; // Сундук
-                Player.playerHealth = 100;
-
             }
         }
 

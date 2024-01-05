@@ -62,7 +62,9 @@ namespace gametop
                 player.Width = 220;
                 boss1.disTimer.Stop();
                 timer.Stop();
-                
+
+                MessageBoxResult result = MessageBox.Show("Вы погибли! Если хотите выйти из игры, нажмите Esc, если хотите начать сначала, нажмите Enter", "Game Over", MessageBoxButton.OK);
+
             }
 
             txtAmmo.Content = ammo;
@@ -172,9 +174,30 @@ namespace gametop
 
         private void Window_KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
-            if (gameOver == true)
+            if (gameOver == false)
             {
-                return;
+                player1.KeyDown(sender, e);
+
+                if (!isChestOpened && e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
+                    Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
+                    Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
+                    Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
+                {
+                    isChestOpened = true;
+
+                    chest.Visibility = Visibility.Hidden; // Сундук
+
+                    for (int i = 0; i < 20; i++)
+                    {
+                        CreateCristall();
+                    }
+                    for (int i = 0; i < 30; i++)
+                    {
+                        CreateCoin();
+                    }
+                    CreateFood();
+
+                }
             }
 
             if (e.Key == Key.Escape)
@@ -182,28 +205,7 @@ namespace gametop
                 this.Close();
             }
 
-            player1.KeyDown(sender, e);
-
-            if (!isChestOpened && e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
-                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
-                Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
-                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
-            {
-                isChestOpened = true;
-
-                chest.Visibility = Visibility.Hidden; // Сундук
-
-                for (int i = 0; i < 20; i++)
-                {
-                    CreateCristall();
-                }
-                for (int i = 0; i < 30; i++)
-                {
-                    CreateCoin();
-                }
-                CreateFood();
-
-            }
+            
         }
 
         private void CreateFood()
