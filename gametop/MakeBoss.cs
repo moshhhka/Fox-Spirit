@@ -30,7 +30,7 @@ namespace gametop
 
         DispatcherTimer shootTimer = new DispatcherTimer();
 
-        DispatcherTimer disTimer = new DispatcherTimer();
+        public DispatcherTimer disTimer = new DispatcherTimer();
 
         public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, ProgressBar bossHealthBar, Image boss)
         {

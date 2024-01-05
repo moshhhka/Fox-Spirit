@@ -344,5 +344,8 @@
   <ItemGroup>
     <Resource Include="доска2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\pldie.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

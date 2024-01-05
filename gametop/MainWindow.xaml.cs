@@ -62,7 +62,9 @@ namespace gametop
             else
             {
                 gameOver = true;
-                player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));
+                player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
+                player.Height = 180;
+                player.Width = 220;
                 timer.Stop();
             }
 
