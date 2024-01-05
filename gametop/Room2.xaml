@@ -13,7 +13,6 @@
             <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="128" Canvas.Top="226" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="txtScore" Content="Kills: 0" Height="54" Canvas.Left="418" Canvas.Top="280" Width="224" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
             <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1402" Canvas.Top="44" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
-            <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1580" Canvas.Top="51" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Value="100"/>
             <Image Tag ="coin" Height="53" Canvas.Left="463" Canvas.Top="815" Width="52" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="53" Canvas.Left="530" Canvas.Top="813" Width="54" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="53" Canvas.Left="392" Canvas.Top="815" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -30,7 +29,7 @@
             <Image Tag ="coin" Height="52" Canvas.Left="1428" Canvas.Top="311" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="door" Tag="door" Height="182" Canvas.Left="874" Source="/дверь_закрытая_вверху.png" Stretch="Fill" Width="180" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10"/>
             <Image x:Name="door1" Tag="door" Height="182" Canvas.Left="785" Source="/дверь_к_открытая_вверху.png" Stretch="Fill" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10" Visibility="Hidden"/>
-            <Image x:Name="heal" Height="107" Canvas.Left="916" Source="/heal.png" Stretch="Fill" Canvas.Top="560" Width="126" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Image x:Name="heal" Tag="heal" Height="107" Canvas.Left="916" Source="/heal.png" Stretch="Fill" Canvas.Top="560" Width="126" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
            <Image x:Name="stenka" Height="488" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="592" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         </Canvas>

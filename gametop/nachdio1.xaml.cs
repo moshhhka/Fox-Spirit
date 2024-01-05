@@ -30,7 +30,7 @@ namespace gametop
         {
             InitializeComponent();
             
-            player1 = new Player(player, myCanvas, healthBar);
+            player1 = new Player(player, myCanvas);
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
@@ -40,11 +40,6 @@ namespace gametop
         {
             player1.Movement();
 
-
-            if (Player.playerHealth > 1)
-            {
-                healthBar.Value = Player.playerHealth;
-            }
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
 
             CollisionDetector collisionDetector = new CollisionDetector(player, elementsCopy);

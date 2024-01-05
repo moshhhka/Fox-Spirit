@@ -40,7 +40,7 @@ namespace gametop
         public Window1()
         {
             InitializeComponent();
-            player1 = new Player(player, myCanvas, healthBar);
+            player1 = new Player(player, myCanvas);
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
@@ -88,7 +88,8 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        healthBar.Maximum = 150;
+                        Player.playerHealth = 100 - Player.playerHealth;
+                        Player.playerhealthBar.Maximum = 150;
                         MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
                         Player.goLeft = false;
                         Player.goRight = false;
@@ -124,7 +125,7 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        Player.playerHealth -= 10;
+                        coins += 50;
                         MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
                         Player.goLeft = false;
                         Player.goRight = false;

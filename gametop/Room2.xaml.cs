@@ -38,7 +38,7 @@ namespace gametop
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
             zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
-            player1 = new Player(player, myCanvas, healthBar);
+            player1 = new Player(player, myCanvas);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
@@ -49,12 +49,7 @@ namespace gametop
         private void GameTimer(object sender, EventArgs e)
         {
 
-            if (Player.playerHealth > 1)
-            {
-                healthBar.Value = Player.playerHealth;
-            }
-
-            else
+            if (Player.playerHealth < 1)
             {
                 gameOver = true;
                 player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));
@@ -112,14 +107,29 @@ namespace gametop
 
                 if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
                 {
-                    if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
-                        Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(imagee) &&
-                        Canvas.GetTop(player) < Canvas.GetTop(imagee) + imagee.ActualHeight &&
-                        Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(imagee))
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(imagee), Canvas.GetTop(imagee), imagee.Width, imagee.Height);
+
+                    if (rect1.IntersectsWith(rect2))
                     {
                         myCanvas.Children.Remove(imagee);
                         imagee.Source = null;
                         ammo += 5;
+                    }
+                }
+
+                if (u is Image imagee1 && (string)imagee1.Tag == "heal")
+                {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(imagee1), Canvas.GetTop(imagee1), imagee1.Width, imagee1.Height);
+
+                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                    {
+                        isChestOpened = true;
+
+                        heal.Visibility = Visibility.Hidden; // Сундук
+                        Player.playerHealth = 100;
+
                     }
                 }
             }
@@ -136,18 +146,6 @@ namespace gametop
             if (gameOver == false)
             {
                 player1.KeyDown(sender, e);
-
-                if (e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(heal) + heal.ActualWidth &&
-                    Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(heal) &&
-                    Canvas.GetTop(player) < Canvas.GetTop(heal) + heal.ActualHeight &&
-                    Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(heal)))
-                {
-                    isChestOpened = true;
-
-                    heal.Visibility = Visibility.Hidden; // Сундук
-                    Player.playerHealth = 100;
-
-                }
             }
 
             if (e.Key == Key.Escape)

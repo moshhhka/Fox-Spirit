@@ -38,7 +38,7 @@ namespace gametop
             InitializeComponent();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
             zombie1 = new MobeKyhnya(player, elementsCopy, zombieList, myCanvas, door1, stenka);
-            player1 = new Player(player, myCanvas, healthBar);
+            player1 = new Player(player, myCanvas);
             RestartGame();
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
@@ -49,12 +49,7 @@ namespace gametop
         private void GameTimer(object sender, EventArgs e)
         {
 
-            if (Player.playerHealth > 1)
-            {
-                healthBar.Value = Player.playerHealth;
-            }
-
-            else
+            if (Player.playerHealth < 1)
             {
                 gameOver = true;
                 player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));

@@ -15,7 +15,6 @@
             <Image Height="106" Canvas.Left="122" Source="/k1.png" Stretch="Fill" Canvas.Top="804" Width="72" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Height="612" Canvas.Left="1214" Source="/tree.png" Stretch="Fill" Canvas.Top="130" Width="412" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image x:Name="scazitel" Height="466" Canvas.Left="1135" Source="/charecter/boss3fl.png" Stretch="Fill" Canvas.Top="391" Width="206" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1542" Canvas.Top="988" Width="280" Value="100" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
             <Image Height="74" Tag="box" Canvas.Left="538" Source="/icons8-ключ-96.png" Stretch="Fill" Canvas.Top="93" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Height="74" Tag="box" Canvas.Left="613" Source="/icons8-s-ключ-96.png" Stretch="Fill" Canvas.Top="93" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Height="74" Tag="box" Canvas.Left="1350" Source="/icons8-электронный-ключ-96.png" Stretch="Fill" Canvas.Top="14" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>

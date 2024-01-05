@@ -19,16 +19,23 @@ namespace gametop
         public static int playerHealth = 100;
         Image player;
         Canvas myCanvas;
-        ProgressBar healthBar;
+        public static ProgressBar playerhealthBar;
 
-        public Player(Image player, Canvas myCanvas, ProgressBar healthBar)
+        public Player(Image player, Canvas myCanvas)
         {
             this.player = player;
             this.myCanvas = myCanvas;
-            this.healthBar = healthBar;
-        }
 
-        
+            playerhealthBar = new ProgressBar();
+            playerhealthBar.Width = 266;
+            playerhealthBar.Height = 28;
+            playerhealthBar.Value = 100; // Устанавливаем здоровье зомби
+            playerhealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
+            // Размещаем ProgressBar над зомби
+            Canvas.SetLeft(playerhealthBar, 1636);
+            Canvas.SetTop(playerhealthBar, 137);
+            myCanvas.Children.Add(playerhealthBar); // Добавляем ProgressBar на Canvas
+        }
 
         public void KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {
@@ -109,7 +116,7 @@ namespace gametop
 
             if (playerHealth > 1)
             {
-                healthBar.Value = playerHealth;
+                playerhealthBar.Value = playerHealth;
             }
         }
     }
