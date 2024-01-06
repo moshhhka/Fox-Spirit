@@ -27,8 +27,9 @@ namespace gametop
     {
         Player player1;
         private bool cardDrawn = false;
-        public static int coins { get; set; }
-        public static bool gotFood = Boss1.gotFood;
+        public static int coins, crist;
+        public static bool gotFood;
+        pause Pause;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -40,25 +41,22 @@ namespace gametop
         public Window1()
         {
             InitializeComponent();
+            myCanvas.Focus();
             player1 = new Player(player, myCanvas);
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
+            Pause = new pause(timer, player);
         }
 
         private void GameTimer(object sender, EventArgs e)
         {
             player1.Movement();
 
+            txtCoins.Content = coins;
+            txtCrist.Content = crist;
 
-            if (Player.playerHealth > 1)
-            {
-                healthBar.Value = Player.playerHealth;
-            }
-
-            txtCoins.Content = "Coins:" + coins;
-
-            if (door1.Visibility == Visibility.Visible && Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
+            if (Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door1) &&
                 Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
@@ -88,9 +86,9 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        Player.playerHealth = 100 - Player.playerHealth;
+                        MessageBox.Show("Вы получили карту \"Богатырское здоровье\", которая увеличивает ваше HP до 100, а максимальный запас здоровья до 150 единиц");
+                        Player.playerHealth += 100 - Player.playerHealth;
                         Player.playerhealthBar.Maximum = 150;
-                        MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -107,8 +105,9 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        Player.speed = 30;
+                        
                         MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
+                        Player.speed = 30;
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -125,8 +124,8 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
+                        MessageBox.Show("Вы получили карту \"Золотые горы\", которая даёт вам +50 монет");
                         coins += 50;
-                        MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -143,7 +142,13 @@ namespace gametop
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                myCanvasPAUSE.Visibility = Visibility.Visible;
+                //Pause.Visibility = Visibility.Visible;
+                timer.Stop();
+                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
+                player.Height = 238;
+                player.Width = 221;
+                Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
 
             player1.KeyDown(sender, e);
@@ -260,6 +265,26 @@ namespace gametop
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             player1.KeyUp(sender, e);
+        }
+
+        private void exitbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (cont.Visibility == Visibility.Visible)
+            {
+                timer.Start();
+                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
+                player.Height = 166;
+                player.Width = 126;
+                myCanvasPAUSE.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void cont_Click(object sender, RoutedEventArgs e)
+        {
+            if (exitbut.Visibility == Visibility.Visible)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

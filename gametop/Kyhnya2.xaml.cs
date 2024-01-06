@@ -27,15 +27,18 @@ namespace gametop
         bool gotKey;
         public static int coins;
         Random randNum = new Random();
+        pause Pause;
 
         List<Image> zombieList = new List<Image>();
         List<Image> boxList = new List<Image>();
+        List<Bullet> bullets = new List<Bullet>();
 
         DispatcherTimer timer = new DispatcherTimer();
 
         public Kyhnya2()
         {
             InitializeComponent();
+            myCanvas.Focus();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
             zombie1 = new MobeKyhnya(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas);
@@ -43,25 +46,37 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
+            Pause = new pause(timer, player);
 
+        }
+
+        public void BulletTimer_Tick()
+        {
+            foreach (Bullet bullet in bullets.ToList())
+            {
+                bullet.BulletMove();
+            }
         }
 
         private void GameTimer(object sender, EventArgs e)
         {
+            BulletTimer_Tick();
 
             if (Player.playerHealth < 1)
             {
                 gameOver = true;
-                player.Source = new BitmapImage(new Uri("300px-Codex_Death.png", UriKind.RelativeOrAbsolute));
+                player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
+                player.Height = 180;
+                player.Width = 220;
                 timer.Stop();
 
-                MessageBoxResult result = MessageBox.Show("Вы погибли! Если хотите выйти из игры, нажмите Esc, если хотите начать сначала, нажмите Enter", "Game Over", MessageBoxButton.OK);
-
+                myCanvas1.Visibility = Visibility.Visible;
+                Canvas.SetZIndex(myCanvas1, 1);
             }
 
-            txtAmmo.Content = "Ammo:" + ammo;
-            txtScore.Content = "Kills:" + zombie1.score;
-            txtCoins.Content = "Coins:" + coins;
+            txtAmmo.Content = ammo;
+            txtScore.Content = zombie1.score;
+            txtCoins.Content = coins;
 
             player1.Movement();
 
@@ -136,6 +151,7 @@ namespace gametop
                         }
                     }
                 }
+
             }
 
         }
@@ -149,9 +165,15 @@ namespace gametop
 
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                myCanvasPAUSE.Visibility = Visibility.Visible;
+                //Pause.Visibility = Visibility.Visible;
+                timer.Stop();
+                MobeKyhnya.shootTimer.Stop();
+                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
+                player.Height = 238;
+                player.Width = 221;
+                Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
-
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e) // Клавиши выкл
@@ -185,11 +207,6 @@ namespace gametop
                     DropAmmo();
                 }
             }
-
-            //if (e.Key == Key.Enter && gameOver == true)
-            //{
-            //    RestartGame();
-            //}
         }
 
 
@@ -200,7 +217,8 @@ namespace gametop
 
         private void ShootBullet(string direstion) // Появление пуль
         {
-            Bullet shootBullet = new Bullet();
+            Bullet shootBullet = new Bullet(bullets);
+            bullets.Add(shootBullet);
             shootBullet.direction = direstion;
             shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(player) + (player.Width / 2));
             shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(player) + (player.Height / 2));
@@ -227,7 +245,7 @@ namespace gametop
         {
             Image box = new Image();
             box.Tag = "box";
-            box.Source = new BitmapImage(new Uri("камень2.png", UriKind.RelativeOrAbsolute));
+            box.Source = new BitmapImage(new Uri("чайник.png", UriKind.RelativeOrAbsolute));
             box.Height = 109;
             box.Width = 105;
 
@@ -339,6 +357,46 @@ namespace gametop
             coins = 0;
 
             timer.Start();
+        }
+
+        private void playb_Click(object sender, RoutedEventArgs e)
+        {
+            if (playb.Visibility == Visibility.Visible)
+            {
+                Kyhnya1 newRoom = new Kyhnya1();
+                this.Hide();
+                timer.Stop();
+                newRoom.Show();
+            }
+        }
+
+        private void exitb_Click(object sender, RoutedEventArgs e)
+        {
+            if (exitb.Visibility == Visibility.Visible)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void exitbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (cont.Visibility == Visibility.Visible)
+            {
+                timer.Start();
+                MobeKyhnya.shootTimer.Start();
+                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
+                player.Height = 166;
+                player.Width = 126;
+                myCanvasPAUSE.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void cont_Click(object sender, RoutedEventArgs e)
+        {
+            if (exitbut.Visibility == Visibility.Visible)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

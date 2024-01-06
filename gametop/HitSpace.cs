@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -15,6 +12,7 @@ namespace gametop
         public double initialSphereTop;
         public int sphereLeft;
         public int sphereTop;
+        int animation = 0;
 
         Image player;
         public Image sphere = new Image();
@@ -23,13 +21,6 @@ namespace gametop
 
         public List<string> downImages = new List<string> { "sp4.png", "sp5.png", "sp6.png", "sp7.png", "sp8.png", "sp9.png" };
         public int currentDownImageIndex = 0;
-
-        private bool animationCompleted = false;
-
-
-        // Добавленные переменные
-        private int sphereDamageCount = 0;
-        private int maxSphereDamageCount = 50; // Максимальное количество урона, которое может нанести сфера
 
         public static bool hasSphereDealtDamage = false;
 
@@ -49,41 +40,25 @@ namespace gametop
 
             form.Children.Add(sphere);
 
-
             sphereTimer.Interval = TimeSpan.FromMilliseconds(20);
             sphereTimer.Tick += new EventHandler(SphereTimerEvent);
             sphereTimer.Start();
 
-
             hasSphereDealtDamage = false;
-
         }
 
         private void SphereTimerEvent(object sender, EventArgs e)
         {
-            if (!animationCompleted)
+            sphere.Source = new BitmapImage(new Uri(downImages[currentDownImageIndex], UriKind.RelativeOrAbsolute));
+            currentDownImageIndex = (currentDownImageIndex + 1) % downImages.Count;
+            animation++;
+
+            if (animation == 6)
             {
-                sphere.Source = new BitmapImage(new Uri(downImages[currentDownImageIndex], UriKind.RelativeOrAbsolute));
-
-                // Если это первая картинка и урон еще не был нанесен, нанесите урон
-                if (currentDownImageIndex == 0 && !hasSphereDealtDamage)
-                {
-                    // Нанесите урон здесь
-                    hasSphereDealtDamage = true;
-                }
-
-
-                currentDownImageIndex = (currentDownImageIndex + 1) % downImages.Count;
-
-                // Если мы прошли через все изображения, установите animationCompleted в true
-                if (currentDownImageIndex == 0)
-                {
-                    animationCompleted = true;
-                    Canvas form = (Canvas)sphere.Parent;
-                    form.Children.Remove(sphere);
-                }
+                sphereTimer.Stop();
+                sphere.Source = null;
+                sphereTimer = null;
             }
         }
-
     }
 }

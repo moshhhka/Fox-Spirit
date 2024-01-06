@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Windows;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Media;
-using System.Windows.Input;
 
 namespace gametop
 {
@@ -30,7 +26,7 @@ namespace gametop
 
         DispatcherTimer shootTimer = new DispatcherTimer();
 
-        public DispatcherTimer disTimer = new DispatcherTimer();
+        public static DispatcherTimer disTimer = new DispatcherTimer();
 
         public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, ProgressBar bossHealthBar, Image boss)
         {
@@ -132,7 +128,7 @@ namespace gametop
             }
         }
 
-        
+
 
         public async void disTimerEvent(object sender, EventArgs e)
         {
@@ -156,22 +152,22 @@ namespace gametop
 
                     // Меняем изображение игрока
                     if (Player.facing == "down")
-                    { 
-                        player.Source = new BitmapImage(new Uri("charecter\\downr.png", UriKind.RelativeOrAbsolute)); 
+                    {
+                        player.Source = new BitmapImage(new Uri("charecter\\downr.png", UriKind.RelativeOrAbsolute));
                     }
 
                     else if (Player.facing == "up")
                     {
-                        player.Source = new BitmapImage(new Uri("charecter\\upr.png", UriKind.RelativeOrAbsolute)); 
+                        player.Source = new BitmapImage(new Uri("charecter\\upr.png", UriKind.RelativeOrAbsolute));
                     }
 
                     else if (Player.facing == "left")
-                    { 
-                        player.Source = new BitmapImage(new Uri("charecter\\leftr.png", UriKind.RelativeOrAbsolute)); 
+                    {
+                        player.Source = new BitmapImage(new Uri("charecter\\leftr.png", UriKind.RelativeOrAbsolute));
                     }
 
                     else if (Player.facing == "right")
-                    { 
+                    {
                         player.Source = new BitmapImage(new Uri("charecter\\rightr.png", UriKind.RelativeOrAbsolute));
                     }
 
@@ -246,7 +242,7 @@ namespace gametop
                         Canvas.SetTop(image1, Canvas.GetTop(image1) + bossSpeed);
                     }
 
-                    
+
                 }
 
 
@@ -266,12 +262,8 @@ namespace gametop
 
                             if ((string)image2.Tag == "sphere")
                             {
-                                // Если урон еще не был нанесен, нанесите урон
-                                if (!HitSpace.hasSphereDealtDamage)
-                                {
-                                    damage = 50;
-                                    HitSpace.hasSphereDealtDamage = true;
-                                }
+                                damage = 50;
+
                             }
 
                             else if ((string)image2.Tag == "sword")
@@ -283,11 +275,8 @@ namespace gametop
                                 damage = 15;
                             }
 
-                            if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
-                            {
-                                myCanvas.Children.Remove(image2);
-                                image2.Source = null;
-                            }
+                            myCanvas.Children.Remove(image2);
+                            image2.Source = null;
 
                             bossHealth -= damage;
                             bossHealthBar.Value = bossHealth;
@@ -304,7 +293,7 @@ namespace gametop
 
                         }
 
-                       
+
                     }
                 }
             }

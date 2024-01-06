@@ -22,18 +22,20 @@ namespace gametop
     public partial class nachdio1 : Window
     {
         Player player1;
-        bool gotKey;
+        bool gotKey, gotE;
+        pause Pause;
 
         DispatcherTimer timer = new DispatcherTimer();
 
         public nachdio1()
         {
             InitializeComponent();
-            
+            myCanvas.Focus();
             player1 = new Player(player, myCanvas);
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
+            Pause = new pause(timer, player);
         }
 
         private void GameTimer(object sender, EventArgs e)
@@ -65,16 +67,34 @@ namespace gametop
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                myCanvasPAUSE.Visibility = Visibility.Visible;
+                //Pause.Visibility = Visibility.Visible;
+                timer.Stop();
+                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
+                player.Height = 238;
+                player.Width = 221;
+                Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
 
             player1.KeyDown(sender, e);
+
+            if (!gotE && Canvas.GetLeft(player) < Canvas.GetLeft(scazitel) + scazitel.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(scazitel) &&
+                Canvas.GetTop(player) < Canvas.GetTop(scazitel) + scazitel.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(scazitel))
+            {
+                keyE.Visibility = Visibility.Visible;
+                dioL.Visibility = Visibility.Visible;
+                gotE = true;
+            }
 
             if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(scazitel) + scazitel.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(scazitel) &&
                 Canvas.GetTop(player) < Canvas.GetTop(scazitel) + scazitel.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(scazitel)))
             {
+                keyE.Visibility = Visibility.Hidden;
+                dioL.Visibility = Visibility.Hidden;
                 MessageBox.Show("фраза 1", "Мужчина в маске:");
                 MessageBox.Show("фраза 2", "Мужчина в маске:");
                 MessageBox.Show("фраза 2", "Мужчина в маске:");
@@ -91,6 +111,26 @@ namespace gametop
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void exitbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (cont.Visibility == Visibility.Visible)
+            {
+                timer.Start();
+                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
+                player.Height = 166;
+                player.Width = 126;
+                myCanvasPAUSE.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void cont_Click(object sender, RoutedEventArgs e)
+        {
+            if (exitbut.Visibility == Visibility.Visible)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

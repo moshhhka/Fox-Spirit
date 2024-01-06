@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -89,7 +85,7 @@ namespace gametop
             //shootTimer.Start();
         }
 
-        
+
 
 
         //private void shootTimerEvent(object sender, EventArgs e)
@@ -229,64 +225,56 @@ namespace gametop
 
                     if ((j is Image image2 && ((string)image2.Tag == "bullet" || (string)image2.Tag == "sword" || (string)image2.Tag == "sphere")) && u is Image image3 && (string)image3.Tag == "mobe") //Убийство мобов
                     {
-                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
-                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
-                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
-                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        Rect rect1 = new Rect(Canvas.GetLeft(image2), Canvas.GetTop(image2), image2.Width, image2.Height);
+                        Rect rect2 = new Rect(Canvas.GetLeft(image3), Canvas.GetTop(image3), image3.Width, image3.Height);
+
+                        if (rect1.IntersectsWith(rect2))
                         {
 
                             // Теперь вы можете использовать zombieHealthBar
-                                int damage = 0;
+                            int damage = 0;
+                            if ((string)image2.Tag == "sphere")
+                            {
+                                damage = 50;
+                            }
 
-                                if ((string)image2.Tag == "sphere")
+
+                            else if ((string)image2.Tag == "sword")
+                            {
+                                damage = 25;
+                            }
+
+                            else if ((string)image2.Tag == "bullet")
+                            {
+                                damage = 15;
+                            }
+
+                            myCanvas.Children.Remove(image2);
+                            image2.Source = null;
+
+
+                            if (zombieBars.ContainsKey(image3))
+                            {
+                                ProgressBar zombieHealthBar = zombieBars[image3];
+                                zombieHealthBar.Value -= damage;
+                                if (zombieHealthBar.Value < 1)
                                 {
-                                    // Если урон еще не был нанесен, нанесите урон
-                                    if (!HitSpace.hasSphereDealtDamage)
+                                    myCanvas.Children.Remove(image3);
+                                    image3.Source = null;
+                                    zombieList.Remove(image3);
+                                    myCanvas.Children.Remove(zombieHealthBar);
+                                    zombieBars.Remove(image3);
+                                    score++;
+                                    if (score <= 12)
                                     {
-                                        damage = 50;
-                                        HitSpace.hasSphereDealtDamage = true;
+                                        MakeZombies();
+                                    }
+                                    if (score == 15)
+                                    {
+                                        door1.Visibility = Visibility.Visible;
                                     }
                                 }
-
-
-                                else if ((string)image2.Tag == "sword")
-                                {
-                                    damage = 25;
-                                }
-
-                                else if ((string)image2.Tag == "bullet")
-                                {
-                                    damage = 15;
-                                }
-
-                                if ((string)image2.Tag != "sphere") // Если это не sphere, удаляем сразу
-                                {
-                                    myCanvas.Children.Remove(image2);
-                                    image2.Source = null;
-                                }
-
-                                if (zombieBars.ContainsKey(image3))
-                                {
-                                    ProgressBar zombieHealthBar = zombieBars[image3];
-                                    zombieHealthBar.Value -= damage;
-                                    if (zombieHealthBar.Value < 1)
-                                    {
-                                        myCanvas.Children.Remove(image3);
-                                        image3.Source = null;
-                                        zombieList.Remove(image3);
-                                        myCanvas.Children.Remove(zombieHealthBar);
-                                        zombieBars.Remove(image3);
-                                        score++;
-                                        if (score <= 12)
-                                        {
-                                            MakeZombies();
-                                        }
-                                        if (score == 15)
-                                        {
-                                            door1.Visibility = Visibility.Visible;
-                                        }
-                                    }
-                                }
+                            }
 
 
                         }

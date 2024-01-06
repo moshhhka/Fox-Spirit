@@ -26,7 +26,7 @@ namespace gametop
         public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
 
 
-        DispatcherTimer shootTimer = new DispatcherTimer();
+        public static DispatcherTimer shootTimer = new DispatcherTimer();
 
 
         public MobeKyhnya(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image door1, Image stenka, int zombieSpeed = 3, int score = 0)

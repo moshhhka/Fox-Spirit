@@ -20,13 +20,17 @@ namespace gametop
 
         private int speed = 20;
         private Image bullet = new Image();
-        DispatcherTimer bulletTimer = new DispatcherTimer();
+        List<Bullet> bullets;
 
+        public Bullet(List<Bullet> bullets)
+        {
+            this.bullets = bullets;
+        }
 
 
         public void MakeBullet(Canvas form)
         {
-            bullet.Source = new BitmapImage(new Uri("playerbullet.png", UriKind.RelativeOrAbsolute));
+            bullet.Source = new BitmapImage(new Uri("plbul.png", UriKind.RelativeOrAbsolute));
             bullet.Height = 80;
             bullet.Width = 80;
             bullet.Tag = "bullet";
@@ -37,14 +41,10 @@ namespace gametop
             form.Children.Add(bullet);
 
 
-            bulletTimer.Interval = TimeSpan.FromMilliseconds(speed);
-            bulletTimer.Tick += new EventHandler(BulletTimerEvent);
-            bulletTimer.Start();
-
         }
 
 
-        private void BulletTimerEvent(object sender, EventArgs e)
+        public void BulletMove()
         { 
             if (direction == "left")
             {
@@ -68,10 +68,8 @@ namespace gametop
 
             if (Canvas.GetLeft(bullet) < 10 || Canvas.GetLeft(bullet) > 1800 || Canvas.GetTop(bullet) < 10 || Canvas.GetTop(bullet) > 980)
             {
-                bulletTimer.Stop();
                 bullet.Source = null;
-                bulletTimer = null;
-
+                bullets.Remove(this);
             }
 
         }

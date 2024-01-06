@@ -5,20 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:gametop"
         mc:Ignorable="d"
-        Title="Window1" Height="1080" Width="1900" WindowState="Maximized" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed" WindowStyle="None">
+        Title="Window1" Height="1080" Width="1920" WindowState="Maximized" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed" WindowStyle="None">
     <Viewbox Stretch="Fill">
-        <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Center" Width="1900">
-            <Image Height="980" Source="/татамитемно.png" Stretch="Fill" Width="1900" HorizontalAlignment="Center" Canvas.Top="100" VerticalAlignment="Top"/>
+        <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Center" Width="1920">
+            <Image Height="1080" Source="/отдых.png" Stretch="Fill" Width="1920"/>
             <Image x:Name="nps1" Height="291" Canvas.Left="361" Source="/charecter/nps2.png" Stretch="Fill" Canvas.Top="223" Width="117" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="23" Canvas.Top="44" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label x:Name="txtScore" Content="Kills: 0" Height="54" Canvas.Left="429" Canvas.Top="44" Width="223" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
-            <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1402" Canvas.Top="44" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
-            <ProgressBar x:Name="healthBar" Height="40" Canvas.Left="1580" Canvas.Top="51" Width="280" HorizontalAlignment="Left" VerticalAlignment="Top" Value="100"/>
-            <Label x:Name="txtCoins" Content="Coins: 0" Height="54" Canvas.Left="800" Canvas.Top="44" Width="233" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image x:Name="nps" Height="292" Canvas.Left="1246" Canvas.Top="248" Width="207" Source="/charecter/nps.png"/>
             <Image x:Name="player" Height="166" Canvas.Left="976" Canvas.Top="603" Width="126" Source="/charecter/down.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image x:Name="door1" Height="196" Canvas.Left="1691" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="588" Width="169"/>
-            <Image x:Name="nps2" Height="276" Canvas.Left="429" Source="/charecter/nps1.png" Stretch="Fill" Canvas.Top="769" Width="262" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="door1" Height="170" Canvas.Left="852" Source="/17922362adbe9d6414a092c6c8eb24e9-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Width="216" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="10" Visibility="Hidden"/>
+            <Image x:Name="nps2" Height="276" Canvas.Left="508" Source="/charecter/nps1.png" Stretch="Fill" Canvas.Top="686" Width="262" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image Height="174" Source="/доска2.png" Stretch="Fill" Width="346" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1564" Canvas.Top="14"/>
+            <Label x:Name="txtAmmo" Content="0" Height="56" Canvas.Left="1643" Canvas.Top="11" Width="84" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label x:Name="txtCoins" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="11" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="txtCrist" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="70" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label x:Name="txtScore" Content="0" Height="52" Canvas.Left="1643" Canvas.Top="70" Width="84" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
+            <Image x:Name="stenka" Height="182" Source="/стена_отдых.png" Stretch="Fill" Canvas.Top="898" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Canvas x:Name="myCanvasPAUSE" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
+                <Image Height="1080" Canvas.Left="597" Source="/34cbe714857d1a552557e022d724a949.jpg" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="cont" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="cont_Click"/>
+                <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click"/>
+            </Canvas>
         </Canvas>
     </Viewbox>
 </Window>

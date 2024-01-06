@@ -10,9 +10,6 @@
         <Canvas x:Name="myCanvas" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920">
             <Image Height="1080" Source="/фон_подвал.png" Stretch="Fill" Width="1920"/>
             <Image x:Name="player" Tag ="player" Height="166" Canvas.Left="908" Canvas.Top="792" Width="126" Source="/charecter/down.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label x:Name="txtAmmo" Content="Ammo: 0" Height="54" Canvas.Left="23" Canvas.Top="44" Width="222" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label x:Name="txtScore" Content="Kills: 0" Height="54" Canvas.Left="429" Canvas.Top="44" Width="223" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
-            <Label x:Name="txtHealth" Content="Health:" Height="54" Canvas.Left="1402" Canvas.Top="44" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontFamily="Segoe Script" FontWeight="Bold"/>
             <Image Tag ="coin" Height="53" Canvas.Left="626" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="53" Canvas.Left="700" Canvas.Top="435" Width="54" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="53" Canvas.Left="773" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -23,14 +20,27 @@
             <Image Tag ="coin" Height="53" Canvas.Left="272" Canvas.Top="540" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="53" Canvas.Left="272" Canvas.Top="601" Width="53" Source="/монета.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="53" Canvas.Left="343" Canvas.Top="601" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="txtCoins" Content="Coins: 0" Height="54" Canvas.Left="800" Canvas.Top="44" Width="233" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="53" Canvas.Left="1477" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1402" Canvas.Top="435" Width="53" Source="/монета.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Tag ="coin" Height="52" Canvas.Left="1477" Canvas.Top="514" Width="53" Source="/монета.png" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Image x:Name="door" Tag="door" Height="182" Canvas.Left="874" Source="/дверь_закрытая_вверху.png" Stretch="Fill" Width="180" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10"/>
             <Image x:Name="door1" Tag="door" Height="182" Canvas.Left="785" Source="/дверь_к_открытая_вверху.png" Stretch="Fill" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10" Visibility="Hidden"/>
-            <Image x:Name="stenka" Height="488" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="592" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
+            <Image x:Name="stenka" Height="155" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="925" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image Height="174" Source="/доска2.png" Stretch="Fill" Width="346" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1564" Canvas.Top="14"/>
+            <Label x:Name="txtAmmo" Content="0" Height="56" Canvas.Left="1643" Canvas.Top="11" Width="84" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label x:Name="txtCoins" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="11" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label x:Name="txtCrist" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="70" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label x:Name="txtScore" Content="0" Height="52" Canvas.Left="1643" Canvas.Top="70" Width="84" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
+            <Canvas x:Name="myCanvas1" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
+                <Image Height="1080" Canvas.Left="597" Source="/34cbe714857d1a552557e022d724a949.jpg" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="exitb" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitb_Click"/>
+                <Button x:Name="playb" Content="Начать заново" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="playb_Click"/>
+            </Canvas>
+            <Canvas x:Name="myCanvasPAUSE" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
+                <Image Height="1080" Canvas.Left="597" Source="/34cbe714857d1a552557e022d724a949.jpg" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="cont" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="cont_Click"/>
+                <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click"/>
+            </Canvas>
         </Canvas>
     </Viewbox>
 </Window>
