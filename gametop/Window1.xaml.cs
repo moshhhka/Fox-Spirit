@@ -29,7 +29,6 @@ namespace gametop
         private bool cardDrawn = false;
         public static int coins, crist;
         public static bool gotFood;
-        pause Pause;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -46,7 +45,6 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-            Pause = new pause(timer, player);
         }
 
         private void GameTimer(object sender, EventArgs e)
@@ -143,11 +141,7 @@ namespace gametop
             if (e.Key == Key.Escape)
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
-                //Pause.Visibility = Visibility.Visible;
                 timer.Stop();
-                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
-                player.Height = 238;
-                player.Width = 221;
                 Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
 

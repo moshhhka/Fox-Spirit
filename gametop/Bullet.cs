@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace gametop
 {
@@ -39,9 +40,9 @@ namespace gametop
             Canvas.SetZIndex(bullet, 1);
 
             form.Children.Add(bullet);
-
-
         }
+
+        
 
 
         public void BulletMove()

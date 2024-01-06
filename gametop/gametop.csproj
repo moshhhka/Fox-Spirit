@@ -58,6 +58,7 @@
     <Compile Include="Boss1.xaml.cs">
       <DependentUpon>Boss1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BossKyhnya.cs" />
     <Compile Include="Collise.cs" />
     <Compile Include="HitSpace.cs" />
     <Compile Include="Kyhnya1.xaml.cs">
@@ -65,6 +66,9 @@
     </Compile>
     <Compile Include="Kyhnya2.xaml.cs">
       <DependentUpon>Kyhnya2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kyhnya3.xaml.cs">
+      <DependentUpon>Kyhnya3.xaml</DependentUpon>
     </Compile>
     <Compile Include="MakeBoss.cs" />
     <Compile Include="MakeMobe.cs" />
@@ -75,9 +79,6 @@
     <Compile Include="MobeKyhnya.cs" />
     <Compile Include="nachdio1.xaml.cs">
       <DependentUpon>nachdio1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pause.xaml.cs">
-      <DependentUpon>pause.xaml</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="Room2.xaml.cs">
@@ -99,6 +100,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Kyhnya3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,10 +122,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="nachdio1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pause.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -355,6 +356,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="стена_к_внизу.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Босс1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

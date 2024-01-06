@@ -26,7 +26,7 @@
             <Image x:Name="door" Tag="door" Height="182" Canvas.Left="874" Source="/дверь_закрытая_вверху.png" Stretch="Fill" Width="180" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10"/>
             <Image x:Name="door1" Tag="door" Height="182" Canvas.Left="785" Source="/дверь_к_открытая_вверху.png" Stretch="Fill" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10" Visibility="Hidden"/>
             <Image x:Name="heal" Tag="heal" Height="107" Canvas.Left="916" Source="/heal.png" Stretch="Fill" Canvas.Top="560" Width="126" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
-            <Image x:Name="stenka" Height="488" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="592" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image x:Name="stenka" Height="155" Source="/стена_к_внизу.png" Stretch="Fill" Canvas.Top="925" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Image Height="174" Source="/доска2.png" Stretch="Fill" Width="346" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1564" Canvas.Top="14"/>
             <Label x:Name="txtAmmo" Content="0" Height="56" Canvas.Left="1643" Canvas.Top="11" Width="84" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label x:Name="txtCoins" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="11" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Top"/>

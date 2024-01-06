@@ -22,9 +22,13 @@ namespace gametop
 
         public ProgressBar zombieHealthBar;
         public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
+        public Dictionary<Image, int> zombieSpeeds = new Dictionary<Image, int>();
+        public static bool bullet_ice, poisonsworf;
+
+        // Добавьте новый таймер для восстановления скорости зомби после замораживания
+        System.Timers.Timer freezeTimer = null;
 
 
-        DispatcherTimer shootTimer = new DispatcherTimer();
 
 
         public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image door1, Image stenka, int zombieSpeed = 3, int score = 0)
@@ -47,14 +51,14 @@ namespace gametop
             zombie.Tag = "mobe";
             zombie.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
 
-            // Генерируем случайные координаты для зомби
             double zombieLeft, zombieTop;
             do
             {
                 zombieLeft = randNum.Next(0, 1595);
                 zombieTop = randNum.Next(80, 780);
             }
-            // Проверяем, что зомби не появляется слишком близко к игроку
+
+
             while (Math.Abs(Canvas.GetLeft(player) - zombieLeft) < 600 && Math.Abs(Canvas.GetTop(player) - zombieTop) < 600);
 
             Canvas.SetLeft(zombie, zombieLeft);
@@ -62,15 +66,16 @@ namespace gametop
 
             zombie.Height = 296;
             zombie.Width = 302;
+            zombieSpeeds[zombie] = 3;
+
             zombieList.Add(zombie);
             myCanvas.Children.Add(zombie);
 
             zombieHealthBar = new ProgressBar();
             zombieHealthBar.Width = 260;
             zombieHealthBar.Height = 20;
-            zombieHealthBar.Value = 100; // Устанавливаем здоровье зомби
-            zombieHealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
-            // Размещаем ProgressBar над зомби
+            zombieHealthBar.Value = 100;
+            zombieHealthBar.Maximum = 100;
             Canvas.SetLeft(zombieHealthBar, zombieLeft);
             Canvas.SetTop(zombieHealthBar, zombieTop - zombieHealthBar.Height);
             myCanvas.Children.Add(zombieHealthBar); // Добавляем ProgressBar на Canvas
@@ -79,85 +84,6 @@ namespace gametop
 
             Canvas.SetZIndex(player, 1);
             Canvas.SetZIndex(stenka, 1);
-
-            //shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
-            //shootTimer.Tick += new EventHandler(shootTimerEvent);
-            //shootTimer.Start();
-        }
-
-
-
-
-        //private void shootTimerEvent(object sender, EventArgs e)
-        //{
-        //    foreach (UIElement u in elementsCopy)
-        //    {
-        //        if (Player.playerHealth <= 0)
-        //        {
-        //            shootTimer.Stop();
-        //            return; // Выход из метода
-        //        }
-
-        //        // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
-        //        if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
-        //        {
-        //            shootTimer.Start();
-        //        }
-
-        //        if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
-        //        {
-        //            string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
-        //            MobeBullet shootBullet = new MobeBullet();
-        //            shootBullet.direction = direction;
-        //            shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
-        //            shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-        //            shootBullet.MakeMobeBullet(myCanvas);
-        //        }
-        //    }
-        //}
-
-        public string CalculateDirection(double zombieLeft, double zombieTop, double playerLeft, double playerTop)
-        {
-            // Вычислите разницу между координатами зомби и игрока
-            double deltaX = playerLeft - zombieLeft;
-            double deltaY = playerTop - zombieTop;
-
-            // Вычислите угол между зомби и игроком
-            double angle = Math.Atan2(deltaY, deltaX);
-
-            // Определите направление от зомби к игроку
-            if (angle >= -Math.PI / 8 && angle < Math.PI / 8)
-            {
-                return "right";
-            }
-            else if (angle >= Math.PI / 8 && angle < 3 * Math.PI / 8)
-            {
-                return "downright";
-            }
-            else if (angle >= 3 * Math.PI / 8 && angle < 5 * Math.PI / 8)
-            {
-                return "down";
-            }
-            else if (angle >= 5 * Math.PI / 8 && angle < 7 * Math.PI / 8)
-            {
-                return "downleft";
-            }
-            else if (angle >= 7 * Math.PI / 8 || angle < -7 * Math.PI / 8)
-            {
-                return "left";
-            }
-            else if (angle >= -7 * Math.PI / 8 && angle < -5 * Math.PI / 8)
-            {
-                return "upleft";
-            }
-            else if (angle >= -5 * Math.PI / 8 && angle < -3 * Math.PI / 8)
-            {
-                return "up";
-            }
-            else // angle >= -3 * Math.PI / 8 && angle < -Math.PI / 8
-            {
-                return "upright";
-            }
         }
 
         System.Timers.Timer timer = null;
@@ -168,6 +94,8 @@ namespace gametop
             {
                 if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
                 {
+                    int zombieSpeed = zombieSpeeds[image1];
+
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
 
@@ -235,18 +163,92 @@ namespace gametop
                             int damage = 0;
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 50;
+                                damage = 15;
+                                if (poisonsworf == true)
+                                {
+                                    image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
+                                    image3.Tag = null;
+
+                                    DispatcherTimer poisonTimer = new DispatcherTimer();
+                                    poisonTimer.Interval = TimeSpan.FromSeconds(1);
+                                    int poisonDamageCount = 0;
+                                    poisonTimer.Tick += (sender, e) =>
+                                    {
+                                        poisonDamageCount++;
+                                        if (poisonDamageCount >= 3)
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                            image3.Tag = "mobe";
+                                            poisonTimer.Stop();
+                                        }
+                                    };
+                                    poisonTimer.Start();
+                                }
                             }
 
 
                             else if ((string)image2.Tag == "sword")
                             {
-                                damage = 25;
+                                damage = 15;
+                                if (poisonsworf == true)
+                                {
+                                    DispatcherTimer poisonTimer = new DispatcherTimer();
+                                    poisonTimer.Interval = TimeSpan.FromSeconds(1);
+                                    int poisonDamageCount = 0;
+                                    poisonTimer.Tick += (sender, e) =>
+                                    {
+                                        ProgressBar zombieHealthBar = zombieBars[image3];
+                                        zombieHealthBar.Value -= 5;
+                                        poisonDamageCount++;
+                                        if (zombieHealthBar.Value < 1)
+                                        {
+                                            myCanvas.Children.Remove(image3);
+                                            image3.Source = null;
+                                            zombieList.Remove(image3);
+                                            myCanvas.Children.Remove(zombieHealthBar);
+                                            zombieBars.Remove(image3);
+                                            score++;
+                                            if (score <= 12)
+                                            {
+                                                MakeZombies();
+                                            }
+                                            if (score == 15)
+                                            {
+                                                door1.Visibility = Visibility.Visible;
+                                            }
+                                            poisonTimer.Stop();
+                                        }
+                                        else if (poisonDamageCount >= 3)
+                                        {
+                                            poisonTimer.Stop();
+                                        }
+                                    };
+                                    poisonTimer.Start();
+                                }
                             }
 
                             else if ((string)image2.Tag == "bullet")
                             {
                                 damage = 15;
+                                
+                                if (bullet_ice)
+                                {
+                                    damage = 25;
+                                    zombieSpeeds[image3] = 1;
+                                    
+                                    if (freezeTimer == null)
+                                    {
+                                        freezeTimer = new System.Timers.Timer(3000);
+                                        freezeTimer.Elapsed += (sender, e) =>
+                                        {
+                                            zombieSpeeds[image3] = 3; 
+                                            freezeTimer.Stop(); 
+                                            freezeTimer = null; 
+                                        };
+                                        freezeTimer.AutoReset = false; 
+                                        freezeTimer.Start(); 
+                                    }
+                                }
                             }
 
                             myCanvas.Children.Remove(image2);

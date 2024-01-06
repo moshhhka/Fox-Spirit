@@ -32,7 +32,6 @@ namespace gametop
         bool gotKey;
         public static int coins;
         Random randNum = new Random();
-        pause Pause;
 
         List<Image> zombieList = new List<Image>();
         List<Image> boxList = new List<Image>();
@@ -51,7 +50,7 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-            Pause = new pause(timer, player);
+            
         }
 
         public void BulletTimer_Tick()
@@ -64,6 +63,7 @@ namespace gametop
 
         private void GameTimer(object sender, EventArgs e)
         {
+
             BulletTimer_Tick();
 
             if (Player.playerHealth < 1)
@@ -170,11 +170,7 @@ namespace gametop
             if (e.Key == Key.Escape)
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
-                //Pause.Visibility = Visibility.Visible;
                 timer.Stop();
-                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
-                player.Height = 238;
-                player.Width = 221;
                 Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
         }
@@ -366,6 +362,7 @@ namespace gametop
             if (playb.Visibility == Visibility.Visible)
             {
                 RestartGame();
+                myCanvas1.Visibility = Visibility.Collapsed;
             }
         }
 

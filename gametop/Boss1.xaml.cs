@@ -28,7 +28,6 @@ namespace gametop
         public static bool gotFood;
         public static int coins, crist;
         Random randNum = new Random();
-        pause Pause;
 
         List<Image> boxList = new List<Image>();
         List<Bullet> bullets = new List<Bullet>();
@@ -46,7 +45,6 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-            Pause = new pause(timer, player);
 
         }
 
@@ -213,12 +211,8 @@ namespace gametop
             if (e.Key == Key.Escape)
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
-                //Pause.Visibility = Visibility.Visible;
                 timer.Stop();
                 MakeBoss.disTimer.Stop();
-                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
-                player.Height = 238;
-                player.Width = 221;
                 Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
         }

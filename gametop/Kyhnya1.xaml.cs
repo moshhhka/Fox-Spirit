@@ -27,7 +27,6 @@ namespace gametop
         bool gotKey;
         public static int coins;
         Random randNum = new Random();
-        pause Pause;
 
         List<Image> zombieList = new List<Image>();
         List<Image> boxList = new List<Image>();
@@ -46,7 +45,6 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-            Pause = new pause(timer, player);
 
         }
 
@@ -165,12 +163,8 @@ namespace gametop
             if (e.Key == Key.Escape)
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
-                //Pause.Visibility = Visibility.Visible;
                 timer.Stop();
                 MobeKyhnya.shootTimer.Stop();
-                player.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
-                player.Height = 238;
-                player.Width = 221;
                 Canvas.SetZIndex(myCanvasPAUSE, 1);
             }
         }
@@ -253,7 +247,7 @@ namespace gametop
             {
                 isIntersecting = false;
                 Canvas.SetLeft(box, randNum.Next(0, 1595));
-                Canvas.SetTop(box, randNum.Next(80, 780));
+                Canvas.SetTop(box, randNum.Next(100, 780));
 
                 Rect newBoxRect = new Rect(Canvas.GetLeft(box), Canvas.GetTop(box), box.Width, box.Height);
                 foreach (UIElement uiElement in myCanvas.Children)
@@ -363,6 +357,7 @@ namespace gametop
             if (playb.Visibility == Visibility.Visible)
             {
                 RestartGame();
+                myCanvas1.Visibility = Visibility.Collapsed;
             }
         }
 
