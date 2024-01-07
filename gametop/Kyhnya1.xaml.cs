@@ -133,6 +133,20 @@ namespace gametop
                     }
                 }
 
+                if (u is Image imagee1 && (string)imagee1.Tag == "heal")
+                {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(imagee1), Canvas.GetTop(imagee1), imagee1.Width, imagee1.Height);
+
+                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                    {
+
+                        myCanvas.Children.Remove(imagee1);
+                        Player.playerHealth += 10;
+
+                    }
+                }
+
                 foreach (UIElement j in elementsCopy)
                 {
 

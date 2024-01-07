@@ -175,10 +175,6 @@ namespace gametop
                 {
                     int zombieSpeed = zombieSpeeds[image1];
 
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
-
-
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
                     {
                         Canvas.SetLeft(image1, Canvas.GetLeft(image1) - zombieSpeed);
@@ -260,26 +256,29 @@ namespace gametop
                                     int poisonDamageCount = 0;
                                     poisonTimer.Tick += (sender, e) =>
                                     {
-                                        ProgressBar zombieHealthBar = zombieBars[image3];
-                                        zombieHealthBar.Value -= 5;
-                                        poisonDamageCount++;
-                                        if (zombieHealthBar.Value < 1)
+                                        if (zombieBars.ContainsKey(image3))
                                         {
-                                            myCanvas.Children.Remove(image3);
-                                            image3.Source = null;
-                                            zombieList.Remove(image3);
-                                            myCanvas.Children.Remove(zombieHealthBar);
-                                            zombieBars.Remove(image3);
-                                            score++;
-                                            if (score <= 12)
+                                            ProgressBar zombieHealthBar = zombieBars[image3];
+                                            zombieHealthBar.Value -= 5;
+                                            poisonDamageCount++;
+                                            if (zombieHealthBar.Value < 1)
                                             {
-                                                MakeZombies();
+                                                myCanvas.Children.Remove(image3);
+                                                image3.Source = null;
+                                                zombieList.Remove(image3);
+                                                myCanvas.Children.Remove(zombieHealthBar);
+                                                zombieBars.Remove(image3);
+                                                score++;
+                                                if (score <= 12)
+                                                {
+                                                    MakeZombies();
+                                                }
+                                                if (score == 15)
+                                                {
+                                                    door1.Visibility = Visibility.Visible;
+                                                }
+                                                poisonTimer.Stop();
                                             }
-                                            if (score == 15)
-                                            {
-                                                door1.Visibility = Visibility.Visible;
-                                            }
-                                            poisonTimer.Stop();
                                         }
                                         else if (poisonDamageCount >= 3)
                                         {
@@ -333,13 +332,28 @@ namespace gametop
                                         }
                                     }
 
-
                                     myCanvas.Children.Remove(image3);
                                     image3.Source = null;
                                     zombieList.Remove(image3);
                                     myCanvas.Children.Remove(zombieHealthBar);
                                     zombieBars.Remove(image3);
                                     score++;
+
+                                    double randomNumber = randNum.NextDouble();
+
+
+                                    if (randomNumber < 0.35)
+                                    {
+                                        Image coffee = new Image();
+                                        coffee.Tag = "heal";
+                                        coffee.Height = 60;
+                                        coffee.Width = 60;
+                                        coffee.Source = new BitmapImage(new Uri("heal.png", UriKind.RelativeOrAbsolute));
+                                        Canvas.SetLeft(coffee, Canvas.GetLeft(image3));
+                                        Canvas.SetTop(coffee, Canvas.GetTop(image3));
+                                        myCanvas.Children.Add(coffee);
+                                    }
+
                                     if (score <= 10)
                                     {
                                         MakeZombies();

@@ -50,7 +50,8 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-            
+            MessageBox.Show("Чтобы атаковать истользуйте \"Q\" для врыва по площади, \"Space\" для удара мечом, \"E\" для атаки лисьим огнём.");
+
         }
 
         public void BulletTimer_Tick()

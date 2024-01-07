@@ -141,6 +141,26 @@ namespace gametop
             {
                 if (u is Image image1 && (string)image1.Tag == "boss") //Движение мобов
                 {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
+
+                    if (rect1.IntersectsWith(rect2))
+                    {
+
+                        if (timer == null)
+                        {
+                            timer = new System.Timers.Timer(500);
+                            timer.Elapsed += (sender, e) =>
+                            {
+                                Player.playerHealth -= 3; // Уменьшите здоровье на 5 через секунду
+                                timer.Stop(); // Остановите таймер
+                                timer = null; // Установите таймер в null
+                            };
+                            timer.AutoReset = false; // Установите AutoReset в false, чтобы таймер сработал только один раз
+                            timer.Start(); // Запустите таймер
+                        }
+                    }
+
                     if (Canvas.GetLeft(image1) > Canvas.GetLeft(player))
                     {
                         Canvas.SetLeft(image1, Canvas.GetLeft(image1) - bossSpeed);

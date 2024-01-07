@@ -223,9 +223,6 @@
     <Resource Include="icons8-s-ключ-96.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons8-электронный-ключ-96.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icons8-клавиша-w-96.png" />
   </ItemGroup>
   <ItemGroup>

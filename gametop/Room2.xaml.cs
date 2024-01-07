@@ -24,7 +24,6 @@ namespace gametop
         Player player1;
         bool gameOver;
         int ammo = 5;
-        bool isChestOpened;
         public static int coins, crist;
         Random randNum = new Random();
 

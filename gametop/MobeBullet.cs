@@ -35,8 +35,6 @@ namespace gametop
             bulletTimer.Interval = TimeSpan.FromMilliseconds(speed);
             bulletTimer.Tick += new EventHandler(MobeBulletTimerEvent);
             bulletTimer.Start();
-
-
         }
 
 

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -28,7 +31,7 @@ namespace gametop
         // Добавьте новый таймер для восстановления скорости зомби после замораживания
         System.Timers.Timer freezeTimer = null;
 
-
+        public static DispatcherTimer disTimer = new DispatcherTimer();
 
 
         public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image door1, Image stenka, int zombieSpeed = 3, int score = 0)
@@ -41,6 +44,22 @@ namespace gametop
             this.zombieList = zombieList;
             this.door1 = door1;
             this.stenka = stenka;
+
+            disTimer.Interval = TimeSpan.FromMilliseconds(5000);
+            disTimer.Tick += new EventHandler(disTimerEvent);
+            disTimer.Start();
+        }
+
+        public async void disTimerEvent(object sender, EventArgs e)
+        {
+            foreach (UIElement u in elementsCopy)
+            {
+                if (u is Image image1 && (string)image1.Tag == "mobe")
+                {
+                    int originalSpeed = zombieSpeeds[image1];
+                    zombieSpeeds[image1] = 5;
+                }
+            }
         }
 
 
@@ -168,6 +187,7 @@ namespace gametop
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
                                     image3.Tag = null;
+                                    disTimer.Stop();
 
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
                                     poisonTimer.Interval = TimeSpan.FromSeconds(1);
@@ -180,6 +200,7 @@ namespace gametop
                                             image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
                                             image3.Tag = "mobe";
                                             poisonTimer.Stop();
+                                            disTimer.Start();
                                         }
                                     };
                                     poisonTimer.Start();
@@ -261,6 +282,10 @@ namespace gametop
                                 zombieHealthBar.Value -= damage;
                                 if (zombieHealthBar.Value < 1)
                                 {
+                                    // Сохраните позицию mobe перед его удалением
+                                    double mobeLeft = Canvas.GetLeft(image3);
+                                    double mobeTop = Canvas.GetTop(image3);
+
                                     myCanvas.Children.Remove(image3);
                                     image3.Source = null;
                                     zombieList.Remove(image3);
@@ -268,6 +293,21 @@ namespace gametop
                                     zombieBars.Remove(image3);
                                     score++;
 
+                                    // Создайте новый объект HitSpace на месте удаленного mobe
+                                    HitSpace hitSpace = new HitSpace();
+                                    hitSpace.MakeSphere(myCanvas, player);
+                                    Canvas.SetLeft(hitSpace.sphere, mobeLeft);
+                                    Canvas.SetTop(hitSpace.sphere, mobeTop);
+
+                                    // Создайте таймер для удаления объекта HitSpace через 5 секунд
+                                    DispatcherTimer sphereTimer = new DispatcherTimer();
+                                    sphereTimer.Interval = TimeSpan.FromSeconds(5);
+                                    sphereTimer.Tick += (s, e) =>
+                                    {
+                                        myCanvas.Children.Remove(hitSpace.sphere);
+                                        sphereTimer.Stop();
+                                    };
+                                    sphereTimer.Start();
 
                                     double randomNumber = randNum.NextDouble();
 

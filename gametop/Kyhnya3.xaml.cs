@@ -45,7 +45,6 @@ namespace gametop
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
-
         }
 
         public void BulletTimer_Tick()
@@ -96,6 +95,20 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
+                MobeKyhnya.foxyball = false;
+                MakeBoss.foxyball = false;
+                MakeMobe.foxyball = false;
+                BossKyhnya.foxyball = false;
+                MobeKyhnya.poisonsworf = false;
+                MakeBoss.poisonsworf = false;
+                MakeMobe.poisonsworf = false;
+                BossKyhnya.poisonsworf = false;
+                MobeKyhnya.bullet_ice = false;
+                MakeBoss.bullet_ice = false;
+                MakeMobe.bullet_ice = false;
+                BossKyhnya.bullet_ice = false;
+                Player.playerhealthBar.Maximum = 100;
+                Player.speed = 20;
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
