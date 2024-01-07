@@ -21,7 +21,7 @@ namespace gametop
         Image door1;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
-        public static bool bullet_ice, poisonsworf;
+        public static bool bullet_ice, poisonsworf, foxyball;
 
         public ProgressBar zombieHealthBar;
         public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
@@ -111,14 +111,13 @@ namespace gametop
 
                 if (u is Image image1 && (string)image1.Tag == "mobe" && zombieBars.ContainsKey(image1) && zombieBars[image1].Value > 0) //Движение мобов
                 {
-                    string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
                     MobeBullet shootBullet = new MobeBullet();
+                    string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
                     shootBullet.direction = direction;
                     shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
                     shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
                     shootBullet.MakeMobeBullet(myCanvas);
                 }
-
             }
         }
 
@@ -226,8 +225,8 @@ namespace gametop
                             if ((string)image2.Tag == "sphere")
                             {
                                 damage = 15;
-                                //if (poisonsworf == true)
-                                //{
+                                if (foxyball == true)
+                                {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
                                     image3.Tag = null;
                                     shootTimer.Stop();
@@ -247,15 +246,15 @@ namespace gametop
                                         }
                                     };
                                     poisonTimer.Start();
-                                //}
+                                }
                             }
 
 
                             else if ((string)image2.Tag == "sword")
                             {
                                 damage = 15;
-                                //if (poisonsworf == true)
-                                //{
+                                if (poisonsworf == true)
+                                {
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
                                     poisonTimer.Interval = TimeSpan.FromSeconds(1);
                                     int poisonDamageCount = 0;
@@ -288,15 +287,15 @@ namespace gametop
                                         }
                                     };
                                     poisonTimer.Start();
-                                //}
+                                }
                             }
 
                             else if ((string)image2.Tag == "bullet")
                             {
-                                //damage = 15;
+                                damage = 15;
 
-                                //if (bullet_ice)
-                                //{
+                                if (bullet_ice)
+                                {
                                     damage = 25;
                                     zombieSpeeds[image3] = 1;
 
@@ -312,7 +311,7 @@ namespace gametop
                                         freezeTimer.AutoReset = false;
                                         freezeTimer.Start();
                                     }
-                                //}
+                                }
                             }
 
                             myCanvas.Children.Remove(image2);

@@ -329,8 +329,6 @@ namespace gametop
                 zombie1.MakeZombies();
             }
 
-            
-
             boxList.Clear();
 
             for (int i = 0; i < 3; i++)
@@ -344,7 +342,8 @@ namespace gametop
             Player.goRight = false;
             gameOver = false;
 
-            
+
+            Player.playerHealth = 50;
             zombie1.score = 0;
             ammo = 5;
             coins = 0;

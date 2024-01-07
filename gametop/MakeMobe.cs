@@ -23,7 +23,7 @@ namespace gametop
         public ProgressBar zombieHealthBar;
         public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
         public Dictionary<Image, int> zombieSpeeds = new Dictionary<Image, int>();
-        public static bool bullet_ice, poisonsworf;
+        public static bool bullet_ice, poisonsworf, foxyball;
 
         // Добавьте новый таймер для восстановления скорости зомби после замораживания
         System.Timers.Timer freezeTimer = null;
@@ -164,7 +164,7 @@ namespace gametop
                             if ((string)image2.Tag == "sphere")
                             {
                                 damage = 15;
-                                if (poisonsworf == true)
+                                if (foxyball == true)
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
                                     image3.Tag = null;
@@ -267,6 +267,23 @@ namespace gametop
                                     myCanvas.Children.Remove(zombieHealthBar);
                                     zombieBars.Remove(image3);
                                     score++;
+
+
+                                    double randomNumber = randNum.NextDouble();
+
+                                    
+                                    if (randomNumber < 0.35)
+                                    {
+                                        Image coffee = new Image();
+                                        coffee.Tag = "heal";
+                                        coffee.Height = 60;
+                                        coffee.Width = 60;
+                                        coffee.Source = new BitmapImage(new Uri("heal.png", UriKind.RelativeOrAbsolute));
+                                        Canvas.SetLeft(coffee, Canvas.GetLeft(image3));
+                                        Canvas.SetTop(coffee, Canvas.GetTop(image3));
+                                        myCanvas.Children.Add(coffee);
+                                    }
+
                                     if (score <= 12)
                                     {
                                         MakeZombies();

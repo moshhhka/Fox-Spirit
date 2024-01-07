@@ -84,8 +84,8 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(door1) + door1.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
-                Room2 newRoom = new Room2();
-                Room2.coins = coins;
+                Kyhnya3 newRoom = new Kyhnya3();
+                Kyhnya3.coins = coins;
                 this.Hide();
                 timer.Stop();
                 gotKey = false;

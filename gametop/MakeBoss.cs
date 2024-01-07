@@ -24,7 +24,10 @@ namespace gametop
         double bossLeft, bossTop;
         ProgressBar bossHealthBar;
 
-        DispatcherTimer shootTimer = new DispatcherTimer();
+        public static bool bullet_ice, poisonsworf, foxyball;
+
+        // Добавьте новый таймер для восстановления скорости зомби после замораживания
+        System.Timers.Timer freezeTimer = null;
 
         public static DispatcherTimer disTimer = new DispatcherTimer();
 
@@ -38,11 +41,6 @@ namespace gametop
             this.boss = boss;
             this.chest = chest;
 
-            //shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
-            //shootTimer.Tick += new EventHandler(shootTimerEvent);
-            //shootTimer.Start();
-
-
             disTimer.Interval = TimeSpan.FromMilliseconds(5000);
             disTimer.Tick += new EventHandler(disTimerEvent);
             disTimer.Start();
@@ -54,81 +52,6 @@ namespace gametop
 
 
         System.Timers.Timer timer = null;
-
-        //private void shootTimerEvent(object sender, EventArgs e)
-        //{
-        //    foreach (UIElement u in elementsCopy)
-        //    {
-        //        if (Player.playerHealth <= 0)
-        //        {
-        //            shootTimer.Stop();
-        //            return; // Выход из метода
-        //        }
-
-        //        // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
-        //        if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
-        //        {
-        //            shootTimer.Start();
-        //        }
-
-        //        if (u is Image image1 && (string)image1.Tag == "boss") //Движение мобов
-        //        {
-        //            string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
-        //            MobeBullet shootBullet = new MobeBullet();
-        //            shootBullet.direction = direction;
-        //            shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
-        //            shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-        //            shootBullet.MakeMobeBullet(myCanvas);
-        //        }
-        //    }
-        //}
-
-
-        public string CalculateDirection(double bossLeft, double bossTop, double playerLeft, double playerTop)
-        {
-            // Вычислите разницу между координатами зомби и игрока
-            double deltaX = playerLeft - bossLeft;
-            double deltaY = playerTop - bossTop;
-
-            // Вычислите угол между зомби и игроком
-            double angle = Math.Atan2(deltaY, deltaX);
-
-            // Определите направление от зомби к игроку
-            if (angle >= -Math.PI / 8 && angle < Math.PI / 8)
-            {
-                return "right";
-            }
-            else if (angle >= Math.PI / 8 && angle < 3 * Math.PI / 8)
-            {
-                return "downright";
-            }
-            else if (angle >= 3 * Math.PI / 8 && angle < 5 * Math.PI / 8)
-            {
-                return "down";
-            }
-            else if (angle >= 5 * Math.PI / 8 && angle < 7 * Math.PI / 8)
-            {
-                return "downleft";
-            }
-            else if (angle >= 7 * Math.PI / 8 || angle < -7 * Math.PI / 8)
-            {
-                return "left";
-            }
-            else if (angle >= -7 * Math.PI / 8 && angle < -5 * Math.PI / 8)
-            {
-                return "upleft";
-            }
-            else if (angle >= -5 * Math.PI / 8 && angle < -3 * Math.PI / 8)
-            {
-                return "up";
-            }
-            else // angle >= -3 * Math.PI / 8 && angle < -Math.PI / 8
-            {
-                return "upright";
-            }
-        }
-
-
 
         public async void disTimerEvent(object sender, EventArgs e)
         {
@@ -259,20 +182,88 @@ namespace gametop
                         {
 
                             int damage = 0;
-
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 50;
+                                damage = 15;
+                                if (foxyball == true)
+                                {
+                                    image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
+                                    image3.Tag = null;
+                                    disTimer.Stop();
 
+                                    DispatcherTimer poisonTimer = new DispatcherTimer();
+                                    poisonTimer.Interval = TimeSpan.FromSeconds(1);
+                                    int poisonDamageCount = 0;
+                                    poisonTimer.Tick += (sender, e) =>
+                                    {
+                                        poisonDamageCount++;
+                                        if (poisonDamageCount >= 3)
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("boss1.png", UriKind.RelativeOrAbsolute));
+                                            image3.Tag = "boss";
+                                            poisonTimer.Stop();
+                                            disTimer.Start();
+                                        }
+                                    };
+                                    poisonTimer.Start();
+                                }
                             }
+
 
                             else if ((string)image2.Tag == "sword")
                             {
-                                damage = 50;
+                                damage = 25;
+                                if (poisonsworf == true)
+                                {
+                                    DispatcherTimer poisonTimer = new DispatcherTimer();
+                                    poisonTimer.Interval = TimeSpan.FromSeconds(1);
+                                    int poisonDamageCount = 0;
+                                    poisonTimer.Tick += (sender, e) =>
+                                    {
+                                        bossHealth -= 25;
+                                        poisonDamageCount++;
+                                        if (bossHealthBar.Value < 1)
+                                        {
+                                            myCanvas.Children.Remove(image3);
+                                            image3.Source = null;
+                                            myCanvas.Children.Remove(bossHealthBar);
+
+                                            door1.Visibility = Visibility.Visible;
+                                            chest.Visibility = Visibility.Visible;
+
+                                            poisonTimer.Stop();
+                                        }
+                                        else if (poisonDamageCount >= 3)
+                                        {
+                                            poisonTimer.Stop();
+                                        }
+                                    };
+                                    poisonTimer.Start();
+                                }
                             }
+
                             else if ((string)image2.Tag == "bullet")
                             {
                                 damage = 15;
+
+                                if (bullet_ice)
+                                {
+                                    damage = 25;
+                                    bossSpeed = 1;
+
+                                    if (freezeTimer == null)
+                                    {
+                                        freezeTimer = new System.Timers.Timer(3000);
+                                        freezeTimer.Elapsed += (sender, e) =>
+                                        {
+                                            bossSpeed = 3;
+                                            freezeTimer.Stop();
+                                            freezeTimer = null;
+                                        };
+                                        freezeTimer.AutoReset = false;
+                                        freezeTimer.Start();
+                                    }
+                                }
                             }
 
                             myCanvas.Children.Remove(image2);

@@ -22,7 +22,7 @@ namespace gametop
         double bossLeft, bossTop;
         ProgressBar bossHealthBar;
 
-        public static bool bullet_ice, poisonsworf;
+        public static bool bullet_ice, poisonsworf, foxyball;
 
         // Добавьте новый таймер для восстановления скорости зомби после замораживания
         System.Timers.Timer freezeTimer = null;
@@ -179,8 +179,8 @@ namespace gametop
                             if ((string)image2.Tag == "sphere")
                             {
                                 damage = 15;
-                                //if (poisonsworf == true)
-                                //{
+                                if (foxyball == true)
+                                {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
                                     image3.Tag = null;
                                     shootTimer.Stop();
@@ -200,15 +200,15 @@ namespace gametop
                                         }
                                     };
                                     poisonTimer.Start();
-                                //}
+                                }
                             }
 
 
                             else if ((string)image2.Tag == "sword")
                             {
                                 damage = 25;
-                                //if (poisonsworf == true)
-                                //{
+                                if (poisonsworf == true)
+                                {
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
                                     poisonTimer.Interval = TimeSpan.FromSeconds(1);
                                     int poisonDamageCount = 0;
@@ -233,15 +233,15 @@ namespace gametop
                                         }
                                     };
                                     poisonTimer.Start();
-                                //}
+                                }
                             }
 
                             else if ((string)image2.Tag == "bullet")
                             {
-                                //damage = 15;
+                                damage = 15;
 
-                                //if (bullet_ice)
-                                //{
+                                if (bullet_ice)
+                                {
                                     damage = 25;
                                     bossSpeed = 1;
 
@@ -257,7 +257,7 @@ namespace gametop
                                         freezeTimer.AutoReset = false;
                                         freezeTimer.Start();
                                     }
-                                //}
+                                }
                             }
 
                             myCanvas.Children.Remove(image2);

@@ -77,17 +77,17 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(scazitel) + scazitel.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(scazitel))
             {
-                keyE.Visibility = Visibility.Visible;
+                keyF.Visibility = Visibility.Visible;
                 dioL.Visibility = Visibility.Visible;
                 gotE = true;
             }
 
-            if (e.Key == Key.E && (Canvas.GetLeft(player) < Canvas.GetLeft(scazitel) + scazitel.ActualWidth &&
+            if (e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(scazitel) + scazitel.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(scazitel) &&
                 Canvas.GetTop(player) < Canvas.GetTop(scazitel) + scazitel.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(scazitel)))
             {
-                keyE.Visibility = Visibility.Hidden;
+                keyF.Visibility = Visibility.Hidden;
                 dioL.Visibility = Visibility.Hidden;
                 MessageBox.Show("фраза 1", "Мужчина в маске:");
                 MessageBox.Show("фраза 2", "Мужчина в маске:");

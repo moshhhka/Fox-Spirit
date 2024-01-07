@@ -139,20 +139,13 @@ namespace gametop
 
                     if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
                     {
-                        isChestOpened = true;
 
-                        heal.Visibility = Visibility.Hidden; // Сундук
-                        Player.playerHealth = 100;
+                        myCanvas.Children.Remove(imagee1);
+                        Player.playerHealth += 10;
 
                     }
                 }
             }
-
-            if (zombie1.score == 15 && !isChestOpened) // Добавить !isChestOpened
-            {
-                heal.Visibility = Visibility.Visible;
-            }
-
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл

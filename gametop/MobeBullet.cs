@@ -20,7 +20,6 @@ namespace gametop
         DispatcherTimer bulletTimer = new DispatcherTimer();
 
 
-
         public void MakeMobeBullet(Canvas form)
         {
             bullet.Source = new BitmapImage(new Uri("mobebullet.png", UriKind.RelativeOrAbsolute));
@@ -32,7 +31,6 @@ namespace gametop
             Canvas.SetZIndex(bullet, 1);
 
             form.Children.Add(bullet);
-
 
             bulletTimer.Interval = TimeSpan.FromMilliseconds(speed);
             bulletTimer.Tick += new EventHandler(MobeBulletTimerEvent);

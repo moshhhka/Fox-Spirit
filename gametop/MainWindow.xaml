@@ -32,14 +32,14 @@
             <Label x:Name="txtCrist" Content="0" Height="54" Canvas.Left="1801" Canvas.Top="70" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label x:Name="txtScore" Content="0" Height="52" Canvas.Left="1643" Canvas.Top="70" Width="84" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script"/>
             <Canvas x:Name="myCanvas1" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
-                <Image Height="1080" Canvas.Left="597" Source="/34cbe714857d1a552557e022d724a949.jpg" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
-                <Button x:Name="exitb" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitb_Click"/>
-                <Button x:Name="playb" Content="Начать заново" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="playb_Click"/>
+                <Image Height="1080" Canvas.Left="597" Source="/losewind.png" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="exitb" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitb_Click" FontFamily="Segoe Print" FontSize="22" Background="#FF6B4A4A"/>
+                <Button x:Name="playb" Content="Начать заново" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="playb_Click" FontSize="22" FontFamily="Segoe Print" Background="#FF82A97F"/>
             </Canvas>
             <Canvas x:Name="myCanvasPAUSE" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
-                <Image Height="1080" Canvas.Left="597" Source="/34cbe714857d1a552557e022d724a949.jpg" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
-                <Button x:Name="cont" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="cont_Click"/>
-                <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click"/>
+                <Image Height="1080" Canvas.Left="597" Source="/pausewind.png" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="cont" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="cont_Click" FontFamily="Segoe Print" Background="#FF6B4A4A" FontSize="22"/>
+                <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click" FontFamily="Segoe Print" Background="#FF82A97F" FontSize="22"/>
             </Canvas>
         </Canvas>
     </Viewbox>
