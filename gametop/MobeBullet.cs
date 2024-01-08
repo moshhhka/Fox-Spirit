@@ -39,48 +39,36 @@ namespace gametop
 
         private void MobeBulletTimerEvent(object sender, EventArgs e)
         {
-            if (direction == "left")
+            switch (direction)
             {
-                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
-            }
-
-            if (direction == "right")
-            {
-                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
-            }
-
-            if (direction == "up")
-            {
-                Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
-            }
-
-            if (direction == "down")
-            {
-                Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
-            }
-
-            if (direction == "upleft")
-            {
-                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
-                Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
-            }
-
-            if (direction == "upright")
-            {
-                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
-                Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
-            }
-
-            if (direction == "downleft")
-            {
-                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
-                Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
-            }
-
-            if (direction == "downright")
-            {
-                Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
-                Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
+                case "left":
+                    Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
+                    break;
+                case "right":
+                    Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
+                    break;
+                case "up":
+                    Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
+                    break;
+                case "down":
+                    Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
+                    break;
+                case "upleft":
+                    Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
+                    Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
+                    break;
+                case "upright":
+                    Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
+                    Canvas.SetTop(bullet, Canvas.GetTop(bullet) - speed);
+                    break;
+                case "downleft":
+                    Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) - speed);
+                    Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
+                    break;
+                case "downright":
+                    Canvas.SetLeft(bullet, Canvas.GetLeft(bullet) + speed);
+                    Canvas.SetTop(bullet, Canvas.GetTop(bullet) + speed);
+                    break;
             }
 
 

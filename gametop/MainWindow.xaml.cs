@@ -75,13 +75,15 @@ namespace gametop
             MakeMobe.MobeKotelnaya = false;
             MakeMobe.MobeBani = false;
 
-            Random rand = new Random();
+            Random randNum = new Random();
             int choice;
             do
             {
-                choice = rand.Next(3);
+                choice = randNum.Next(3);
             }
-            while ((choice == 0 && MakeMobe.WasMobeKyhnya) || (choice == 1 && MakeMobe.WasMobeKotelnaya) || (choice == 2 && MakeMobe.WasMobeBani));
+            while ((choice == 0 && (MakeMobe.WasMobeKyhnya || MakeMobe.MobeKyhnya)) ||
+                   (choice == 1 && (MakeMobe.WasMobeKotelnaya || MakeMobe.MobeKotelnaya)) ||
+                   (choice == 2 && (MakeMobe.WasMobeBani || MakeMobe.MobeBani)));
 
             switch (choice)
             {

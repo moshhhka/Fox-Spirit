@@ -124,12 +124,6 @@ namespace gametop
                     return; // Выход из метода
                 }
 
-                // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
-                if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
-                {
-                    shootTimer.Start();
-                }
-
                 if (u is Image image1 && (string)image1.Tag == "mobe" && zombieBars.ContainsKey(image1) && zombieBars[image1].Value > 0) //Движение мобов
                 {
                     MobeBullet shootBullet = new MobeBullet();

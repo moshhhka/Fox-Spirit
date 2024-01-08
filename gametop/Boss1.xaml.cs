@@ -68,7 +68,9 @@ namespace gametop
             {
                 choice = randNum.Next(3);
             }
-            while ((choice == 0 && MakeBoss.WasBossKyhnya) || (choice == 1 && MakeBoss.WasBossKotelnaya) || (choice == 2 && MakeBoss.WasBossBani));
+            while ((choice == 0 && (MakeBoss.WasBossKyhnya || MakeBoss.BossKyhnya)) ||
+                   (choice == 1 && (MakeBoss.WasBossKotelnaya || MakeBoss.BossKotelnaya)) ||
+                   (choice == 2 && (MakeBoss.WasBossBani || MakeBoss.BossBani)));
 
             switch (choice)
             {

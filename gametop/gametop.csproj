@@ -68,6 +68,9 @@
       <DependentUpon>Boss1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Collise.cs" />
+    <Compile Include="final.xaml.cs">
+      <DependentUpon>final.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HitSpace.cs" />
     <Compile Include="Kyhnya1.xaml.cs">
       <DependentUpon>Kyhnya1.xaml</DependentUpon>
@@ -109,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Boss1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="final.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -484,6 +491,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="тазик.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\Чашка.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="кабинет.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="куст1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="куст2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="склянка.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="урна.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
