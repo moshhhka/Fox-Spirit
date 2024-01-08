@@ -20,7 +20,7 @@ namespace gametop
     /// </summary>
     public partial class Bani3 : Window
     {
-        BossBani boss1;
+        MakeBoss boss1;
         Player player1;
         bool gameOver;
         int ammo = 5;
@@ -42,7 +42,8 @@ namespace gametop
             InitializeComponent();
             myCanvas.Focus();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            boss1 = new BossBani(player, elementsCopy, myCanvas, door1, chest, stenka);
+            SetRandomMobe();
+            boss1 = new MakeBoss(player, elementsCopy, myCanvas, door1, chest, stenka);
             player1 = new Player(player, myCanvas);
             RestartGame();
 
@@ -53,6 +54,43 @@ namespace gametop
             speedBoostTimer = new DispatcherTimer();
             speedBoostTimer.Interval = TimeSpan.FromMilliseconds(200);
             speedBoostTimer.Tick += SpeedBoostTimer_Tick;
+        }
+
+        public static void SetRandomMobe()
+        {
+            MakeBoss.BossKyhnya = false;
+            MakeBoss.BossKotelnaya = false;
+            MakeBoss.BossBani = false;
+
+            Random randNum = new Random();
+            int choice;
+            do
+            {
+                choice = randNum.Next(3);
+            }
+            while ((choice == 0 && MakeBoss.WasBossKyhnya) || (choice == 1 && MakeBoss.WasBossKotelnaya) || (choice == 2 && MakeBoss.WasBossBani));
+
+            switch (choice)
+            {
+                case 0:
+                    MakeBoss.BossKyhnya = true;
+                    MakeBoss.WasBossKyhnya = true;
+                    MakeBoss.WasBossKotelnaya = false;
+                    MakeBoss.WasBossBani = false;
+                    break;
+                case 1:
+                    MakeBoss.BossKotelnaya = true;
+                    MakeBoss.WasBossKyhnya = false;
+                    MakeBoss.WasBossKotelnaya = true;
+                    MakeBoss.WasBossBani = false;
+                    break;
+                case 2:
+                    MakeBoss.BossBani = true;
+                    MakeBoss.WasBossKyhnya = false;
+                    MakeBoss.WasBossKotelnaya = false;
+                    MakeBoss.WasBossBani = true;
+                    break;
+            }
         }
 
         public void BulletTimer_Tick()
@@ -80,8 +118,10 @@ namespace gametop
                 player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
                 player.Height = 180;
                 player.Width = 220;
-                BossBani.disTimer.Stop();
-                BossBani.shootTimer.Stop();
+                MakeBoss.disTimer.Stop();
+                MakeBoss.disbaniTimer.Stop();
+                MakeBoss.shootbaniTimer.Stop();
+                MakeBoss.shootTimer.Stop();
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
@@ -110,18 +150,12 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
-                MobeKyhnya.foxyball = false;
                 MakeBoss.foxyball = false;
                 MakeMobe.foxyball = false;
-                BossKyhnya.foxyball = false;
-                MobeKyhnya.poisonsworf = false;
                 MakeBoss.poisonsworf = false;
                 MakeMobe.poisonsworf = false;
-                BossKyhnya.poisonsworf = false;
-                MobeKyhnya.bullet_ice = false;
                 MakeBoss.bullet_ice = false;
                 MakeMobe.bullet_ice = false;
-                BossKyhnya.bullet_ice = false;
                 Player.playerhealthBar.Maximum = 100;
                 Player.speed = 20;
             }
@@ -264,8 +298,10 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
-                BossBani.disTimer.Stop();
-                BossBani.shootTimer.Stop();
+                MakeBoss.disTimer.Stop();
+                MakeBoss.disbaniTimer.Stop();
+                MakeBoss.shootbaniTimer.Stop();
+                MakeBoss.shootTimer.Stop();
                 Canvas.SetZIndex(myCanvasPAUSE, 9999);
             }
 
@@ -490,7 +526,7 @@ namespace gametop
             Player.goRight = false;
             gameOver = false;
 
-            boss1.MakeBoss();
+            boss1.MakeBoss1();
             
             ammo = 5;
 
@@ -521,8 +557,10 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
-                BossBani.disTimer.Start();
-                BossBani.shootTimer.Start();
+                MakeBoss.disTimer.Start();
+                MakeBoss.disbaniTimer.Start();
+                MakeBoss.shootbaniTimer.Start();
+                MakeBoss.shootTimer.Start();
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

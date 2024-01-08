@@ -154,10 +154,8 @@ namespace gametop
                     {
                         myCanvas.Children.Remove(x);
                         MessageBox.Show("Вы получили бафф \"Холодное сердце\", который делает ваши пули ледяными. Теперь вы можете замедлять врагов на 3 секунды");
-                        MobeKyhnya.bullet_ice = true;
                         MakeBoss.bullet_ice = true;
                         MakeMobe.bullet_ice = true;
-                        BossKyhnya.bullet_ice = true;
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -175,10 +173,8 @@ namespace gametop
                     {
                         myCanvas.Children.Remove(x);
                         MessageBox.Show("Вы получили бафф \"Лисьи духи\". Теперь ваша атака по площади превращает врагов в безобидных лисичек, но всего на 3 секунды");
-                        MobeKyhnya.foxyball = true;
                         MakeBoss.foxyball = true;
                         MakeMobe.foxyball = true;
-                        BossKyhnya.foxyball = true;
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -196,10 +192,8 @@ namespace gametop
                     {
                         myCanvas.Children.Remove(x);
                         MessageBox.Show("Вы получили бафф \"Змеиный укус\", который делает ваш клинок ядовитым. Теперь вы можете отравляете врагов и им на протяжении 3 секунд наносится постоянный урон в размере 25");
-                        MobeKyhnya.poisonsworf = true;
                         MakeBoss.poisonsworf = true;
                         MakeMobe.poisonsworf = true;
-                        BossKyhnya.poisonsworf = true;
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;

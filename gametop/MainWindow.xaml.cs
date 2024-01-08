@@ -41,11 +41,13 @@ namespace gametop
         DispatcherTimer timer = new DispatcherTimer();
         public DispatcherTimer speedBoostTimer;
 
+
         public MainWindow()
         {
             InitializeComponent();
             myCanvas.Focus();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
+            SetRandomMobe();
             zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas);
             RestartGame();
@@ -67,6 +69,43 @@ namespace gametop
             }
         }
 
+        public static void SetRandomMobe()
+        {
+            MakeMobe.MobeKyhnya = false;
+            MakeMobe.MobeKotelnaya = false;
+            MakeMobe.MobeBani = false;
+
+            Random rand = new Random();
+            int choice;
+            do
+            {
+                choice = rand.Next(3);
+            }
+            while ((choice == 0 && MakeMobe.WasMobeKyhnya) || (choice == 1 && MakeMobe.WasMobeKotelnaya) || (choice == 2 && MakeMobe.WasMobeBani));
+
+            switch (choice)
+            {
+                case 0:
+                    MakeMobe.MobeKyhnya = true;
+                    MakeMobe.WasMobeKyhnya = true;
+                    MakeMobe.WasMobeKotelnaya = false;
+                    MakeMobe.WasMobeBani = false;
+                    break;
+                case 1:
+                    MakeMobe.MobeKotelnaya = true;
+                    MakeMobe.WasMobeKyhnya = false;
+                    MakeMobe.WasMobeKotelnaya = true;
+                    MakeMobe.WasMobeBani = false;
+                    break;
+                case 2:
+                    MakeMobe.MobeBani = true;
+                    MakeMobe.WasMobeKyhnya = false;
+                    MakeMobe.WasMobeKotelnaya = false;
+                    MakeMobe.WasMobeBani = true;
+                    break;
+            }
+        }
+
         private void SpeedBoostTimer_Tick(object sender, EventArgs e)
         {
             Player.speed = originalspeed;
@@ -85,6 +124,8 @@ namespace gametop
                 player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
                 player.Height = 180;
                 player.Width = 220;
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
@@ -161,27 +202,54 @@ namespace gametop
                     {
 
                         myCanvas.Children.Remove(imagee1);
-                        Player.playerHealth += 10;
+                        Player.playerHealth += 15;
 
                     }
                 }
 
                 foreach (UIElement j in elementsCopy)
                 {
-                    if (j is Image image4 && (string)image4.Tag == "box" && u is Image image5 && ((string)image5.Tag == "bullet" || (string)image5.Tag == "sword" || (string)image5.Tag == "sphere")) //Урон по персонажу пулями
+                    if (j is Image image6 && (string)image6.Tag == "box" && u is Image image7 && ((string)image7.Tag == "bullet" || (string)image7.Tag == "sword" || (string)image7.Tag == "sphere"))
+                    {
+                        if (Canvas.GetLeft(image7) < Canvas.GetLeft(image6) + image6.ActualWidth &&
+                        Canvas.GetLeft(image7) + image7.ActualWidth > Canvas.GetLeft(image6) &&
+                        Canvas.GetTop(image7) < Canvas.GetTop(image6) + image6.ActualHeight &&
+                        Canvas.GetTop(image7) + image7.ActualHeight > Canvas.GetTop(image6))
+                        {
+                            myCanvas.Children.Remove(image6);
+                            image6.Source = null;
+                            myCanvas.Children.Remove(image7);
+                            image7.Source = null;
+                        }
+                    }
+
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player")
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
+                            Player.playerHealth -= 2;
+                            myCanvas.Children.Remove(image2);
+                            image2.Source = null;
+                        }
+                    }
+
+                    if (j is Image image4 && (string)image4.Tag == "mobesphere" && u is Image image5 && (string)image5.Tag == "player")
                     {
                         if (Canvas.GetLeft(image5) < Canvas.GetLeft(image4) + image4.ActualWidth &&
                         Canvas.GetLeft(image5) + image5.ActualWidth > Canvas.GetLeft(image4) &&
                         Canvas.GetTop(image5) < Canvas.GetTop(image4) + image4.ActualHeight &&
                         Canvas.GetTop(image5) + image5.ActualHeight > Canvas.GetTop(image4))
                         {
+                            Player.playerHealth -= 5;
                             myCanvas.Children.Remove(image4);
                             image4.Source = null;
-                            myCanvas.Children.Remove(image5);
-                            image5.Source = null;
                         }
                     }
                 }
+
 
             }
 
@@ -198,7 +266,38 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
+                MakeMobe.shootTimer.Start();
+                MakeMobe.disTimer.Start();
                 Canvas.SetZIndex(myCanvasPAUSE, 9999);
+            }
+
+            if (e.Key == Key.LeftShift)
+            {
+                originalImage = player.Source;
+
+                Player.speed = 45;
+
+                if (Player.facing == "down")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\downs.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "up")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\ups.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "left")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\lefts.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "right")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\rights.png", UriKind.RelativeOrAbsolute));
+                }
+
+                speedBoostTimer.Start();
             }
         }
 
@@ -402,6 +501,8 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
+                MakeMobe.shootTimer.Start();
+                MakeMobe.disTimer.Start();
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

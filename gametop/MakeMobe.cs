@@ -23,6 +23,10 @@ namespace gametop
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
 
+        public static bool MobeKyhnya, MobeKotelnaya, MobeBani;
+        public static bool WasMobeKyhnya, WasMobeKotelnaya, WasMobeBani;
+
+
         public ProgressBar zombieHealthBar;
         public static Dictionary<Image, ProgressBar> zombieBars = new Dictionary<Image, ProgressBar>();
         public Dictionary<Image, int> zombieSpeeds = new Dictionary<Image, int>();
@@ -31,6 +35,8 @@ namespace gametop
         // Добавьте новый таймер для восстановления скорости зомби после замораживания
         System.Timers.Timer freezeTimer = null;
 
+        public static DispatcherTimer disTimer = new DispatcherTimer();
+        public static DispatcherTimer shootTimer = new DispatcherTimer();
 
         public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image door1, Image stenka, int zombieSpeed = 3, int score = 0)
         {
@@ -44,13 +50,24 @@ namespace gametop
             this.stenka = stenka;
         }
 
-
         public void MakeZombies() // Создание мобов
         {
-
             Image zombie = new Image();
             zombie.Tag = "mobe";
-            zombie.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+
+            if (MobeBani)
+            {
+                zombie.Source = new BitmapImage(new Uri("charecter\\mobebani.png", UriKind.RelativeOrAbsolute));
+            }
+            else if (MobeKyhnya)
+            {
+                zombie.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
+            }
+            else if (MobeKotelnaya)
+            {
+                zombie.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+            }
+
 
             double zombieLeft, zombieTop;
             do
@@ -85,6 +102,131 @@ namespace gametop
 
             Canvas.SetZIndex(player, 1);
             Canvas.SetZIndex(stenka, 1);
+
+            shootTimer.Interval = TimeSpan.FromMilliseconds(2800);
+            shootTimer.Tick += new EventHandler(shootTimerEvent);
+            shootTimer.Start();
+
+            disTimer.Interval = TimeSpan.FromMilliseconds(3000);
+            disTimer.Tick += new EventHandler(disTimerEvent);
+            disTimer.Start();
+        }
+
+        private void shootTimerEvent(object sender, EventArgs e)
+        {
+            if (!MobeKyhnya) return;
+
+            foreach (UIElement u in elementsCopy)
+            {
+                if (Player.playerHealth <= 0)
+                {
+                    shootTimer.Stop();
+                    return; // Выход из метода
+                }
+
+                // Если здоровье игрока больше 0, но таймер остановлен, запустите таймер
+                if (Player.playerHealth > 0 && !shootTimer.IsEnabled)
+                {
+                    shootTimer.Start();
+                }
+
+                if (u is Image image1 && (string)image1.Tag == "mobe" && zombieBars.ContainsKey(image1) && zombieBars[image1].Value > 0) //Движение мобов
+                {
+                    MobeBullet shootBullet = new MobeBullet();
+                    string direction = CalculateDirection(Canvas.GetLeft(image1), Canvas.GetTop(image1), Canvas.GetLeft(player), Canvas.GetTop(player));
+                    shootBullet.direction = direction;
+                    shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
+                    shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
+                    string bulname = "mobebullet.png";
+                    shootBullet.MakeMobeBullet(myCanvas, bulname);
+                }
+            }
+        }
+
+        public string CalculateDirection(double zombieLeft, double zombieTop, double playerLeft, double playerTop)
+        {
+            // Вычислите разницу между координатами зомби и игрока
+            double deltaX = playerLeft - zombieLeft;
+            double deltaY = playerTop - zombieTop;
+
+            // Вычислите угол между зомби и игроком
+            double angle = Math.Atan2(deltaY, deltaX);
+
+            // Определите направление от зомби к игроку
+            if (angle >= -Math.PI / 8 && angle < Math.PI / 8)
+            {
+                return "right";
+            }
+            else if (angle >= Math.PI / 8 && angle < 3 * Math.PI / 8)
+            {
+                return "downright";
+            }
+            else if (angle >= 3 * Math.PI / 8 && angle < 5 * Math.PI / 8)
+            {
+                return "down";
+            }
+            else if (angle >= 5 * Math.PI / 8 && angle < 7 * Math.PI / 8)
+            {
+                return "downleft";
+            }
+            else if (angle >= 7 * Math.PI / 8 || angle < -7 * Math.PI / 8)
+            {
+                return "left";
+            }
+            else if (angle >= -7 * Math.PI / 8 && angle < -5 * Math.PI / 8)
+            {
+                return "upleft";
+            }
+            else if (angle >= -5 * Math.PI / 8 && angle < -3 * Math.PI / 8)
+            {
+                return "up";
+            }
+            else // angle >= -3 * Math.PI / 8 && angle < -Math.PI / 8
+            {
+                return "upright";
+            }
+        }
+
+        public async void disTimerEvent(object sender, EventArgs e)
+        {
+            if (!MobeBani) return;
+
+            foreach (UIElement u in elementsCopy)
+            {
+                if (u is Image image1 && (string)image1.Tag == "mobe")
+                {
+                    int originalSpeed = zombieSpeeds[image1];
+
+                    //// Генерируем случайное время задержки от 1 до 5 секунд
+                    int delay = randNum.Next(1, 3) * 1000;
+
+                    //// Создаем новый таймер, который будет работать после случайной задержки
+                    await Task.Delay(delay);
+
+                    zombieSpeeds[image1] = 15;
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        image1.Source = new BitmapImage(new Uri("charecter\\bany.png", UriKind.RelativeOrAbsolute));
+                    });
+
+                    DispatcherTimer speedResetTimer = new DispatcherTimer();
+                    speedResetTimer.Interval = TimeSpan.FromSeconds(1);
+                    speedResetTimer.Tick += (s, ev) =>
+                    {
+                        // Возвращаем исходную скорость зомби
+                        zombieSpeeds[image1] = originalSpeed;
+
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            image1.Source = new BitmapImage(new Uri("charecter\\mobebani.png", UriKind.RelativeOrAbsolute));
+                        });
+
+                        speedResetTimer.Stop();
+                    };
+                    speedResetTimer.Start();
+                }
+            }
         }
 
         System.Timers.Timer timer = null;
@@ -103,7 +245,7 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2))
                     {
 
-                        if (timer == null)
+                        if (timer == null && (MobeBani || MobeKotelnaya))
                         {
                             timer = new System.Timers.Timer(500);
                             timer.Elapsed += (sender, e) =>
@@ -164,11 +306,13 @@ namespace gametop
                             int damage = 0;
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 15;
+                                damage = 50;
                                 if (foxyball == true)
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
                                     image3.Tag = null;
+                                    disTimer.Stop();
+                                    shootTimer.Stop();
 
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
                                     poisonTimer.Interval = TimeSpan.FromSeconds(1);
@@ -178,9 +322,23 @@ namespace gametop
                                         poisonDamageCount++;
                                         if (poisonDamageCount >= 3)
                                         {
-                                            image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                            if (MobeBani)
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\mobebani.png", UriKind.RelativeOrAbsolute));
+                                            }
+                                            else if (MobeKyhnya)
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
+                                            }
+                                            else if (MobeKotelnaya)
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                            }
+
                                             image3.Tag = "mobe";
                                             poisonTimer.Stop();
+                                            disTimer.Start();
+                                            shootTimer.Start();
                                         }
                                     };
                                     poisonTimer.Start();
@@ -197,38 +355,63 @@ namespace gametop
                                     int poisonDamageCount = 0;
                                     poisonTimer.Tick += (sender, e) =>
                                     {
-                                        ProgressBar zombieHealthBar = zombieBars[image3];
-                                        zombieHealthBar.Value -= 5;
-                                        poisonDamageCount++;
-
-                                        Application.Current.Dispatcher.Invoke(() =>
+                                        if (zombieBars.ContainsKey(image3))
                                         {
-                                            image3.Source = new BitmapImage(new Uri("charecter\\kotp.png", UriKind.RelativeOrAbsolute));
-                                        });
+                                            ProgressBar zombieHealthBar = zombieBars[image3];
+                                            zombieHealthBar.Value -= 5;
+                                            poisonDamageCount++;
 
-                                        if (zombieHealthBar.Value < 1)
-                                        {
-                                            myCanvas.Children.Remove(image3);
-                                            image3.Source = null;
-                                            zombieList.Remove(image3);
-                                            myCanvas.Children.Remove(zombieHealthBar);
-                                            zombieBars.Remove(image3);
-                                            score++;
-                                            if (score <= 12)
+                                            Application.Current.Dispatcher.Invoke(() =>
                                             {
-                                                MakeZombies();
-                                            }
-                                            if (score == 15)
+                                                if (MobeBani)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\banp.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                                else if (MobeKyhnya)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\kyhp.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                                else if (MobeKotelnaya)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\kotp.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                            });
+
+                                            if (zombieHealthBar.Value < 1)
                                             {
-                                                door1.Visibility = Visibility.Visible;
+                                                myCanvas.Children.Remove(image3);
+                                                image3.Source = null;
+                                                zombieList.Remove(image3);
+                                                myCanvas.Children.Remove(zombieHealthBar);
+                                                zombieBars.Remove(image3);
+                                                score++;
+                                                if (score <= 12)
+                                                {
+                                                    MakeZombies();
+                                                }
+                                                if (score == 15)
+                                                {
+                                                    door1.Visibility = Visibility.Visible;
+                                                }
+                                                poisonTimer.Stop();
                                             }
-                                            poisonTimer.Stop();
                                         }
                                         else if (poisonDamageCount >= 3)
                                         {
                                             Application.Current.Dispatcher.Invoke(() =>
                                             {
-                                                image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                                if (MobeBani)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\mobebani.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                                else if (MobeKyhnya)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                                else if (MobeKotelnaya)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                                }
                                             });
                                             poisonTimer.Stop();
                                         }
@@ -247,7 +430,18 @@ namespace gametop
                                     zombieSpeeds[image3] = 1;
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
-                                        image3.Source = new BitmapImage(new Uri("charecter\\kotz.png", UriKind.RelativeOrAbsolute));
+                                        if (MobeBani)
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\banz.png", UriKind.RelativeOrAbsolute));
+                                        }
+                                        else if (MobeKyhnya)
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\kyhz.png", UriKind.RelativeOrAbsolute));
+                                        }
+                                        else if (MobeKotelnaya)
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\kotz.png", UriKind.RelativeOrAbsolute));
+                                        }
                                     });
 
                                     if (freezeTimer == null)
@@ -258,7 +452,18 @@ namespace gametop
                                             zombieSpeeds[image3] = 3;
                                             Application.Current.Dispatcher.Invoke(() =>
                                             {
-                                                image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                                if (MobeBani)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\mobebani.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                                else if (MobeKyhnya)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
+                                                }
+                                                else if (MobeKotelnaya)
+                                                {
+                                                    image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                                }
                                             });
                                             freezeTimer.Stop(); 
                                             freezeTimer = null; 
@@ -290,9 +495,28 @@ namespace gametop
                                     zombieBars.Remove(image3);
                                     score++;
 
+                                    if (MobeBani)
+                                    {
+                                        // Создайте новый объект HitSpace на месте удаленного mobe
+                                        MobeHitSpace hitSpace = new MobeHitSpace();
+                                        hitSpace.MakeSphere(myCanvas, player);
+                                        Canvas.SetLeft(hitSpace.sphere, mobeLeft);
+                                        Canvas.SetTop(hitSpace.sphere, mobeTop);
+
+                                        // Создайте таймер для удаления объекта HitSpace через 5 секунд
+                                        DispatcherTimer sphereTimer = new DispatcherTimer();
+                                        sphereTimer.Interval = TimeSpan.FromSeconds(5);
+                                        sphereTimer.Tick += (s, e) =>
+                                        {
+                                            myCanvas.Children.Remove(hitSpace.sphere);
+                                            sphereTimer.Stop();
+                                        };
+                                        sphereTimer.Start();
+                                    }
+
                                     double randomNumber = randNum.NextDouble();
 
-                                    
+
                                     if (randomNumber < 0.3)
                                     {
                                         Image coffee = new Image();

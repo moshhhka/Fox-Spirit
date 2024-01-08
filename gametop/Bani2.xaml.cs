@@ -20,7 +20,7 @@ namespace gametop
     /// </summary>
     public partial class Bani2 : Window
     {
-        MobeBani zombie1;
+        MakeMobe zombie1;
         Player player1;
         bool gameOver;
         int ammo = 5;
@@ -41,7 +41,7 @@ namespace gametop
             InitializeComponent();
             myCanvas.Focus();
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MobeBani(player, elementsCopy, zombieList, myCanvas, door1, stenka);
+            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas);
             RestartGame();
 
@@ -79,7 +79,8 @@ namespace gametop
                 player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
                 player.Height = 180;
                 player.Width = 220;
-                MobeBani.disTimer.Stop();
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
@@ -216,7 +217,8 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
-                MobeBani.disTimer.Stop();
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 Canvas.SetZIndex(myCanvasPAUSE, 9999);
             }
 
@@ -375,7 +377,7 @@ namespace gametop
 
             List<ProgressBar> barsToRemove = new List<ProgressBar>();
 
-            foreach (ProgressBar zombieHealthBar in MobeBani.zombieBars.Values)
+            foreach (ProgressBar zombieHealthBar in MakeMobe.zombieBars.Values)
             {
                 barsToRemove.Add(zombieHealthBar);
             }
@@ -448,7 +450,8 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
-                MobeBani.disTimer.Start();
+                MakeMobe.shootTimer.Start();
+                MakeMobe.disTimer.Start();
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

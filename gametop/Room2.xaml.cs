@@ -79,6 +79,8 @@ namespace gametop
                 player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
                 player.Height = 180;
                 player.Width = 220;
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
@@ -153,7 +155,7 @@ namespace gametop
                     {
 
                         myCanvas.Children.Remove(imagee1);
-                        Player.playerHealth += 10;
+                        Player.playerHealth += 15;
 
                     }
                 }
@@ -173,6 +175,32 @@ namespace gametop
                             image7.Source = null;
                         }
                     }
+
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player")
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
+                            Player.playerHealth -= 2;
+                            myCanvas.Children.Remove(image2);
+                            image2.Source = null;
+                        }
+                    }
+
+                    if (j is Image image4 && (string)image4.Tag == "mobesphere" && u is Image image5 && (string)image5.Tag == "player")
+                    {
+                        if (Canvas.GetLeft(image5) < Canvas.GetLeft(image4) + image4.ActualWidth &&
+                        Canvas.GetLeft(image5) + image5.ActualWidth > Canvas.GetLeft(image4) &&
+                        Canvas.GetTop(image5) < Canvas.GetTop(image4) + image4.ActualHeight &&
+                        Canvas.GetTop(image5) + image5.ActualHeight > Canvas.GetTop(image4))
+                        {
+                            Player.playerHealth -= 5;
+                            myCanvas.Children.Remove(image4);
+                            image4.Source = null;
+                        }
+                    }
                 }
             }
         }
@@ -188,6 +216,8 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 Canvas.SetZIndex(myCanvasPAUSE, 9999);
             }
 
@@ -404,6 +434,8 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
+                MakeMobe.shootTimer.Start();
+                MakeMobe.disTimer.Start();
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

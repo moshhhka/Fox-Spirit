@@ -20,7 +20,7 @@ namespace gametop
     /// </summary>
     public partial class Kyhnya1 : Window
     {
-        MobeKyhnya zombie1;
+        MakeMobe zombie1;
         Player player1;
         bool gameOver;
         int ammo = 5;
@@ -40,8 +40,10 @@ namespace gametop
         {
             InitializeComponent();
             myCanvas.Focus();
+            SetRandomMobe();
+
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
-            zombie1 = new MobeKyhnya(player, elementsCopy, zombieList, myCanvas, door1, stenka);
+            zombie1 = new MakeMobe(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas);
             RestartGame();
 
@@ -52,6 +54,43 @@ namespace gametop
             speedBoostTimer = new DispatcherTimer();
             speedBoostTimer.Interval = TimeSpan.FromMilliseconds(200);
             speedBoostTimer.Tick += SpeedBoostTimer_Tick;
+        }
+
+        public static void SetRandomMobe()
+        {
+            MakeMobe.MobeKyhnya = false;
+            MakeMobe.MobeKotelnaya = false;
+            MakeMobe.MobeBani = false;
+
+            Random rand = new Random();
+            int choice;
+            do
+            {
+                choice = rand.Next(3);
+            }
+            while ((choice == 0 && MakeMobe.WasMobeKyhnya) || (choice == 1 && MakeMobe.WasMobeKotelnaya) || (choice == 2 && MakeMobe.WasMobeBani));
+
+            switch (choice)
+            {
+                case 0:
+                    MakeMobe.MobeKyhnya = true;
+                    MakeMobe.WasMobeKyhnya = true;
+                    MakeMobe.WasMobeKotelnaya = false;
+                    MakeMobe.WasMobeBani = false;
+                    break;
+                case 1:
+                    MakeMobe.MobeKotelnaya = true;
+                    MakeMobe.WasMobeKyhnya = false;
+                    MakeMobe.WasMobeKotelnaya = true;
+                    MakeMobe.WasMobeBani = false;
+                    break;
+                case 2:
+                    MakeMobe.MobeBani = true;
+                    MakeMobe.WasMobeKyhnya = false;
+                    MakeMobe.WasMobeKotelnaya = false;
+                    MakeMobe.WasMobeBani = true;
+                    break;
+            }
         }
 
         public void BulletTimer_Tick()
@@ -79,6 +118,8 @@ namespace gametop
                 player.Source = new BitmapImage(new Uri("charecter\\pldie.png", UriKind.RelativeOrAbsolute));
                 player.Height = 180;
                 player.Width = 220;
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
@@ -161,20 +202,6 @@ namespace gametop
 
                 foreach (UIElement j in elementsCopy)
                 {
-
-                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player") //Урон по персонажу пулями
-                    {
-                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
-                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
-                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
-                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
-                        {
-                            Player.playerHealth -= 2; // Уменьшите здоровье игрока на 5
-                            myCanvas.Children.Remove(image2); // Удалите пулю из канвы
-                            image2.Source = null;
-                        }
-                    }
-
                     if (j is Image image6 && (string)image6.Tag == "box" && u is Image image7 && ((string)image7.Tag == "bullet" || (string)image7.Tag == "sword" || (string)image7.Tag == "sphere"))
                     {
                         if (Canvas.GetLeft(image7) < Canvas.GetLeft(image6) + image6.ActualWidth &&
@@ -186,6 +213,32 @@ namespace gametop
                             image6.Source = null;
                             myCanvas.Children.Remove(image7);
                             image7.Source = null;
+                        }
+                    }
+
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player")
+                    {
+                        if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
+                        Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
+                        Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
+                        Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
+                        {
+                            Player.playerHealth -= 2;
+                            myCanvas.Children.Remove(image2);
+                            image2.Source = null;
+                        }
+                    }
+
+                    if (j is Image image4 && (string)image4.Tag == "mobesphere" && u is Image image5 && (string)image5.Tag == "player")
+                    {
+                        if (Canvas.GetLeft(image5) < Canvas.GetLeft(image4) + image4.ActualWidth &&
+                        Canvas.GetLeft(image5) + image5.ActualWidth > Canvas.GetLeft(image4) &&
+                        Canvas.GetTop(image5) < Canvas.GetTop(image4) + image4.ActualHeight &&
+                        Canvas.GetTop(image5) + image5.ActualHeight > Canvas.GetTop(image4))
+                        {
+                            Player.playerHealth -= 5;
+                            myCanvas.Children.Remove(image4);
+                            image4.Source = null;
                         }
                     }
                 }
@@ -204,7 +257,8 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
-                MobeKyhnya.shootTimer.Stop();
+                MakeMobe.shootTimer.Stop();
+                MakeMobe.disTimer.Stop();
                 Canvas.SetZIndex(myCanvasPAUSE, 9999);
             }
 
@@ -364,7 +418,7 @@ namespace gametop
 
             List<ProgressBar> barsToRemove = new List<ProgressBar>();
 
-            foreach (ProgressBar zombieHealthBar in MobeKyhnya.zombieBars.Values)
+            foreach (ProgressBar zombieHealthBar in MakeMobe.zombieBars.Values)
             {
                 barsToRemove.Add(zombieHealthBar);
             }
@@ -437,7 +491,8 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
-                MobeKyhnya.shootTimer.Start();
+                MakeMobe.shootTimer.Start();
+                MakeMobe.disTimer.Start();
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }
