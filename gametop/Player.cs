@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace gametop
 {
@@ -21,6 +23,7 @@ namespace gametop
         Canvas myCanvas;
         public static ProgressBar playerhealthBar;
 
+
         public Player(Image player, Canvas myCanvas)
         {
             this.player = player;
@@ -29,13 +32,15 @@ namespace gametop
             playerhealthBar = new ProgressBar();
             playerhealthBar.Width = 266;
             playerhealthBar.Height = 28;
-            playerhealthBar.Value = 100; // Устанавливаем здоровье зомби
+            playerhealthBar.Value = playerHealth; // Устанавливаем здоровье зомби
             playerhealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
             // Размещаем ProgressBar над зомби
             Canvas.SetLeft(playerhealthBar, 1636);
             Canvas.SetTop(playerhealthBar, 137);
             myCanvas.Children.Add(playerhealthBar); // Добавляем ProgressBar на Canvas
+
         }
+
 
         public void KeyDown(object sender, KeyEventArgs e)  // Клавиши вкл
         {

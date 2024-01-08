@@ -29,6 +29,7 @@ namespace gametop
         private bool cardDrawn, bafDrawn;
         public static int coins, crist;
         public static bool gotFood;
+        public static bool isKyhnya1Opened, isBani1Opened;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -63,12 +64,24 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
-                Kyhnya1 newRoom = new Kyhnya1();
-                Kyhnya1.coins = coins;
-                this.Hide();
-                timer.Stop();
-                newRoom.Show();
-                
+                if (!isKyhnya1Opened)
+                {
+                    Kyhnya3 newRoom = new Kyhnya3();
+                    Kyhnya3.coins = coins;
+                    this.Hide();
+                    timer.Stop();
+                    newRoom.Show();
+                    isKyhnya1Opened = true;
+                }
+                else if (!isBani1Opened)
+                {
+                    Bani1 newRoom = new Bani1();
+                    Bani1.coins = coins;
+                    this.Hide();
+                    timer.Stop();
+                    newRoom.Show();
+                    isBani1Opened = true;
+                }
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -205,7 +218,7 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
-                Canvas.SetZIndex(myCanvasPAUSE, 1);
+                Canvas.SetZIndex(myCanvasPAUSE, 9999);
             }
 
             player1.KeyDown(sender, e);
@@ -416,9 +429,6 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
-                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
-                player.Height = 166;
-                player.Width = 126;
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

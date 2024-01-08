@@ -24,15 +24,17 @@ namespace gametop
         Player player1;
         bool gameOver;
         int ammo = 5;
-        bool gotKey;
         public static int coins;
         Random randNum = new Random();
+        int originalspeed = Player.speed;
+        ImageSource originalImage;
 
         List<Image> zombieList = new List<Image>();
         List<Image> boxList = new List<Image>();
         List<Bullet> bullets = new List<Bullet>();
 
         DispatcherTimer timer = new DispatcherTimer();
+        public DispatcherTimer speedBoostTimer;
 
         public Kyhnya2()
         {
@@ -42,10 +44,14 @@ namespace gametop
             zombie1 = new MobeKyhnya(player, elementsCopy, zombieList, myCanvas, door1, stenka);
             player1 = new Player(player, myCanvas);
             RestartGame();
+
             timer.Tick += new EventHandler(GameTimer);
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
 
+            speedBoostTimer = new DispatcherTimer();
+            speedBoostTimer.Interval = TimeSpan.FromMilliseconds(200);
+            speedBoostTimer.Tick += SpeedBoostTimer_Tick;
         }
 
         public void BulletTimer_Tick()
@@ -54,6 +60,13 @@ namespace gametop
             {
                 bullet.BulletMove();
             }
+        }
+
+        private void SpeedBoostTimer_Tick(object sender, EventArgs e)
+        {
+            Player.speed = originalspeed;
+            speedBoostTimer.Stop();
+            player.Source = originalImage;
         }
 
         private void GameTimer(object sender, EventArgs e)
@@ -69,7 +82,7 @@ namespace gametop
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
-                Canvas.SetZIndex(myCanvas1, 1);
+                Canvas.SetZIndex(myCanvas1, 9999);
             }
 
             txtAmmo.Content = ammo;
@@ -88,7 +101,6 @@ namespace gametop
                 Kyhnya3.coins = coins;
                 this.Hide();
                 timer.Stop();
-                gotKey = false;
                 newRoom.Show();
                 Player.goLeft = false;
                 Player.goRight = false;
@@ -142,7 +154,7 @@ namespace gametop
                     {
 
                         myCanvas.Children.Remove(imagee1);
-                        Player.playerHealth += 10;
+                        Player.playerHealth += 15;
 
                     }
                 }
@@ -160,6 +172,20 @@ namespace gametop
                             Player.playerHealth -= 2; // Уменьшите здоровье игрока на 5
                             myCanvas.Children.Remove(image2); // Удалите пулю из канвы
                             image2.Source = null;
+                        }
+                    }
+
+                    if (j is Image image6 && (string)image6.Tag == "box" && u is Image image7 && ((string)image7.Tag == "bullet" || (string)image7.Tag == "sword" || (string)image7.Tag == "sphere"))
+                    {
+                        if (Canvas.GetLeft(image7) < Canvas.GetLeft(image6) + image6.ActualWidth &&
+                        Canvas.GetLeft(image7) + image7.ActualWidth > Canvas.GetLeft(image6) &&
+                        Canvas.GetTop(image7) < Canvas.GetTop(image6) + image6.ActualHeight &&
+                        Canvas.GetTop(image7) + image7.ActualHeight > Canvas.GetTop(image6))
+                        {
+                            myCanvas.Children.Remove(image6);
+                            image6.Source = null;
+                            myCanvas.Children.Remove(image7);
+                            image7.Source = null;
                         }
                     }
                 }
@@ -180,7 +206,36 @@ namespace gametop
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
                 MobeKyhnya.shootTimer.Stop();
-                Canvas.SetZIndex(myCanvasPAUSE, 1);
+                Canvas.SetZIndex(myCanvasPAUSE, 9999);
+            }
+
+            if (e.Key == Key.LeftShift)
+            {
+                originalImage = player.Source;
+
+                Player.speed = 45;
+
+                if (Player.facing == "down")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\downs.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "up")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\ups.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "left")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\lefts.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "right")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\rights.png", UriKind.RelativeOrAbsolute));
+                }
+
+                speedBoostTimer.Start();
             }
         }
 
@@ -290,8 +345,8 @@ namespace gametop
             ammo.Source = new BitmapImage(new Uri("ammo.png", UriKind.RelativeOrAbsolute));
             ammo.Height = 80;
             ammo.Width = 80;
-            Canvas.SetLeft(ammo, randNum.Next(10, Convert.ToInt32(myCanvas.Width - ammo.Width)));
-            Canvas.SetTop(ammo, randNum.Next(80, Convert.ToInt32(myCanvas.Height - ammo.Height)));
+            Canvas.SetLeft(ammo, randNum.Next(10, Convert.ToInt32(myCanvas.Width - 100)));
+            Canvas.SetTop(ammo, randNum.Next(80, Convert.ToInt32(myCanvas.Height - 200)));
             ammo.Tag = "ammo";
             myCanvas.Children.Add(ammo);
 
@@ -308,7 +363,6 @@ namespace gametop
                 myCanvas.Children.Remove(i);
             }
 
-            // Создайте список для ProgressBar, которые нужно удалить
             List<ProgressBar> barsToRemove = new List<ProgressBar>();
 
             foreach (ProgressBar zombieHealthBar in MobeKyhnya.zombieBars.Values)
@@ -316,7 +370,6 @@ namespace gametop
                 barsToRemove.Add(zombieHealthBar);
             }
 
-            // Удалите ProgressBar из Canvas
             foreach (ProgressBar bar in barsToRemove)
             {
                 myCanvas.Children.Remove(bar);
@@ -327,7 +380,6 @@ namespace gametop
                 myCanvas.Children.Remove(x);
             }
 
-
             foreach (UIElement u in myCanvas.Children)
             {
                 if (u is Image image && (string)image.Tag == "coin" && u.Visibility == Visibility.Hidden)
@@ -336,14 +388,12 @@ namespace gametop
                 }
             }
 
-
             zombieList.Clear();
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 zombie1.MakeZombies();
             }
-
 
 
             boxList.Clear();
@@ -362,7 +412,6 @@ namespace gametop
             
             zombie1.score = 0;
             ammo = 5;
-            coins = 0;
 
             timer.Start();
         }
@@ -371,7 +420,7 @@ namespace gametop
         {
             if (playb.Visibility == Visibility.Visible)
             {
-                Kyhnya1 newRoom = new Kyhnya1();
+                nachdio1 newRoom = new nachdio1();
                 this.Hide();
                 timer.Stop();
                 newRoom.Show();
@@ -392,9 +441,6 @@ namespace gametop
             {
                 timer.Start();
                 MobeKyhnya.shootTimer.Start();
-                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
-                player.Height = 166;
-                player.Width = 126;
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

@@ -38,6 +38,8 @@ namespace gametop
 
         private void GameTimer(object sender, EventArgs e)
         {
+            Player.playerhealthBar.Visibility = Visibility.Hidden;
+
             player1.Movement();
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -67,7 +69,7 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
-                Canvas.SetZIndex(myCanvasPAUSE, 1);
+                Canvas.SetZIndex(myCanvasPAUSE, 9999);
             }
 
             player1.KeyDown(sender, e);
@@ -112,9 +114,6 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
-                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
-                player.Height = 166;
-                player.Width = 126;
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

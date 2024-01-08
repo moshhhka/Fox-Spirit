@@ -16,13 +16,13 @@ namespace gametop
         public int bulletTop;
 
         private int speed = 20;
-        private Image bullet = new Image();
+        public Image bullet = new Image();
         DispatcherTimer bulletTimer = new DispatcherTimer();
 
 
-        public void MakeMobeBullet(Canvas form)
+        public void MakeMobeBullet(Canvas form, string imageSource)
         {
-            bullet.Source = new BitmapImage(new Uri("mobebullet.png", UriKind.RelativeOrAbsolute));
+            bullet.Source = new BitmapImage(new Uri(imageSource, UriKind.RelativeOrAbsolute));
             bullet.Height = 80;
             bullet.Width = 80;
             bullet.Tag = "mobebullet";
@@ -36,7 +36,6 @@ namespace gametop
             bulletTimer.Tick += new EventHandler(MobeBulletTimerEvent);
             bulletTimer.Start();
         }
-
 
         private void MobeBulletTimerEvent(object sender, EventArgs e)
         {

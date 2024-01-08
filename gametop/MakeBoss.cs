@@ -14,14 +14,13 @@ namespace gametop
 
         public string direction;
         Image player;
-        Image boss;
         Image door1;
         Image chest;
+        Image stenka;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
         public static int bossSpeed = 2;
-        public static int bossHealth = 1000;
-        double bossLeft, bossTop;
+        public static int bossHealth = 2000;
         ProgressBar bossHealthBar;
 
         public static bool bullet_ice, poisonsworf, foxyball;
@@ -31,25 +30,49 @@ namespace gametop
 
         public static DispatcherTimer disTimer = new DispatcherTimer();
 
-        public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, ProgressBar bossHealthBar, Image boss)
+        public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, Image stenka)
         {
             this.player = player;
             this.myCanvas = myCanvas;
             this.elementsCopy = elementsCopy;
             this.door1 = door1;
-            this.bossHealthBar = bossHealthBar;
-            this.boss = boss;
             this.chest = chest;
+            this.stenka = stenka;
 
             disTimer.Interval = TimeSpan.FromMilliseconds(5000);
             disTimer.Tick += new EventHandler(disTimerEvent);
             disTimer.Start();
-
-
-            bossLeft = Canvas.GetLeft(boss);
-            bossTop = Canvas.GetTop(boss);
+            
         }
 
+        public void MakeBoss1()
+        {
+            Image boss = new Image();
+            boss.Source = new BitmapImage(new Uri("boss1.png", UriKind.RelativeOrAbsolute));
+            boss.Tag = "boss";
+            boss.Height = 408;
+            boss.Width = 300;
+
+            Canvas.SetLeft(boss, 810);
+            Canvas.SetTop(boss, 336);
+
+            bossHealthBar = new ProgressBar();
+            bossHealthBar.Height = 40;
+            bossHealthBar.Width = 1500;
+            bossHealthBar.Maximum = 2000;
+            bossHealthBar.Value = bossHealth;
+
+            Canvas.SetLeft(bossHealthBar, 207);
+            Canvas.SetTop(bossHealthBar, 997);
+
+            myCanvas.Children.Add(boss);
+
+            Canvas.SetZIndex(player, 1);
+            Canvas.SetZIndex(stenka, 1);
+
+            myCanvas.Children.Add(bossHealthBar);
+            Canvas.SetZIndex(bossHealthBar, 1);
+        }
 
         System.Timers.Timer timer = null;
 
@@ -222,6 +245,12 @@ namespace gametop
                                     {
                                         bossHealth -= 25;
                                         poisonDamageCount++;
+
+                                        Application.Current.Dispatcher.Invoke(() =>
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\boskotp.png", UriKind.RelativeOrAbsolute));
+                                        });
+
                                         if (bossHealthBar.Value < 1)
                                         {
                                             myCanvas.Children.Remove(image3);
@@ -235,6 +264,10 @@ namespace gametop
                                         }
                                         else if (poisonDamageCount >= 3)
                                         {
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("boss1.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             poisonTimer.Stop();
                                         }
                                     };
@@ -251,12 +284,21 @@ namespace gametop
                                     damage = 25;
                                     bossSpeed = 1;
 
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        image3.Source = new BitmapImage(new Uri("charecter\\boskotz.png", UriKind.RelativeOrAbsolute));
+                                    });
+
                                     if (freezeTimer == null)
                                     {
                                         freezeTimer = new System.Timers.Timer(3000);
                                         freezeTimer.Elapsed += (sender, e) =>
                                         {
                                             bossSpeed = 3;
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("boss1.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             freezeTimer.Stop();
                                             freezeTimer = null;
                                         };

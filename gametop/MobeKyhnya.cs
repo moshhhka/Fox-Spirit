@@ -116,7 +116,8 @@ namespace gametop
                     shootBullet.direction = direction;
                     shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
                     shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-                    shootBullet.MakeMobeBullet(myCanvas);
+                    string bulname = "mobebullet.png";
+                    shootBullet.MakeMobeBullet(myCanvas, bulname);
                 }
             }
         }
@@ -164,8 +165,6 @@ namespace gametop
                 return "upright";
             }
         }
-
-        System.Timers.Timer timer = null;
 
         public void MoveMobe()
         {
@@ -261,6 +260,13 @@ namespace gametop
                                             ProgressBar zombieHealthBar = zombieBars[image3];
                                             zombieHealthBar.Value -= 5;
                                             poisonDamageCount++;
+
+                                            //Заменяем изображение зомби на изображение замороженного зомби
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\kyhp.png", UriKind.RelativeOrAbsolute));
+                                            });
+
                                             if (zombieHealthBar.Value < 1)
                                             {
                                                 myCanvas.Children.Remove(image3);
@@ -282,6 +288,11 @@ namespace gametop
                                         }
                                         else if (poisonDamageCount >= 3)
                                         {
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
+                                            });
+
                                             poisonTimer.Stop();
                                         }
                                     };
@@ -297,6 +308,10 @@ namespace gametop
                                 {
                                     damage = 25;
                                     zombieSpeeds[image3] = 1;
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        image3.Source = new BitmapImage(new Uri("charecter\\kyhz.png", UriKind.RelativeOrAbsolute));
+                                    });
 
                                     if (freezeTimer == null)
                                     {
@@ -304,6 +319,10 @@ namespace gametop
                                         freezeTimer.Elapsed += (sender, e) =>
                                         {
                                             zombieSpeeds[image3] = 3;
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\bosskyhnya.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             freezeTimer.Stop();
                                             freezeTimer = null;
                                         };
@@ -342,7 +361,7 @@ namespace gametop
                                     double randomNumber = randNum.NextDouble();
 
 
-                                    if (randomNumber < 0.35)
+                                    if (randomNumber < 0.3)
                                     {
                                         Image coffee = new Image();
                                         coffee.Tag = "heal";
@@ -354,11 +373,11 @@ namespace gametop
                                         myCanvas.Children.Add(coffee);
                                     }
 
-                                    if (score <= 10)
+                                    if (score <= 12)
                                     {
                                         MakeZombies();
                                     }
-                                    if (score == 12)
+                                    if (score == 15)
                                     {
                                         door1.Visibility = Visibility.Visible;
                                     }

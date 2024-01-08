@@ -26,12 +26,15 @@ namespace gametop
         int ammo = 5;
         public static int coins, crist;
         Random randNum = new Random();
+        int originalspeed = Player.speed;
+        ImageSource originalImage;
 
         List<Image> zombieList = new List<Image>();
         List<Image> boxList = new List<Image>();
         List<Bullet> bullets = new List<Bullet>();
 
         DispatcherTimer timer = new DispatcherTimer();
+        DispatcherTimer speedBoostTimer;
 
         public Room2()
         {
@@ -45,6 +48,9 @@ namespace gametop
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
 
+            speedBoostTimer = new DispatcherTimer();
+            speedBoostTimer.Interval = TimeSpan.FromMilliseconds(200);
+            speedBoostTimer.Tick += SpeedBoostTimer_Tick;
         }
 
         public void BulletTimer_Tick()
@@ -53,6 +59,13 @@ namespace gametop
             {
                 bullet.BulletMove();
             }
+        }
+
+        private void SpeedBoostTimer_Tick(object sender, EventArgs e)
+        {
+            Player.speed = originalspeed;
+            speedBoostTimer.Stop();
+            player.Source = originalImage;
         }
 
         private void GameTimer(object sender, EventArgs e)
@@ -69,7 +82,7 @@ namespace gametop
                 timer.Stop();
 
                 myCanvas1.Visibility = Visibility.Visible;
-                Canvas.SetZIndex(myCanvas1, 1);
+                Canvas.SetZIndex(myCanvas1, 9999);
             }
 
             txtAmmo.Content = ammo;
@@ -144,6 +157,23 @@ namespace gametop
 
                     }
                 }
+
+                foreach (UIElement j in elementsCopy)
+                {
+                    if (j is Image image6 && (string)image6.Tag == "box" && u is Image image7 && ((string)image7.Tag == "bullet" || (string)image7.Tag == "sword" || (string)image7.Tag == "sphere"))
+                    {
+                        if (Canvas.GetLeft(image7) < Canvas.GetLeft(image6) + image6.ActualWidth &&
+                        Canvas.GetLeft(image7) + image7.ActualWidth > Canvas.GetLeft(image6) &&
+                        Canvas.GetTop(image7) < Canvas.GetTop(image6) + image6.ActualHeight &&
+                        Canvas.GetTop(image7) + image7.ActualHeight > Canvas.GetTop(image6))
+                        {
+                            myCanvas.Children.Remove(image6);
+                            image6.Source = null;
+                            myCanvas.Children.Remove(image7);
+                            image7.Source = null;
+                        }
+                    }
+                }
             }
         }
 
@@ -158,7 +188,36 @@ namespace gametop
             {
                 myCanvasPAUSE.Visibility = Visibility.Visible;
                 timer.Stop();
-                Canvas.SetZIndex(myCanvasPAUSE, 1);
+                Canvas.SetZIndex(myCanvasPAUSE, 9999);
+            }
+
+            if (e.Key == Key.LeftShift)
+            {
+                originalImage = player.Source;
+
+                Player.speed = 45;
+
+                if (Player.facing == "down")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\downs.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "up")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\ups.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "left")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\lefts.png", UriKind.RelativeOrAbsolute));
+                }
+
+                else if (Player.facing == "right")
+                {
+                    player.Source = new BitmapImage(new Uri("charecter\\rights.png", UriKind.RelativeOrAbsolute));
+                }
+
+                speedBoostTimer.Start();
             }
         }
 
@@ -317,7 +376,6 @@ namespace gametop
 
             zombie1.score = 0;
             ammo = 5;
-            coins = 0;
 
             timer.Start();
         }
@@ -326,7 +384,7 @@ namespace gametop
         {
             if (playb.Visibility == Visibility.Visible)
             {
-                MainWindow newRoom = new MainWindow();
+                nachdio1 newRoom = new nachdio1();
                 this.Hide();
                 timer.Stop();
                 newRoom.Show();
@@ -346,9 +404,6 @@ namespace gametop
             if (cont.Visibility == Visibility.Visible)
             {
                 timer.Start();
-                player.Source = new BitmapImage(new Uri("charecter\\down.png", UriKind.RelativeOrAbsolute));
-                player.Height = 166;
-                player.Width = 126;
                 myCanvasPAUSE.Visibility = Visibility.Collapsed;
             }
         }

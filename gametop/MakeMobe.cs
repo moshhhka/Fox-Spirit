@@ -31,8 +31,6 @@ namespace gametop
         // Добавьте новый таймер для восстановления скорости зомби после замораживания
         System.Timers.Timer freezeTimer = null;
 
-        public static DispatcherTimer disTimer = new DispatcherTimer();
-
 
         public MakeMobe(Image player, List<UIElement> elementsCopy, List<Image> zombieList, Canvas myCanvas, Image door1, Image stenka, int zombieSpeed = 3, int score = 0)
         {
@@ -44,22 +42,6 @@ namespace gametop
             this.zombieList = zombieList;
             this.door1 = door1;
             this.stenka = stenka;
-
-            disTimer.Interval = TimeSpan.FromMilliseconds(5000);
-            disTimer.Tick += new EventHandler(disTimerEvent);
-            disTimer.Start();
-        }
-
-        public async void disTimerEvent(object sender, EventArgs e)
-        {
-            foreach (UIElement u in elementsCopy)
-            {
-                if (u is Image image1 && (string)image1.Tag == "mobe")
-                {
-                    int originalSpeed = zombieSpeeds[image1];
-                    zombieSpeeds[image1] = 5;
-                }
-            }
         }
 
 
@@ -187,7 +169,6 @@ namespace gametop
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
                                     image3.Tag = null;
-                                    disTimer.Stop();
 
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
                                     poisonTimer.Interval = TimeSpan.FromSeconds(1);
@@ -200,13 +181,11 @@ namespace gametop
                                             image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
                                             image3.Tag = "mobe";
                                             poisonTimer.Stop();
-                                            disTimer.Start();
                                         }
                                     };
                                     poisonTimer.Start();
                                 }
                             }
-
 
                             else if ((string)image2.Tag == "sword")
                             {
@@ -221,6 +200,12 @@ namespace gametop
                                         ProgressBar zombieHealthBar = zombieBars[image3];
                                         zombieHealthBar.Value -= 5;
                                         poisonDamageCount++;
+
+                                        Application.Current.Dispatcher.Invoke(() =>
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\kotp.png", UriKind.RelativeOrAbsolute));
+                                        });
+
                                         if (zombieHealthBar.Value < 1)
                                         {
                                             myCanvas.Children.Remove(image3);
@@ -241,6 +226,10 @@ namespace gametop
                                         }
                                         else if (poisonDamageCount >= 3)
                                         {
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             poisonTimer.Stop();
                                         }
                                     };
@@ -256,13 +245,21 @@ namespace gametop
                                 {
                                     damage = 25;
                                     zombieSpeeds[image3] = 1;
-                                    
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        image3.Source = new BitmapImage(new Uri("charecter\\kotz.png", UriKind.RelativeOrAbsolute));
+                                    });
+
                                     if (freezeTimer == null)
                                     {
                                         freezeTimer = new System.Timers.Timer(3000);
                                         freezeTimer.Elapsed += (sender, e) =>
                                         {
-                                            zombieSpeeds[image3] = 3; 
+                                            zombieSpeeds[image3] = 3;
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("charecter\\bos1et.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             freezeTimer.Stop(); 
                                             freezeTimer = null; 
                                         };
@@ -293,26 +290,10 @@ namespace gametop
                                     zombieBars.Remove(image3);
                                     score++;
 
-                                    // Создайте новый объект HitSpace на месте удаленного mobe
-                                    HitSpace hitSpace = new HitSpace();
-                                    hitSpace.MakeSphere(myCanvas, player);
-                                    Canvas.SetLeft(hitSpace.sphere, mobeLeft);
-                                    Canvas.SetTop(hitSpace.sphere, mobeTop);
-
-                                    // Создайте таймер для удаления объекта HitSpace через 5 секунд
-                                    DispatcherTimer sphereTimer = new DispatcherTimer();
-                                    sphereTimer.Interval = TimeSpan.FromSeconds(5);
-                                    sphereTimer.Tick += (s, e) =>
-                                    {
-                                        myCanvas.Children.Remove(hitSpace.sphere);
-                                        sphereTimer.Stop();
-                                    };
-                                    sphereTimer.Start();
-
                                     double randomNumber = randNum.NextDouble();
 
                                     
-                                    if (randomNumber < 0.35)
+                                    if (randomNumber < 0.3)
                                     {
                                         Image coffee = new Image();
                                         coffee.Tag = "heal";

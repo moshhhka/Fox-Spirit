@@ -12,14 +12,13 @@ namespace gametop
 
         public string direction;
         Image player;
-        Image boss;
         Image door1;
         Image chest;
+        Image stenka;
         Canvas myCanvas;
         public List<UIElement> elementsCopy;
         public static int bossSpeed = 2;
         public static int bossHealth = 2000;
-        double bossLeft, bossTop;
         ProgressBar bossHealthBar;
 
         public static bool bullet_ice, poisonsworf, foxyball;
@@ -29,23 +28,47 @@ namespace gametop
 
         public static DispatcherTimer shootTimer = new DispatcherTimer();
 
-        public BossKyhnya(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, ProgressBar bossHealthBar, Image boss)
+        public BossKyhnya(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, Image stenka)
         {
             this.player = player;
             this.myCanvas = myCanvas;
             this.elementsCopy = elementsCopy;
             this.door1 = door1;
-            this.bossHealthBar = bossHealthBar;
-            this.boss = boss;
             this.chest = chest;
+            this.stenka = stenka;
 
             shootTimer.Interval = TimeSpan.FromMilliseconds(1800);
             shootTimer.Tick += new EventHandler(shootTimerEvent);
             shootTimer.Start();
+        }
 
+        public void MakeBoss()
+        {
+            Image boss = new Image();
+            boss.Source = new BitmapImage(new Uri("Босс1.png", UriKind.RelativeOrAbsolute));
+            boss.Tag = "boss";
+            boss.Height = 366;
+            boss.Width = 374;
 
-            bossLeft = Canvas.GetLeft(boss);
-            bossTop = Canvas.GetTop(boss);
+            Canvas.SetLeft(boss, 784);
+            Canvas.SetTop(boss, 357);
+
+            bossHealthBar = new ProgressBar();
+            bossHealthBar.Height = 40;
+            bossHealthBar.Width = 1500;
+            bossHealthBar.Maximum = 2000;
+            bossHealthBar.Value = bossHealth;
+
+            Canvas.SetLeft(bossHealthBar, 207);
+            Canvas.SetTop(bossHealthBar, 997);
+
+            myCanvas.Children.Add(boss);
+
+            Canvas.SetZIndex(player, 1);
+            Canvas.SetZIndex(stenka, 1);
+
+            myCanvas.Children.Add(bossHealthBar);
+            Canvas.SetZIndex(bossHealthBar, 1);
         }
 
 
@@ -79,7 +102,8 @@ namespace gametop
                         shootBullet.direction = direction;
                         shootBullet.bulletLeft = (int)Math.Round(Canvas.GetLeft(image1) + (image1.Width / 2));
                         shootBullet.bulletTop = (int)Math.Round(Canvas.GetTop(image1) + (image1.Height / 2));
-                        shootBullet.MakeMobeBullet(myCanvas);
+                        string bulname = "mobebullet.png";
+                        shootBullet.MakeMobeBullet(myCanvas, bulname);
                     }
                 }
             }
@@ -227,8 +251,8 @@ namespace gametop
                             else if ((string)image2.Tag == "sword")
                             {
                                 damage = 25;
-                                if (poisonsworf == true)
-                                {
+                                //if (poisonsworf == true)
+                                //{
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
                                     poisonTimer.Interval = TimeSpan.FromSeconds(1);
                                     int poisonDamageCount = 0;
@@ -236,6 +260,12 @@ namespace gametop
                                     {
                                         bossHealth -= 25;
                                         poisonDamageCount++;
+
+                                        Application.Current.Dispatcher.Invoke(() =>
+                                        {
+                                            image3.Source = new BitmapImage(new Uri("charecter\\boskyhp.png", UriKind.RelativeOrAbsolute));
+                                        });
+
                                         if (bossHealthBar.Value < 1)
                                         {
                                             myCanvas.Children.Remove(image3);
@@ -249,21 +279,30 @@ namespace gametop
                                         }
                                         else if (poisonDamageCount >= 3)
                                         {
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("Босс1.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             poisonTimer.Stop();
                                         }
                                     };
                                     poisonTimer.Start();
-                                }
+                                //}
                             }
 
                             else if ((string)image2.Tag == "bullet")
                             {
                                 damage = 15;
 
-                                if (bullet_ice)
-                                {
+                                //if (bullet_ice)
+                                //{
                                     damage = 25;
                                     bossSpeed = 1;
+
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        image3.Source = new BitmapImage(new Uri("charecter\\boskyhz.png", UriKind.RelativeOrAbsolute));
+                                    });
 
                                     if (freezeTimer == null)
                                     {
@@ -271,13 +310,17 @@ namespace gametop
                                         freezeTimer.Elapsed += (sender, e) =>
                                         {
                                             bossSpeed = 3;
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                image3.Source = new BitmapImage(new Uri("Босс1.png", UriKind.RelativeOrAbsolute));
+                                            });
                                             freezeTimer.Stop();
                                             freezeTimer = null;
                                         };
                                         freezeTimer.AutoReset = false;
                                         freezeTimer.Start();
                                     }
-                                }
+                                //}
                             }
 
                             myCanvas.Children.Remove(image2);
@@ -295,10 +338,7 @@ namespace gametop
                                 door1.Visibility = Visibility.Visible;
                                 chest.Visibility = Visibility.Visible;
                             }
-
                         }
-
-
                     }
                 }
             }
