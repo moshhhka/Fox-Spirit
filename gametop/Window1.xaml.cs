@@ -66,8 +66,8 @@ namespace gametop
                 Player.goDown = false;
                 if (!isKyhnya1Opened)
                 {
-                    Kyhnya3 newRoom = new Kyhnya3();
-                    Kyhnya3.coins = coins;
+                    Kyhnya1 newRoom = new Kyhnya1();
+                    Kyhnya1.coins = coins;
                     this.Hide();
                     timer.Stop();
                     newRoom.Show();
