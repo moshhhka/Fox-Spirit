@@ -154,6 +154,12 @@ namespace gametop
                         Player.goRight = false;
                         Player.goUp = false;
                         Player.goDown = false;
+
+                        if ((string)image.Tag == "cookie3")
+                        {
+                            int vospoln = Convert.ToInt16(Player.playerhealthBar.Maximum);
+                            Player.playerHealth += vospoln - Player.playerHealth;
+                        }
                     }
                 }
 

@@ -466,7 +466,7 @@ namespace gametop
                 MakeBox();
             }
 
-            Player.playerHealth = 500;
+            Player.playerHealth = 100;
             Player.goUp = false;
             Player.goLeft = false;
             Player.goDown = false;
