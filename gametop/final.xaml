@@ -25,6 +25,11 @@
                 <Button x:Name="cont" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="cont_Click" FontFamily="Segoe Print" Background="#FF6B4A4A" FontSize="22"/>
                 <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click" FontFamily="Segoe Print" Background="#FF82A97F" FontSize="22"/>
             </Canvas>
+            <Canvas x:Name="myCanvasFina" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
+                <Image Height="856" Canvas.Left="198" Source="/finafon.jpg" Stretch="Fill" Canvas.Top="112" Width="1524" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="dioend" Content="Какой-то наш текст с сюжетом. Мявк" Height="322" Canvas.Left="484" Canvas.Top="353" Width="952" FontSize="24" FontFamily="Segoe Print" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Button x:Name="theend" Content="Пойти готовиться к сессии и следить за своим здоровьем &#128218; &#9752;" Height="68" Canvas.Left="672" Canvas.Top="798" Width="576" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe Print" Click="theend_Click"/>
+            </Canvas>
         </Canvas>
     </Viewbox>
 </Window>

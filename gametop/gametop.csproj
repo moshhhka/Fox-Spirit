@@ -536,5 +536,14 @@
   <ItemGroup>
     <Resource Include="cookie3.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="d2ca040a1adae3bce595130053f3d93b.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="kniga.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="finafon.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

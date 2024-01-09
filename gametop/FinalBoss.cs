@@ -599,6 +599,17 @@ namespace gametop
                                 myCanvas.Children.Remove(image3);
                                 image3.Source = null;
                                 myCanvas.Children.Remove(bossHealthBar);
+
+                                Image trof = new Image();
+                                trof.Source = new BitmapImage(new Uri("kniga.png", UriKind.RelativeOrAbsolute));
+                                trof.Tag = "trof3";
+                                trof.Height = 80;
+                                trof.Width = 80;
+
+                                Canvas.SetLeft(trof, Canvas.GetLeft(image3));
+                                Canvas.SetTop(trof, Canvas.GetTop(image3));
+
+                                myCanvas.Children.Add(trof);
                             }
 
                         }

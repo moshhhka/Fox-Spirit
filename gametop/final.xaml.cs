@@ -84,7 +84,7 @@ namespace gametop
                 nachdio1.YzeIgral = true;
 
                 myCanvas1.Visibility = Visibility.Visible;
-                Canvas.SetZIndex(myCanvas1, 9999);
+                Canvas.SetZIndex(myCanvas1, 9998);
             }
 
             txtAmmo.Content = ammo;
@@ -150,6 +150,19 @@ namespace gametop
                         myCanvas.Children.Remove(imagee);
                         imagee.Source = null;
                         ammo += 5;
+                    }
+                }
+
+                if (u is Image imag111 && (string)imag111.Tag == "trof3") // Сбор коинов
+                {
+                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                    Rect rect2 = new Rect(Canvas.GetLeft(imag111), Canvas.GetTop(imag111), imag111.Width, imag111.Height);
+
+                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                    {
+                        u.Visibility = Visibility.Hidden;
+                        myCanvasFina.Visibility = Visibility.Visible;
+                        Canvas.SetZIndex(myCanvasFina, 9999);
                     }
                 }
 
@@ -445,6 +458,14 @@ namespace gametop
         private void cont_Click(object sender, RoutedEventArgs e)
         {
             if (exitbut.Visibility == Visibility.Visible)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void theend_Click(object sender, RoutedEventArgs e)
+        {
+            if (theend.Visibility == Visibility.Visible)
             {
                 Application.Current.Shutdown();
             }
