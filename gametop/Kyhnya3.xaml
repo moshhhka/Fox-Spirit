@@ -13,7 +13,7 @@
             <Image x:Name="door" Tag="door" Height="182" Canvas.Left="874" Source="/дверь_закрытая_вверху.png" Stretch="Fill" Width="180" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="10"/>
             <Image x:Name="door1" Height="182" Width="350" Canvas.Left="785" Source="/двери_вверху_сфоном_кухня.png" Stretch="Fill" Canvas.Top="10" Visibility="Hidden"/>
             <Image x:Name="chest" Tag ="chest" Height="106" Canvas.Left="927" Source="/40345f81a641c415f7d9aafd311957ff-PhotoRoom.png-PhotoRoom.png" Stretch="Fill" Canvas.Top="522" Width="106" Visibility="Hidden"/>
-            <Image x:Name="stenka" Height="239" Source="/стена_внизу_кухня.png" Stretch="Fill" Canvas.Top="841" Width="1920" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="stenka" Height="204" Source="/стена_внизу_кухня.png" Stretch="Fill" Canvas.Top="876" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <Image Height="83" Tag="box" Canvas.Left="679" Source="/Remove-bg.ai_1703863482146.png" Stretch="Fill" Canvas.Top="155" Width="88"/>
             <Image Height="83" Tag="box" Canvas.Left="1140" Source="/Remove-bg.ai_1703863482146.png" Stretch="Fill" Canvas.Top="155" Width="88" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Height="174" Source="/доска2.png" Stretch="Fill" Width="346" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1564" Canvas.Top="14"/>

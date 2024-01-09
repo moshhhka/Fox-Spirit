@@ -40,7 +40,7 @@ namespace gametop
 
                         if (Player.goRight)
                         {
-                           Player.goRight = false;
+                            Player.goRight = false;
                             Canvas.SetLeft(player, Canvas.GetLeft(player) - speed);
                         }
 

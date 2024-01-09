@@ -37,6 +37,8 @@ namespace gametop
         DispatcherTimer timer = new DispatcherTimer();
         public DispatcherTimer speedBoostTimer;
 
+        string[] tags = { "trof1", "trof2", "trof3" };
+
         public Kyhnya3()
         {
             InitializeComponent();
@@ -62,35 +64,25 @@ namespace gametop
             MakeBoss.BossKotelnaya = false;
             MakeBoss.BossBani = false;
 
-            Random randNum = new Random();
             int choice;
             do
             {
-                choice = randNum.Next(3);
+                choice = MakeBoss.randNum.Next(3);
             }
-            while ((choice == 0 && (MakeBoss.WasBossKyhnya || MakeBoss.BossKyhnya)) ||
-                   (choice == 1 && (MakeBoss.WasBossKotelnaya || MakeBoss.BossKotelnaya)) ||
-                   (choice == 2 && (MakeBoss.WasBossBani || MakeBoss.BossBani)));
+            while (MakeBoss.chosenNumbers.Contains(choice));
+
+            MakeBoss.chosenNumbers.Add(choice);
 
             switch (choice)
             {
                 case 0:
                     MakeBoss.BossKyhnya = true;
-                    MakeBoss.WasBossKyhnya = true;
-                    MakeBoss.WasBossKotelnaya = false;
-                    MakeBoss.WasBossBani = false;
                     break;
                 case 1:
                     MakeBoss.BossKotelnaya = true;
-                    MakeBoss.WasBossKyhnya = false;
-                    MakeBoss.WasBossKotelnaya = true;
-                    MakeBoss.WasBossBani = false;
                     break;
                 case 2:
                     MakeBoss.BossBani = true;
-                    MakeBoss.WasBossKyhnya = false;
-                    MakeBoss.WasBossKotelnaya = false;
-                    MakeBoss.WasBossBani = true;
                     break;
             }
         }
@@ -124,7 +116,9 @@ namespace gametop
                 MakeBoss.disbaniTimer.Stop();
                 MakeBoss.shootbaniTimer.Stop();
                 MakeBoss.shootTimer.Stop();
+                Player.playerHealth = 0;
                 timer.Stop();
+                nachdio1.YzeIgral = true;
 
                 myCanvas1.Visibility = Visibility.Visible;
                 Canvas.SetZIndex(myCanvas1, 9999);
@@ -159,7 +153,7 @@ namespace gametop
                 MakeMobe.poisonsworf = false;
                 MakeBoss.bullet_ice = false;
                 MakeMobe.bullet_ice = false;
-                Player.playerhealthBar.Maximum = 100;
+                Window1.isBuffActive = false;
                 Player.speed = 20;
             }
 
@@ -211,6 +205,26 @@ namespace gametop
                     }
                 }
 
+                if (u is Image imag11)
+                {
+                    for (int i = 0; i < tags.Length; i++)
+                    {
+                        if ((string)imag11.Tag == tags[i])
+                        {
+                            Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                            Rect rect2 = new Rect(Canvas.GetLeft(imag11), Canvas.GetTop(imag11), imag11.Width, imag11.Height);
+
+                            if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                            {
+                                u.Visibility = Visibility.Hidden;
+                                if (i == 0) Window1.isTrof1 = true;
+                                if (i == 1) Window1.isTrof2 = true;
+                                if (i == 2) Window1.isTrof3 = true;
+                            }
+                        }
+                    }
+                }
+
                 if (u is Image imagee && (string)imagee.Tag == "ammo") // Трата патронов
                 {
                     if (Canvas.GetLeft(player) < Canvas.GetLeft(imagee) + imagee.ActualWidth &&
@@ -227,16 +241,29 @@ namespace gametop
                 foreach (UIElement j in elementsCopy)
                 {
 
-                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player") //Урон по персонажу пулями
+                    if (j is Image image2 && (string)image2.Tag == "mobebullet" && u is Image image3 && (string)image3.Tag == "player")
                     {
                         if (Canvas.GetLeft(image3) < Canvas.GetLeft(image2) + image2.ActualWidth &&
                         Canvas.GetLeft(image3) + image3.ActualWidth > Canvas.GetLeft(image2) &&
                         Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
                         Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
                         {
-                            Player.playerHealth -= 7; // Уменьшите здоровье игрока на 5
-                            myCanvas.Children.Remove(image2); // Удалите пулю из канвы
+                            Player.playerHealth -= 2;
+                            myCanvas.Children.Remove(image2);
                             image2.Source = null;
+                        }
+                    }
+
+                    if (j is Image image4 && (string)image4.Tag == "mobesphere" && u is Image image5 && (string)image5.Tag == "player")
+                    {
+                        if (Canvas.GetLeft(image5) < Canvas.GetLeft(image4) + image4.ActualWidth &&
+                        Canvas.GetLeft(image5) + image5.ActualWidth > Canvas.GetLeft(image4) &&
+                        Canvas.GetTop(image5) < Canvas.GetTop(image4) + image4.ActualHeight &&
+                        Canvas.GetTop(image5) + image5.ActualHeight > Canvas.GetTop(image4))
+                        {
+                            Player.playerHealth -= 7;
+                            myCanvas.Children.Remove(image4);
+                            image4.Source = null;
                         }
                     }
 
@@ -263,10 +290,11 @@ namespace gametop
             {
                 player1.KeyDown(sender, e);
 
-                if (!isChestOpened && e.Key == Key.F && (Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
-                    Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
-                    Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
-                    Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest)))
+                if (!isChestOpened && e.Key == Key.F && chest.Visibility == Visibility.Visible &&
+                Canvas.GetLeft(player) < Canvas.GetLeft(chest) + chest.ActualWidth &&
+                Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(chest) &&
+                Canvas.GetTop(player) < Canvas.GetTop(chest) + chest.ActualHeight &&
+                Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(chest))
                 {
                     isChestOpened = true;
 
@@ -281,7 +309,6 @@ namespace gametop
                         CreateCoin();
                     }
                     CreateFood();
-
                 }
             }
 
@@ -404,6 +431,11 @@ namespace gametop
                     DropAmmo();
                 }
             }
+
+            if (e.Key == Key.LeftShift)
+            {
+                SpeedBoostTimer_Tick(sender, e);
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -522,7 +554,14 @@ namespace gametop
             gameOver = false;
 
             boss1.MakeBoss1();
-            ammo = 5;
+            if (Window1.isBuffActive)
+            {
+                ammo = 10; // Если бафф активирован, устанавливаем количество боеприпасов на 10
+            }
+            else
+            {
+                ammo = 5;
+            }
 
             timer.Start();
         }

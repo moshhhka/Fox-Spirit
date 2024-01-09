@@ -68,9 +68,8 @@
       <DependentUpon>Boss1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Collise.cs" />
-    <Compile Include="final.xaml.cs">
-      <DependentUpon>final.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="final.xaml.cs" />
+    <Compile Include="FinalBoss.cs" />
     <Compile Include="HitSpace.cs" />
     <Compile Include="Kyhnya1.xaml.cs">
       <DependentUpon>Kyhnya1.xaml</DependentUpon>
@@ -116,8 +115,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="final.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Kyhnya1.xaml">
       <SubType>Designer</SubType>
@@ -509,6 +508,33 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="урна.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="доскафинал.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\Чашказ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="charecter\Чашкап.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="lut1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="lut2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="lut3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cookie1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cookie2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cookie3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

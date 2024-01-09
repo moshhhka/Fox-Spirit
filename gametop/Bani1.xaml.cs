@@ -69,35 +69,25 @@ namespace gametop
             MakeMobe.MobeKotelnaya = false;
             MakeMobe.MobeBani = false;
 
-            Random randNum = new Random();
             int choice;
             do
             {
-                choice = randNum.Next(3);
+                choice = MakeMobe.randNumMobe.Next(3);
             }
-            while ((choice == 0 && (MakeMobe.WasMobeKyhnya || MakeMobe.MobeKyhnya)) ||
-                   (choice == 1 && (MakeMobe.WasMobeKotelnaya || MakeMobe.MobeKotelnaya)) ||
-                   (choice == 2 && (MakeMobe.WasMobeBani || MakeMobe.MobeBani)));
+            while (MakeMobe.chosenNumbers.Contains(choice));
+
+            MakeMobe.chosenNumbers.Add(choice);
 
             switch (choice)
             {
                 case 0:
                     MakeMobe.MobeKyhnya = true;
-                    MakeMobe.WasMobeKyhnya = true;
-                    MakeMobe.WasMobeKotelnaya = false;
-                    MakeMobe.WasMobeBani = false;
                     break;
                 case 1:
                     MakeMobe.MobeKotelnaya = true;
-                    MakeMobe.WasMobeKyhnya = false;
-                    MakeMobe.WasMobeKotelnaya = true;
-                    MakeMobe.WasMobeBani = false;
                     break;
                 case 2:
                     MakeMobe.MobeBani = true;
-                    MakeMobe.WasMobeKyhnya = false;
-                    MakeMobe.WasMobeKotelnaya = false;
-                    MakeMobe.WasMobeBani = true;
                     break;
             }
         }
@@ -121,7 +111,9 @@ namespace gametop
                 player.Width = 220;
                 MakeMobe.shootTimer.Stop();
                 MakeMobe.disTimer.Stop();
+                Player.playerHealth = 0;
                 timer.Stop();
+                nachdio1.YzeIgral = true;
 
                 myCanvas1.Visibility = Visibility.Visible;
                 Canvas.SetZIndex(myCanvas1, 9999);
@@ -194,8 +186,10 @@ namespace gametop
                     {
 
                         myCanvas.Children.Remove(imagee1);
-                        Player.playerHealth += 15;
-
+                        if (Player.playerHealth < Player.playerhealthBar.Maximum)
+                        {
+                            Player.playerHealth += 15;
+                        }
                     }
                 }
 
@@ -323,7 +317,10 @@ namespace gametop
                 }
             }
 
-            
+            if (e.Key == Key.LeftShift)
+            {
+                SpeedBoostTimer_Tick(sender, e);
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -463,7 +460,14 @@ namespace gametop
             gameOver = false;
 
             zombie1.score = 0;
-            ammo = 5;
+            if (Window1.isBuffActive)
+            {
+                ammo = 10; // Если бафф активирован, устанавливаем количество боеприпасов на 10
+            }
+            else
+            {
+                ammo = 5;
+            }
 
             timer.Start();
         }

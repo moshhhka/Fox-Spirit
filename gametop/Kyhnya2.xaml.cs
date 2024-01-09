@@ -81,7 +81,9 @@ namespace gametop
                 player.Width = 220;
                 MakeMobe.shootTimer.Stop();
                 MakeMobe.disTimer.Stop();
+                Player.playerHealth = 0;
                 timer.Stop();
+                nachdio1.YzeIgral = true;
 
                 myCanvas1.Visibility = Visibility.Visible;
                 Canvas.SetZIndex(myCanvas1, 9999);
@@ -156,7 +158,10 @@ namespace gametop
                     {
 
                         myCanvas.Children.Remove(imagee1);
-                        Player.playerHealth += 15;
+                        if (Player.playerHealth < Player.playerhealthBar.Maximum)
+                        {
+                            Player.playerHealth += 15;
+                        }
 
                     }
                 }
@@ -284,6 +289,11 @@ namespace gametop
                 {
                     DropAmmo();
                 }
+            }
+
+            if (e.Key == Key.LeftShift)
+            {
+                SpeedBoostTimer_Tick(sender, e);
             }
         }
 
@@ -426,7 +436,14 @@ namespace gametop
 
             
             zombie1.score = 0;
-            ammo = 5;
+            if (Window1.isBuffActive)
+            {
+                ammo = 10; // Если бафф активирован, устанавливаем количество боеприпасов на 10
+            }
+            else
+            {
+                ammo = 5;
+            }
 
             timer.Start();
         }

@@ -10,14 +10,14 @@
         <Canvas x:Name="myCanvas" HorizontalAlignment="Left" Height="1080" VerticalAlignment="Top" Width="1900">
             <Image Height="1080" Source="/fon1.png" Stretch="Fill" Width="1900"/>
             <Image Height="148" Canvas.Left="245" Source="/k1.png" Stretch="Fill" Canvas.Top="264" Width="99" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image Height="145" Canvas.Left="1585" Source="/k2.png" Stretch="Fill" Canvas.Top="925" Width="97" Tag="box"/>
+            <Image Height="145" Canvas.Left="1591" Source="/k2.png" Stretch="Fill" Canvas.Top="892" Width="97" Tag="box"/>
             <Image Height="176" Canvas.Left="194" Source="/k3.png" Stretch="Fill" Canvas.Top="804" Width="102" Tag="box"/>
             <Image Height="106" Canvas.Left="122" Source="/k1.png" Stretch="Fill" Canvas.Top="804" Width="72" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image Height="612" Canvas.Left="1214" Source="/tree.png" Stretch="Fill" Canvas.Top="130" Width="412" Tag="box" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image x:Name="scazitel" Height="466" Canvas.Left="1135" Source="/charecter/boss3fl.png" Stretch="Fill" Canvas.Top="391" Width="206" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="612" Canvas.Left="1238" Source="/tree.png" Stretch="Fill" Canvas.Top="78" Width="412" Tag="box" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="scazitel" Height="466" Canvas.Left="1086" Source="/charecter/boss3fl.png" Stretch="Fill" Canvas.Top="384" Width="206" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Height="74" Tag="box" Canvas.Left="872" Source="/icons8-ключ-96.png" Stretch="Fill" Canvas.Top="978" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Height="74" Tag="box" Canvas.Left="947" Source="/icons8-s-ключ-96.png" Stretch="Fill" Canvas.Top="978" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image x:Name="keyF" Height="74" Tag="box" Canvas.Left="1051" Source="/keyF.png" Stretch="Fill" Canvas.Top="524" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Image x:Name="keyF" Height="74" Canvas.Left="1051" Source="/keyF.png" Stretch="Fill" Canvas.Top="524" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
             <Image Height="74" Tag="box" Canvas.Left="947" Source="/icons8-клавиша-w-96.png" Stretch="Fill" Canvas.Top="899" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Image Height="74" Tag="box" Canvas.Left="1022" Source="/icons8-клавиша-d-96.png" Stretch="Fill" Canvas.Top="978" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label Tag="box" Content="Чтобы двигаться используйте:" Height="54" Canvas.Left="473" Canvas.Top="982" Width="346" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe Print" FontSize="20" Foreground="White"/>
@@ -30,6 +30,6 @@
                 <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click" FontFamily="Segoe Print" Background="#FF82A97F" FontSize="22"/>
             </Canvas>
         </Canvas>
-        
+
     </Viewbox>
 </Window>

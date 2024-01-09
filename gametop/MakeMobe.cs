@@ -25,6 +25,8 @@ namespace gametop
 
         public static bool MobeKyhnya, MobeKotelnaya, MobeBani;
         public static bool WasMobeKyhnya, WasMobeKotelnaya, WasMobeBani;
+        public static List<int> chosenNumbers = new List<int>();
+        public static Random randNumMobe = new Random();
 
 
         public ProgressBar zombieHealthBar;
@@ -103,11 +105,11 @@ namespace gametop
             Canvas.SetZIndex(player, 1);
             Canvas.SetZIndex(stenka, 1);
 
-            shootTimer.Interval = TimeSpan.FromMilliseconds(2800);
+            shootTimer.Interval = TimeSpan.FromMilliseconds(2200);
             shootTimer.Tick += new EventHandler(shootTimerEvent);
             shootTimer.Start();
 
-            disTimer.Interval = TimeSpan.FromMilliseconds(3000);
+            disTimer.Interval = TimeSpan.FromMilliseconds(1000);
             disTimer.Tick += new EventHandler(disTimerEvent);
             disTimer.Start();
         }

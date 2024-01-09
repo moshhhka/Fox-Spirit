@@ -23,6 +23,7 @@ namespace gametop
     {
         Player player1;
         bool gotKey, gotE;
+        public static bool YzeIgral;
 
         DispatcherTimer timer = new DispatcherTimer();
 
@@ -60,6 +61,7 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
+                YzeIgral = false;
             }
         }
 
@@ -89,13 +91,24 @@ namespace gametop
                 Canvas.GetTop(player) < Canvas.GetTop(scazitel) + scazitel.ActualHeight &&
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(scazitel)))
             {
-                keyF.Visibility = Visibility.Hidden;
-                dioL.Visibility = Visibility.Hidden;
-                MessageBox.Show("фраза 1", "Мужчина в маске:");
-                MessageBox.Show("фраза 2", "Мужчина в маске:");
-                MessageBox.Show("фраза 2", "Мужчина в маске:");
-                gotKey = true;
-                door.Visibility = Visibility.Visible;
+                if (!YzeIgral)
+                {
+                    keyF.Visibility = Visibility.Hidden;
+                    dioL.Visibility = Visibility.Hidden;
+                    MessageBox.Show("фраза 1", "Мужчина в маске:");
+                    MessageBox.Show("фраза 2", "Мужчина в маске:");
+                    MessageBox.Show("фраза 2", "Мужчина в маске:");
+                    gotKey = true;
+                    door.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    keyF.Visibility = Visibility.Hidden;
+                    dioL.Visibility = Visibility.Hidden;
+                    MessageBox.Show("фраза 1", "Мужчина в маске:");
+                    gotKey = true;
+                    door.Visibility = Visibility.Visible;
+                }
             }
         }
 

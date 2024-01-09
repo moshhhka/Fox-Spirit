@@ -36,6 +36,8 @@ namespace gametop
 
         public static bool BossKyhnya, BossKotelnaya, BossBani;
         public static bool WasBossKyhnya, WasBossKotelnaya, WasBossBani;
+        public static List<int> chosenNumbers = new List<int>();
+        public static Random randNum = new Random();
 
 
         public MakeBoss(Image player, List<UIElement> elementsCopy, Canvas myCanvas, Image door1, Image chest, Image stenka)
@@ -648,6 +650,48 @@ namespace gametop
 
                                 door1.Visibility = Visibility.Visible;
                                 chest.Visibility = Visibility.Visible;
+
+                                if (BossKotelnaya)
+                                {
+                                    Image trof = new Image();
+                                    trof.Source = new BitmapImage(new Uri("lut3.png", UriKind.RelativeOrAbsolute));
+                                    trof.Tag = "trof1";
+                                    trof.Height = 80;
+                                    trof.Width = 80;
+
+                                    Canvas.SetLeft(trof, Canvas.GetLeft(image3));
+                                    Canvas.SetTop(trof, Canvas.GetTop(image3));
+
+                                    myCanvas.Children.Add(trof);
+                                }
+
+                                if (BossKyhnya)
+                                {
+                                    Image trof = new Image();
+                                    trof.Source = new BitmapImage(new Uri("lut1.png", UriKind.RelativeOrAbsolute));
+                                    trof.Tag = "trof2";
+                                    trof.Height = 80;
+                                    trof.Width = 80;
+
+                                    Canvas.SetLeft(trof, Canvas.GetLeft(image3));
+                                    Canvas.SetTop(trof, Canvas.GetTop(image3));
+
+                                    myCanvas.Children.Add(trof);
+                                }
+
+                                if (BossBani)
+                                {
+                                    Image trof = new Image();
+                                    trof.Source = new BitmapImage(new Uri("lut2.png", UriKind.RelativeOrAbsolute));
+                                    trof.Tag = "trof3";
+                                    trof.Height = 80;
+                                    trof.Width = 80;
+
+                                    Canvas.SetLeft(trof, Canvas.GetLeft(image3));
+                                    Canvas.SetTop(trof, Canvas.GetTop(image3));
+
+                                    myCanvas.Children.Add(trof);
+                                }
                             }
 
                         }

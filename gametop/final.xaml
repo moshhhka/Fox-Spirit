@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:gametop"
         mc:Ignorable="d"
-        Title="final" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="final" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed">
+    <Viewbox Stretch="Fill">
+        <Canvas x:Name="myCanvas" Height="1080" Width="1920">
+            <Image Height="1080" Source="/кабинет.png" Stretch="Fill" Width="1920"/>
+            <Image x:Name="player" Tag ="player" Height="166" Canvas.Left="908" Canvas.Top="792" Width="126" Source="/charecter/down.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="stenka" Height="182" Source="/стена_отдых.png" Stretch="Fill" Canvas.Top="898" Width="1920" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Image Height="209" Tag="box" Canvas.Left="10" Source="/куст1.png" Stretch="Fill" Canvas.Top="29" Width="267" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image Height="225" Tag="box" Canvas.Left="1685" Source="/куст2.png" Stretch="Fill" Canvas.Top="13" Width="225" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="156" Canvas.Left="1552" Source="/доскафинал.png" Stretch="Fill" Canvas.Top="29" Width="363" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label x:Name="txtAmmo" Content="0" Height="56" Canvas.Left="1656" Canvas.Top="43" Width="84" FontSize="36" FontWeight="Bold" FontFamily="Segoe Script" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Canvas x:Name="myCanvas1" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
+                <Image Height="1080" Canvas.Left="597" Source="/losewind.png" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="exitb" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitb_Click" FontFamily="Segoe Print" FontSize="22" Background="#FF6B4A4A"/>
+                <Button x:Name="playb" Content="Начать заново" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="playb_Click" FontSize="22" FontFamily="Segoe Print" Background="#FF82A97F"/>
+            </Canvas>
+            <Canvas x:Name="myCanvasPAUSE" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
+                <Image Height="1080" Canvas.Left="597" Source="/pausewind.png" Stretch="Fill" Width="726" HorizontalAlignment="Left" VerticalAlignment="Center" OpacityMask="#E5000000"/>
+                <Button x:Name="cont" Content="Выход" Height="63" Canvas.Left="721" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="cont_Click" FontFamily="Segoe Print" Background="#FF6B4A4A" FontSize="22"/>
+                <Button x:Name="exitbut" Content="Продолжить" Height="63" Canvas.Left="995" Canvas.Top="732" Width="208" HorizontalAlignment="Left" VerticalAlignment="Center" Click="exitbut_Click" FontFamily="Segoe Print" Background="#FF82A97F" FontSize="22"/>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
 </Window>

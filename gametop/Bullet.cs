@@ -22,6 +22,7 @@ namespace gametop
         private int speed = 20;
         private Image bullet = new Image();
         List<Bullet> bullets;
+        Canvas form;
 
         public Bullet(List<Bullet> bullets)
         {
@@ -31,6 +32,7 @@ namespace gametop
 
         public void MakeBullet(Canvas form)
         {
+            this.form = form;
             bullet.Source = new BitmapImage(new Uri("plbul.png", UriKind.RelativeOrAbsolute));
             bullet.Height = 80;
             bullet.Width = 80;
@@ -71,6 +73,7 @@ namespace gametop
             {
                 bullet.Source = null;
                 bullets.Remove(this);
+                form.Children.Remove(bullet);
             }
 
         }

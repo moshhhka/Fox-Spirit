@@ -29,9 +29,17 @@ namespace gametop
         private bool cardDrawn, bafDrawn;
         public static int coins, crist;
         public static bool gotFood;
-        public static bool isKyhnya1Opened, isBani1Opened;
+        public static bool isKyhnya1Opened, isBani1Opened, isFinishOpened;
+        public static bool isTrof1, isTrof2, isTrof3, isBuffActive;
 
         DispatcherTimer timer = new DispatcherTimer();
+
+        Dictionary<string, (string, int)> cookies = new Dictionary<string, (string, int)>
+        {
+            { "cookie1", ("Вы получили \"Рогалик\", который увеличивает ваш максимальный запас здоровья на 30 единиц", 30) },
+            { "cookie2", ("Вы получили \"Плюшка\", который увеличивает ваш максимальный запас здоровья на 50 единиц", 50) },
+            { "cookie3", ("Вы получили \"Шоколадное печенье\", который увеличивает ваш максимальный запас здоровья на 70 единиц", 70) }
+        };
 
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -82,24 +90,66 @@ namespace gametop
                     newRoom.Show();
                     isBani1Opened = true;
                 }
+                else if (!isFinishOpened)
+                {
+                    final newRoom = new final();
+                    this.Hide();
+                    timer.Stop();
+                    newRoom.Show();
+                    isFinishOpened = true;
+                }
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
 
+            Dictionary<string, (string, Action<UIElement>)> maps = new Dictionary<string, (string, Action<UIElement>)>
+            {
+                { "map1.png", ("Вы получили карту \"Божественное вмешательство\", которое восполняет ваше HP до максимума", (x) =>
+                    {
+                        int vospoln = Convert.ToInt16(Player.playerhealthBar.Maximum);
+                        Player.playerHealth += vospoln - Player.playerHealth;
+                    }) },
+                { "map2.png", ("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10", (x) =>
+                    {
+                        Player.speed = 30;
+                    }) },
+                { "map3.png", ("Вы получили карту \"Подсумок Бесконечности\", количество ваших боеприпасов увеличивается до 10", (x) =>
+                    {
+                        isBuffActive = true;
+                }) }
+            };
+
+            Dictionary<string, (string, Action)> buffs = new Dictionary<string, (string, Action)>
+            {
+                { "baf1.png", ("Вы получили бафф \"Холодное сердце\", который делает ваши пули ледяными. Теперь вы можете замедлять врагов на 3 секунды", () =>
+                {
+                    MakeBoss.bullet_ice = true;
+                    MakeMobe.bullet_ice = true;
+                }) },
+                { "baf2.png", ("Вы получили бафф \"Лисьи духи\". Теперь ваша атака по площади превращает врагов в безобидных лисичек, но всего на 3 секунды", () =>
+                {
+                    MakeBoss.foxyball = true;
+                    MakeMobe.foxyball = true;
+                }) },
+                { "baf3.png", ("Вы получили бафф \"Змеиный укус\", который делает ваш клинок ядовитым. Теперь вы можете отравляете врагов и им на протяжении 3 секунд наносится постоянный урон в размере 25", () =>
+                {
+                    MakeBoss.poisonsworf = true;
+                    MakeMobe.poisonsworf = true;
+                }) }
+            };
+
             foreach (UIElement x in elementsCopy)
             {
-                if (x is Image image && (string)image.Tag == "map1.png")
-                { // Проверяем, что Tag начинается с "map"
-
+                if (x is Image image && image.Tag != null && cookies.TryGetValue((string)image.Tag, out var cookie))
+                {
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.ActualWidth, image.ActualHeight);
 
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        MessageBox.Show("Вы получили карту \"Богатырское здоровье\", которая увеличивает ваше HP до 100, а максимальный запас здоровья до 150 единиц");
-                        Player.playerHealth += 100 - Player.playerHealth;
-                        Player.playerhealthBar.Maximum = 150;
+                        MessageBox.Show(cookie.Item1);
+                        Player.playerhealthBar.Maximum += cookie.Item2;
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -107,18 +157,16 @@ namespace gametop
                     }
                 }
 
-                if (x is Image image1 && (string)image1.Tag == "map2.png")
-                { // Проверяем, что Tag начинается с "map"
-
+                if (x is Image image1 && image1.Tag != null && maps.TryGetValue((string)image1.Tag, out var map))
+                {
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.ActualWidth, image1.ActualHeight);
 
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        
-                        MessageBox.Show("Вы получили карту \"Быстрее ветра\", которая даёт вам прибавку к скорости +10");
-                        Player.speed = 30;
+                        MessageBox.Show(map.Item1);
+                        map.Item2.Invoke(x);
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
@@ -126,81 +174,22 @@ namespace gametop
                     }
                 }
 
-                if (x is Image image2 && (string)image2.Tag == "map3.png")
-                { // Проверяем, что Tag начинается с "map"
-
+                if (x is Image image2 && image2.Tag != null && buffs.TryGetValue((string)image2.Tag, out var buff))
+                {
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image2), Canvas.GetTop(image2), image2.ActualWidth, image2.ActualHeight);
 
                     if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
                     {
                         myCanvas.Children.Remove(x);
-                        MessageBox.Show("Вы получили карту \"Золотые горы\", которая даёт вам +50 монет");
-                        coins += 50;
+                        MessageBox.Show(buff.Item1);
+                        buff.Item2.Invoke();
                         Player.goLeft = false;
                         Player.goRight = false;
                         Player.goUp = false;
                         Player.goDown = false;
                     }
                 }
-
-                if (x is Image image3 && (string)image3.Tag == "baf1.png")
-                { // Проверяем, что Tag начинается с "map"
-
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image3), Canvas.GetTop(image3), image3.ActualWidth, image3.ActualHeight);
-
-                    if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
-                    {
-                        myCanvas.Children.Remove(x);
-                        MessageBox.Show("Вы получили бафф \"Холодное сердце\", который делает ваши пули ледяными. Теперь вы можете замедлять врагов на 3 секунды");
-                        MakeBoss.bullet_ice = true;
-                        MakeMobe.bullet_ice = true;
-                        Player.goLeft = false;
-                        Player.goRight = false;
-                        Player.goUp = false;
-                        Player.goDown = false;
-                    }
-                }
-
-                if (x is Image image4 && (string)image4.Tag == "baf2.png")
-                { // Проверяем, что Tag начинается с "map"
-
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image4), Canvas.GetTop(image4), image4.ActualWidth, image4.ActualHeight);
-
-                    if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
-                    {
-                        myCanvas.Children.Remove(x);
-                        MessageBox.Show("Вы получили бафф \"Лисьи духи\". Теперь ваша атака по площади превращает врагов в безобидных лисичек, но всего на 3 секунды");
-                        MakeBoss.foxyball = true;
-                        MakeMobe.foxyball = true;
-                        Player.goLeft = false;
-                        Player.goRight = false;
-                        Player.goUp = false;
-                        Player.goDown = false;
-                    }
-                }
-
-                if (x is Image image5 && (string)image5.Tag == "baf3.png")
-                { // Проверяем, что Tag начинается с "map"
-
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image5), Canvas.GetTop(image5), image5.ActualWidth, image5.ActualHeight);
-
-                    if (rect1.IntersectsWith(rect2) && x.Visibility == Visibility.Visible)
-                    {
-                        myCanvas.Children.Remove(x);
-                        MessageBox.Show("Вы получили бафф \"Змеиный укус\", который делает ваш клинок ядовитым. Теперь вы можете отравляете врагов и им на протяжении 3 секунд наносится постоянный урон в размере 25");
-                        MakeBoss.poisonsworf = true;
-                        MakeMobe.poisonsworf = true;
-                        Player.goLeft = false;
-                        Player.goRight = false;
-                        Player.goUp = false;
-                        Player.goDown = false;
-                    }
-                }
-
             }
         }
 
@@ -311,20 +300,58 @@ namespace gametop
                 Player.goUp = false;
                 Player.goDown = false;
 
-                MessageBoxResult result = MessageBox.Show("Хочешь печенье?", "Мастер:", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                if (isTrof1)
                 {
-                    MessageBox.Show("Вот твое печенье!");
+                    MessageBox.Show("фраза1");
+                    MessageBox.Show("Вот тебе награда, за трофей!");
                     Image cookie = new Image();
-                    cookie.Tag = "box";
-                    cookie.Source = new BitmapImage(new Uri("cookie.png", UriKind.RelativeOrAbsolute));
+                    cookie.Tag = "cookie1";
+                    cookie.Source = new BitmapImage(new Uri("cookie3.png", UriKind.RelativeOrAbsolute));
                     Canvas.SetLeft(cookie, Canvas.GetLeft(nps) + 240);
                     Canvas.SetTop(cookie, Canvas.GetTop(nps) + 130);
-                    cookie.Height = 139;
-                    cookie.Width = 135;
+                    cookie.Height = 80;
+                    cookie.Width = 80;
                     myCanvas.Children.Add(cookie);
                     Canvas.SetZIndex(player, 1);
                     Canvas.SetZIndex(stenka, 1);
+                    isTrof1 = false;
+                }
+                if (isTrof2)
+                {
+                    MessageBox.Show("фраза1");
+                    MessageBox.Show("Вот тебе награда, за трофей!");
+                    Image cookie = new Image();
+                    cookie.Tag = "cookie2";
+                    cookie.Source = new BitmapImage(new Uri("cookie1.png", UriKind.RelativeOrAbsolute));
+                    Canvas.SetLeft(cookie, Canvas.GetLeft(nps) + 240);
+                    Canvas.SetTop(cookie, Canvas.GetTop(nps) + 130);
+                    cookie.Height = 80;
+                    cookie.Width = 80;
+                    myCanvas.Children.Add(cookie);
+                    Canvas.SetZIndex(player, 1);
+                    Canvas.SetZIndex(stenka, 1);
+                    isTrof2 = false;
+                }
+                if (isTrof3)
+                {
+                    MessageBox.Show("фраза1");
+                    MessageBox.Show("Вот тебе награда, за трофей!");
+                    Image cookie = new Image();
+                    cookie.Tag = "cookie3";
+                    cookie.Source = new BitmapImage(new Uri("cookie2.png", UriKind.RelativeOrAbsolute));
+                    Canvas.SetLeft(cookie, Canvas.GetLeft(nps) + 240);
+                    Canvas.SetTop(cookie, Canvas.GetTop(nps) + 130);
+                    cookie.Height = 80;
+                    cookie.Width = 80;
+                    myCanvas.Children.Add(cookie);
+                    Canvas.SetZIndex(player, 1);
+                    Canvas.SetZIndex(stenka, 1);
+                    isTrof3 = false;
+                }
+
+                if (!isTrof1 && !isTrof2 && !isTrof3)
+                {
+                    MessageBox.Show("Увы у тебя нет трофеев для меня");
                 }
             }
 

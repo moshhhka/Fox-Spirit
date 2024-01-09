@@ -18,10 +18,13 @@ namespace gametop
         private int speed = 20;
         public Image bullet = new Image();
         DispatcherTimer bulletTimer = new DispatcherTimer();
+        Canvas form;
 
 
         public void MakeMobeBullet(Canvas form, string imageSource)
         {
+            this.form = form;
+
             bullet.Source = new BitmapImage(new Uri(imageSource, UriKind.RelativeOrAbsolute));
             bullet.Height = 80;
             bullet.Width = 80;
@@ -75,9 +78,10 @@ namespace gametop
             if (Canvas.GetLeft(bullet) < 10 || Canvas.GetLeft(bullet) > 1800 || Canvas.GetTop(bullet) < 10 || Canvas.GetTop(bullet) > 980)
             {
                 bulletTimer.Stop();
+                form.Children.Remove(bullet); 
+                bulletTimer.Tick -= MobeBulletTimerEvent;
                 bullet.Source = null;
                 bulletTimer = null;
-                
             }
 
         }

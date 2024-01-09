@@ -18,7 +18,11 @@ namespace gametop
         public static bool goLeft, goRight, goUp, goDown;
         public static string facing = "up";
         public static int speed = 20;
-        public static int playerHealth = 100;
+        public static int playerHealth = 500;
+        public static int speedLeft = 20;
+        public static int speedRight = 20;
+        public static int speedUp = 20;
+        public static int speedDown = 20;
         Image player;
         Canvas myCanvas;
         public static ProgressBar playerhealthBar;
@@ -33,7 +37,7 @@ namespace gametop
             playerhealthBar.Width = 266;
             playerhealthBar.Height = 28;
             playerhealthBar.Value = playerHealth; // Устанавливаем здоровье зомби
-            playerhealthBar.Maximum = 100; // Устанавливаем максимальное значение ProgressBar
+            playerhealthBar.Maximum = 500; // Устанавливаем максимальное значение ProgressBar
             // Размещаем ProgressBar над зомби
             Canvas.SetLeft(playerhealthBar, 1636);
             Canvas.SetTop(playerhealthBar, 137);
