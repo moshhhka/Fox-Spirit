@@ -196,9 +196,6 @@
     <Resource Include="Fon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="cookie.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="map1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -366,9 +363,6 @@
     <Resource Include="plbul.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="чайник.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="стена_отдых.png" />
   </ItemGroup>
   <ItemGroup>
@@ -504,9 +498,6 @@
     <Resource Include="куст2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="склянка.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="урна.png" />
   </ItemGroup>
   <ItemGroup>
@@ -537,13 +528,13 @@
     <Resource Include="cookie3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="d2ca040a1adae3bce595130053f3d93b.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="kniga.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="finafon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="большаякапсуларыбьегожиравподставке.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

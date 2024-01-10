@@ -24,7 +24,7 @@ namespace gametop
         Player player1;
         bool gameOver; 
         int ammo = 5; 
-        public static int coins; 
+        public static int coins, crist; 
         Random randNum = new Random(); 
         int originalspeed = Player.speed; 
         ImageSource originalImage; 
@@ -139,6 +139,7 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
+                speedBoostTimer.Stop();
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -173,7 +174,14 @@ namespace gametop
                     {
                         myCanvas.Children.Remove(imagee);
                         imagee.Source = null;
-                        ammo += 5;
+                        if (Window1.isBuffActive)
+                        {
+                            ammo += 10; // Если бафф активирован, устанавливаем количество боеприпасов на 10
+                        }
+                        else
+                        {
+                            ammo += 5;
+                        }
                     }
                 }
 

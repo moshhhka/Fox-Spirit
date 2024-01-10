@@ -102,6 +102,7 @@ namespace gametop
             {
                 Boss1 newRoom = new Boss1();
                 Boss1.coins = coins;
+                Boss1.crist = crist;
                 this.Hide();
                 timer.Stop();
                 newRoom.Show();
@@ -109,6 +110,7 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
+                speedBoostTimer.Stop();
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();

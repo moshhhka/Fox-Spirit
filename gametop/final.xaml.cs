@@ -29,6 +29,7 @@ namespace gametop
         Random randNum = new Random();
         int originalspeed = Player.speed;
         ImageSource originalImage;
+        private int clickCount = 0;
 
         List<Image> boxList = new List<Image>();
         List<Bullet> bullets = new List<Bullet>();
@@ -329,7 +330,7 @@ namespace gametop
         {
             Image box = new Image();
             box.Tag = "box";
-            box.Source = new BitmapImage(new Uri("камень2.png", UriKind.RelativeOrAbsolute));
+            box.Source = new BitmapImage(new Uri("урна.png", UriKind.RelativeOrAbsolute));
             box.Height = 109;
             box.Width = 105;
 
@@ -467,7 +468,21 @@ namespace gametop
         {
             if (theend.Visibility == Visibility.Visible)
             {
-                Application.Current.Shutdown();
+                clickCount++;
+                switch (clickCount)
+                {
+                    case 1:
+                        dioend.Text = "Надо заметить, что Мелисса любит азиатскую культуру и особенно аниме. Она вспомнила, что недавно она смотрела “Унесенных призраками”, где были бани с духами. Мелисса поняла, что это вдохновило ее сон. Она улыбнулась: “Хотела бы я там остаться подольше. Странно, а ведь все демоны так или иначе напоминали мне о таких важных, как сон, еда и чай”. Мелисса вдруг осознала, что она рисковала своим здоровьем ради своих учебных успехов и абсолютно не следила за своим образом жизни. Она поняла, что это было не стоит того. Она поняла, что она должна беречь своё здоровье. Она поняла, что это самое ценное, что у неё есть.";
+                        
+                        break;
+                    case 2:
+                        dioend.Text = "Мы, как разработчики, хотим поблагодарить вас за то, что вы прошли нашу игру. Мы надеемся, что она вам понравилась. Мы хотели бы сказать, что мы восхищаемся студентами и их усердием, и что мы понимаем, как трудно им иногда. Но необходимо сказать, что заботиться о своем здоровье - очень важно! И мы призываем вас следить за ним. Помните, что проекты - это не все, что есть в жизни, и что вы должны находить время для отдыха и развлечений. Не забывайте спать, кушать и пить чай!";
+                        theend.Content = "Пойти готовиться к сессии и следить за своим здоровьем &#128218; &#9752;";
+                        break;
+                    default:
+                        this.Close();
+                        break;
+                }
             }
         }
     }

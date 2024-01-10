@@ -154,6 +154,7 @@ namespace gametop
                 MakeBoss.bullet_ice = false;
                 MakeMobe.bullet_ice = false;
                 Player.speed = 20;
+                speedBoostTimer.Stop();
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();

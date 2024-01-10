@@ -29,7 +29,7 @@ namespace gametop
         Player player1;
         bool gameOver;
         int ammo = 5;
-        public static int coins;
+        public static int coins, crist;
         Random randNum = new Random();
         int originalspeed = Player.speed;
         ImageSource originalImage;
@@ -148,6 +148,7 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
+                speedBoostTimer.Stop();
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -466,7 +467,7 @@ namespace gametop
                 MakeBox();
             }
 
-            Player.playerHealth = 100;
+            Player.playerHealth = 1000;
             Player.goUp = false;
             Player.goLeft = false;
             Player.goDown = false;

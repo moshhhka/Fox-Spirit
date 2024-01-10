@@ -34,7 +34,6 @@ namespace gametop
         public Dictionary<Image, int> zombieSpeeds = new Dictionary<Image, int>();
         public static bool bullet_ice, poisonsworf, foxyball;
 
-        // Добавьте новый таймер для восстановления скорости зомби после замораживания
         System.Timers.Timer freezeTimer = null;
 
         public static DispatcherTimer disTimer = new DispatcherTimer();
@@ -535,8 +534,6 @@ namespace gametop
                                     }
                                 }
                             }
-
-
                         }
                     }
                 }

@@ -119,6 +119,7 @@ namespace gametop
                 Player.playerHealth = 0;
                 timer.Stop();
                 nachdio1.YzeIgral = true;
+                Window1.isBuffActive = false;
 
                 myCanvas1.Visibility = Visibility.Visible;
                 Canvas.SetZIndex(myCanvas1, 9999);
@@ -155,6 +156,7 @@ namespace gametop
                 MakeMobe.bullet_ice = false;
                 Window1.isBuffActive = false;
                 Player.speed = 20;
+                speedBoostTimer.Stop();
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -234,7 +236,14 @@ namespace gametop
                     {
                         myCanvas.Children.Remove(imagee);
                         imagee.Source = null;
-                        ammo += 5;
+                        if (Window1.isBuffActive)
+                        {
+                            ammo += 10; // Если бафф активирован, устанавливаем количество боеприпасов на 10
+                        }
+                        else
+                        {
+                            ammo += 5;
+                        }
                     }
                 }
 
@@ -473,7 +482,7 @@ namespace gametop
         {
             Image box = new Image();
             box.Tag = "box";
-            box.Source = new BitmapImage(new Uri("камень2.png", UriKind.RelativeOrAbsolute));
+            box.Source = new BitmapImage(new Uri("большаякапсуларыбьегожиравподставке.png", UriKind.RelativeOrAbsolute));
             box.Height = 109;
             box.Width = 105;
 

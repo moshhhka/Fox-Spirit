@@ -24,7 +24,7 @@ namespace gametop
         Player player1;
         bool gameOver;
         int ammo = 5;
-        public static int coins;
+        public static int coins, crist;
         Random randNum = new Random();
         int originalspeed = Player.speed;
         ImageSource originalImage;
@@ -109,6 +109,7 @@ namespace gametop
                 Player.goRight = false;
                 Player.goUp = false;
                 Player.goDown = false;
+                speedBoostTimer.Stop();
             }
 
             List<UIElement> elementsCopy = myCanvas.Children.Cast<UIElement>().ToList();
@@ -143,7 +144,14 @@ namespace gametop
                     {
                         myCanvas.Children.Remove(imagee);
                         imagee.Source = null;
-                        ammo += 5;
+                        if (Window1.isBuffActive)
+                        {
+                            ammo += 10; // Если бафф активирован, устанавливаем количество боеприпасов на 10
+                        }
+                        else
+                        {
+                            ammo += 5;
+                        }
                     }
                 }
 
@@ -344,7 +352,7 @@ namespace gametop
                 Rect newBoxRect = new Rect(Canvas.GetLeft(box), Canvas.GetTop(box), box.Width, box.Height);
                 foreach (UIElement uiElement in myCanvas.Children)
                 {
-                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "chest" || tag == "coin" || tag == "key" || tag == "door" || tag == "ammo" || tag == "player"))
+                    if (uiElement is Image && ((Image)uiElement).Tag is string tag && (tag == "box" || tag == "chest" || tag == "coin" || tag == "door" || tag == "ammo" || tag == "player"))
                     {
                         Rect existingElementRect = new Rect(Canvas.GetLeft(uiElement), Canvas.GetTop(uiElement), ((Image)uiElement).Width, ((Image)uiElement).Height);
                         if (newBoxRect.IntersectsWith(existingElementRect))

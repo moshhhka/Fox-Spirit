@@ -474,7 +474,7 @@ namespace gametop
                             int damage = 0;
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 100;
+                                damage = 1000;
                                 if (foxyball == true)
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));

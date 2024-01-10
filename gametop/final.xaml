@@ -27,8 +27,8 @@
             </Canvas>
             <Canvas x:Name="myCanvasFina" HorizontalAlignment="Center" Height="1080" VerticalAlignment="Top" Width="1920" Background="#CD000000" Visibility="Hidden">
                 <Image Height="856" Canvas.Left="198" Source="/finafon.jpg" Stretch="Fill" Canvas.Top="112" Width="1524" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label x:Name="dioend" Content="Какой-то наш текст с сюжетом. Мявк" Height="322" Canvas.Left="484" Canvas.Top="353" Width="952" FontSize="24" FontFamily="Segoe Print" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                <Button x:Name="theend" Content="Пойти готовиться к сессии и следить за своим здоровьем &#128218; &#9752;" Height="68" Canvas.Left="672" Canvas.Top="798" Width="576" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe Print" Click="theend_Click"/>
+                <TextBlock x:Name="dioend" Text = "Мелисса с трудом открыла глаза и увидела перед собой ноутбук. Она была в своей комнате, на своей кровати. Она не могла поверить, что все это был сон. Она все ещё помнила, как она сражалась с демонами, как она призывала лисьи огни, как она общалась с Безликим. Она почувствовала, как её сердце забилось сильнее. Она посмотрела на часы. Она проспала всю ночь. Она вспомнила, что сегодня у неё защита модуля “Непримитивные примитивы”. Она вздрогнула. Она не была готова к этому. Она вспомнила, как она не спала ночами, готовясь к защите, как она пила кофе, чтобы не заснуть. Она поняла, что это повлияло на её сон." Height="438" Canvas.Left="486" TextWrapping="Wrap" Canvas.Top="318" Width="948" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontFamily="Segoe Print"/>
+                <Button x:Name="theend" Content="Далее >>" Height="68" Canvas.Left="672" Canvas.Top="798" Width="576" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe Print" Click="theend_Click"/>
             </Canvas>
         </Canvas>
     </Viewbox>
