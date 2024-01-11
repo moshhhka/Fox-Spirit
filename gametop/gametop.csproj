@@ -68,6 +68,7 @@
       <DependentUpon>Boss1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Collise.cs" />
+    <Compile Include="Cristall.cs" />
     <Compile Include="final.xaml.cs" />
     <Compile Include="FinalBoss.cs" />
     <Compile Include="HitSpace.cs" />

@@ -24,7 +24,6 @@ namespace gametop
         Player player1;
         bool gameOver;
         int ammo = 5;
-        public static int coins, crist;
         Random randNum = new Random();
         int originalspeed = Player.speed;
         ImageSource originalImage;
@@ -91,7 +90,7 @@ namespace gametop
 
             txtAmmo.Content = ammo;
             txtScore.Content = zombie1.score;
-            txtCoins.Content = coins;
+            txtCoins.Content = Cristall.coins;
 
             player1.Movement();
 
@@ -101,7 +100,6 @@ namespace gametop
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
                 Bani3 newRoom = new Bani3();
-                Bani3.coins = coins;
                 this.Hide();
                 timer.Stop();
                 newRoom.Show();
@@ -131,7 +129,7 @@ namespace gametop
                     if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
                     {
                         u.Visibility = Visibility.Hidden;
-                        coins++;
+                        Cristall.coins++;
                     }
                 }
 

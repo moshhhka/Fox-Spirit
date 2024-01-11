@@ -26,7 +26,6 @@ namespace gametop
         int ammo = 5;
         bool isChestOpened;
         public static bool gotFood;
-        public static int coins, crist;
         Random randNum = new Random();
         int originalspeed = Player.speed;
         ImageSource originalImage;
@@ -126,8 +125,8 @@ namespace gametop
             }
 
             txtAmmo.Content = ammo;
-            txtCoins.Content = coins;
-            txtCrist.Content = crist;
+            txtCoins.Content = Cristall.coins;
+            txtCrist.Content = Cristall.crist;
 
             player1.Movement();
 
@@ -137,8 +136,6 @@ namespace gametop
                 Canvas.GetTop(player) + player.ActualHeight > Canvas.GetTop(door1))
             {
                 Window1 newRoom = new Window1();
-                Window1.coins = coins;
-                Window1.crist = crist;
                 Window1.gotFood = gotFood;
                 this.Hide();
                 timer.Stop();
@@ -168,17 +165,18 @@ namespace gametop
             foreach (UIElement u in elementsCopy)
             {
 
-                if (u is Image image && (string)image.Tag == "coin") 
-                {
-                    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
-                    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.Width, image.Height);
+                //if (u is Image image && (string)image.Tag == "coin") 
+                //{
+                //    Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+                //    Rect rect2 = new Rect(Canvas.GetLeft(image), Canvas.GetTop(image), image.Width, image.Height);
 
-                    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
-                    {
-                        u.Visibility = Visibility.Hidden;
-                        coins++;
-                    }
-                }
+                //    if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
+                //    {
+                //        myCanvas.Children.Remove(image);
+                //        image.Source = null;
+                //        coins++;
+                //    }
+                //}
 
                 if (u is Image image1 && (string)image1.Tag == "cristall") 
                 {
@@ -187,8 +185,9 @@ namespace gametop
 
                     if (rect1.IntersectsWith(rect2) && u.Visibility == Visibility.Visible)
                     {
-                        u.Visibility = Visibility.Hidden;
-                        crist++;
+                        myCanvas.Children.Remove(image1);
+                        image1.Source = null;
+                        Cristall.crist++;
                     }
                 }
 
@@ -306,14 +305,14 @@ namespace gametop
 
                     chest.Visibility = Visibility.Hidden;
 
-                    for (int i = 0; i < 20; i++)
+                    for (int i = 0; i < 34; i++)
                     {
                         CreateCristall();
                     }
-                    for (int i = 0; i < 30; i++)
-                    {
-                        CreateCoin();
-                    }
+                    //for (int i = 0; i < 30; i++)
+                    //{
+                    //    CreateCoin();
+                    //}
                     CreateFood();
                 }
             }

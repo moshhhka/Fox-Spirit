@@ -27,7 +27,6 @@ namespace gametop
     {
         Player player1;
         private bool cardDrawn, bafDrawn;
-        public static int coins, crist;
         public static bool gotFood;
         public static bool isKyhnya1Opened, isBani1Opened, isFinishOpened;
         public static bool isTrof1, isTrof2, isTrof3, isBuffActive;
@@ -62,8 +61,8 @@ namespace gametop
         {
             player1.Movement();
 
-            txtCoins.Content = coins;
-            txtCrist.Content = crist;
+            txtCoins.Content = Cristall.coins;
+            txtCrist.Content = Cristall.crist;
 
             if (Canvas.GetLeft(player) < Canvas.GetLeft(door1) + door1.ActualWidth &&
                 Canvas.GetLeft(player) + player.ActualWidth > Canvas.GetLeft(door1) &&
@@ -77,8 +76,6 @@ namespace gametop
                 if (!isKyhnya1Opened)
                 {
                     Kyhnya1 newRoom = new Kyhnya1();
-                    Kyhnya1.coins = coins;
-                    Bani1.crist = crist;
                     this.Hide();
                     timer.Stop();
                     newRoom.Show();
@@ -87,8 +84,6 @@ namespace gametop
                 else if (!isBani1Opened)
                 {
                     Bani1 newRoom = new Bani1();
-                    Bani1.coins = coins;
-                    Bani1.crist = crist;
                     this.Hide();
                     timer.Stop();
                     newRoom.Show();
@@ -236,7 +231,7 @@ namespace gametop
                 MessageBoxResult result = MessageBox.Show("Здравствуй, путник. Я Гадалка, и я умею читать карты Таро. Это не такое уж и большое искусство, но иногда оно может быть полезно. Я могу показать тебе твою судьбу и дать тебе силу, которая поможет тебе на следующем этаже. Но за это я прошу скромную плату в 30 монет за одну карту. Ты готов заплатить эту цену?", "Гадалка:", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (coins >= 30)
+                    if (Cristall.coins >= 30)
                     {
                         MessageBox.Show("Хм, интересный выбор. Надеюсь, это тебе пригодится. Но не думай, что карта может повлиять на твою судьбу. Ты сам выбираешь свой путь. Карты лишь показывают твои возможности, а не определяют твои действия. Удачи тебе, путник.");
                         Random random = new Random();
@@ -253,7 +248,7 @@ namespace gametop
                         Canvas.SetZIndex(player, 1);
                         Canvas.SetZIndex(stenka, 1);
                         cardDrawn = true;
-                        coins -= 30;
+                        Cristall.coins -= 30;
                     }
 
                     else
@@ -394,7 +389,7 @@ namespace gametop
                 MessageBoxResult result = MessageBox.Show("Приветик, странник. Я Оружейница и ты вообще видел мой меч?! Он уже столько демонов перебил… Но не суть! Ты ищешь что-то особенное для своего оружия? Тогда ты пришел по адресу. У меня есть сферы, которые могут сделать твое оружие сильнее, быстрее, красивее… Ну, ты понял. Но не все так просто. Я не раздаю свои сферы просто так. Ты должен заплатить мне 30 кристаллов за каждую. Ну что, соглашаешься? Или ты боишься рисковать?", "Оружейница:", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (crist >= 30)
+                    if (Cristall.crist >= 30)
                     {
                         MessageBox.Show("Ну вот, теперь ты обладатель сферы усиления. Ты не знаешь, что она делает с твоим оружием, пока не попробуешь. Может быть, она сделает его острее, или тяжелее, или светящимся. Или может быть, она взорвется тебе в руках. Шучу, шучу. Или нет? Ладно, не буду тебя дразнить. Вот твоя сфера, и еще одна подсказка: не доверяй всему, что видишь на этом этаже, тут полно ловушек и иллюзий.");
                         Random random = new Random();
@@ -411,8 +406,7 @@ namespace gametop
                         Canvas.SetZIndex(player, 1);
                         Canvas.SetZIndex(stenka, 1);
                         bafDrawn = true;
-                        crist -= 30;
-                        txtCoins.Content = crist;
+                        Cristall.crist -= 30;
                     }
 
                     else
