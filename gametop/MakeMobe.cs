@@ -51,7 +51,7 @@ namespace gametop
             this.stenka = stenka;
         }
 
-        public void MakeZombies() // Создание мобов
+        public void MakeZombies() 
         {
             Image zombie = new Image();
             zombie.Tag = "mobe";
@@ -97,7 +97,7 @@ namespace gametop
             zombieHealthBar.Maximum = 100;
             Canvas.SetLeft(zombieHealthBar, zombieLeft);
             Canvas.SetTop(zombieHealthBar, zombieTop - zombieHealthBar.Height);
-            myCanvas.Children.Add(zombieHealthBar); // Добавляем ProgressBar на Canvas
+            myCanvas.Children.Add(zombieHealthBar); 
             zombieBars.Add(zombie, zombieHealthBar);
 
 
@@ -122,7 +122,7 @@ namespace gametop
                 if (Player.playerHealth <= 0)
                 {
                     shootTimer.Stop();
-                    return; // Выход из метода
+                    return; 
                 }
 
                 if (u is Image image1 && (string)image1.Tag == "mobe" && zombieBars.ContainsKey(image1) && zombieBars[image1].Value > 0) //Движение мобов
@@ -192,10 +192,8 @@ namespace gametop
                 {
                     int originalSpeed = zombieSpeeds[image1];
 
-                    //// Генерируем случайное время задержки от 1 до 5 секунд
                     int delay = randNum.Next(1, 3) * 1000;
 
-                    //// Создаем новый таймер, который будет работать после случайной задержки
                     await Task.Delay(delay);
 
                     zombieSpeeds[image1] = 15;
@@ -209,7 +207,6 @@ namespace gametop
                     speedResetTimer.Interval = TimeSpan.FromSeconds(1);
                     speedResetTimer.Tick += (s, ev) =>
                     {
-                        // Возвращаем исходную скорость зомби
                         zombieSpeeds[image1] = originalSpeed;
 
                         Application.Current.Dispatcher.Invoke(() =>
@@ -230,27 +227,27 @@ namespace gametop
         {
             foreach (UIElement u in elementsCopy)
             {
-                if (u is Image image1 && (string)image1.Tag == "mobe") //Движение мобов
+                if (u is Image image1 && (string)image1.Tag == "mobe") 
                 {
                     int zombieSpeed = zombieSpeeds[image1];
 
                     Rect rect1 = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.RenderSize.Width, player.RenderSize.Height);
                     Rect rect2 = new Rect(Canvas.GetLeft(image1), Canvas.GetTop(image1), image1.RenderSize.Width, image1.RenderSize.Height);
 
-                    if (rect1.IntersectsWith(rect2))
+                    if (rect1.IntersectsWith(rect2) && (MobeBani || MobeKotelnaya))
                     {
 
-                        if (timer == null && (MobeBani || MobeKotelnaya))
+                        if (timer == null)
                         {
                             timer = new System.Timers.Timer(500);
                             timer.Elapsed += (sender, e) =>
                             {
-                                Player.playerHealth -= 3; // Уменьшите здоровье на 5 через секунду
-                                timer.Stop(); // Остановите таймер
-                                timer = null; // Установите таймер в null
+                                Player.playerHealth -= 2; 
+                                timer.Stop(); 
+                                timer = null;
                             };
-                            timer.AutoReset = false; // Установите AutoReset в false, чтобы таймер сработал только один раз
-                            timer.Start(); // Запустите таймер
+                            timer.AutoReset = false; 
+                            timer.Start(); 
                         }
                     }
 
@@ -296,12 +293,10 @@ namespace gametop
 
                         if (rect1.IntersectsWith(rect2))
                         {
-
-                            // Теперь вы можете использовать zombieHealthBar
                             int damage = 0;
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 50;
+                                damage = 45;
                                 if (foxyball == true)
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
@@ -342,7 +337,7 @@ namespace gametop
 
                             else if ((string)image2.Tag == "sword")
                             {
-                                damage = 15;
+                                damage = 30;
                                 if (poisonsworf == true)
                                 {
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
@@ -479,7 +474,6 @@ namespace gametop
                                 zombieHealthBar.Value -= damage;
                                 if (zombieHealthBar.Value < 1)
                                 {
-                                    // Сохраните позицию mobe перед его удалением
                                     double mobeLeft = Canvas.GetLeft(image3);
                                     double mobeTop = Canvas.GetTop(image3);
 
@@ -492,13 +486,11 @@ namespace gametop
 
                                     if (MobeBani)
                                     {
-                                        // Создайте новый объект HitSpace на месте удаленного mobe
                                         MobeHitSpace hitSpace = new MobeHitSpace();
                                         hitSpace.MakeSphere(myCanvas, player);
                                         Canvas.SetLeft(hitSpace.sphere, mobeLeft);
                                         Canvas.SetTop(hitSpace.sphere, mobeTop);
 
-                                        // Создайте таймер для удаления объекта HitSpace через 5 секунд
                                         DispatcherTimer sphereTimer = new DispatcherTimer();
                                         sphereTimer.Interval = TimeSpan.FromSeconds(5);
                                         sphereTimer.Tick += (s, e) =>

@@ -17,13 +17,18 @@ namespace gametop
 
         private int speed = 20;
         public Image bullet = new Image();
-        DispatcherTimer bulletTimer = new DispatcherTimer();
+        public DispatcherTimer bulletTimer = new DispatcherTimer();
         Canvas form;
 
 
         public void MakeMobeBullet(Canvas form, string imageSource)
         {
             this.form = form;
+
+
+            bulletTimer.Interval = TimeSpan.FromMilliseconds(speed);
+            bulletTimer.Tick += new EventHandler(MobeBulletTimerEvent);
+            bulletTimer.Start();
 
             bullet.Source = new BitmapImage(new Uri(imageSource, UriKind.RelativeOrAbsolute));
             bullet.Height = 80;
@@ -33,14 +38,12 @@ namespace gametop
             Canvas.SetTop(bullet, bulletTop);
             Canvas.SetZIndex(bullet, 1);
 
-            form.Children.Add(bullet);
+            bullet.DataContext = this;
 
-            bulletTimer.Interval = TimeSpan.FromMilliseconds(speed);
-            bulletTimer.Tick += new EventHandler(MobeBulletTimerEvent);
-            bulletTimer.Start();
+            form.Children.Add(bullet);
         }
 
-        private void MobeBulletTimerEvent(object sender, EventArgs e)
+        public void MobeBulletTimerEvent(object sender, EventArgs e)
         {
             switch (direction)
             {

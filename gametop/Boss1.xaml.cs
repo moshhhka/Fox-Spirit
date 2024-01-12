@@ -36,6 +36,8 @@ namespace gametop
         DispatcherTimer timer = new DispatcherTimer();
         public DispatcherTimer speedBoostTimer;
 
+        private DateTime lastHitTime;
+
         string[] tags = { "trof1", "trof2", "trof3" };
 
         public Boss1()
@@ -259,7 +261,12 @@ namespace gametop
                         Canvas.GetTop(image3) < Canvas.GetTop(image2) + image2.ActualHeight &&
                         Canvas.GetTop(image3) + image3.ActualHeight > Canvas.GetTop(image2))
                         {
-                            Player.playerHealth -= 2;
+                            // Проверяем, прошло ли достаточно времени с момента последнего столкновения
+                            if ((DateTime.Now - lastHitTime).TotalMilliseconds > 200) // 200 мс - это примерное время "перезарядки"
+                            {
+                                Player.playerHealth -= 3;
+                                lastHitTime = DateTime.Now;
+                            }
                             myCanvas.Children.Remove(image2);
                             image2.Source = null;
                         }
@@ -272,7 +279,11 @@ namespace gametop
                         Canvas.GetTop(image5) < Canvas.GetTop(image4) + image4.ActualHeight &&
                         Canvas.GetTop(image5) + image5.ActualHeight > Canvas.GetTop(image4))
                         {
-                            Player.playerHealth -= 7;
+                            if ((DateTime.Now - lastHitTime).TotalMilliseconds > 200) // 200 мс - это примерное время "перезарядки"
+                            {
+                                Player.playerHealth -= 5;
+                                lastHitTime = DateTime.Now;
+                            }
                             myCanvas.Children.Remove(image4);
                             image4.Source = null;
                         }

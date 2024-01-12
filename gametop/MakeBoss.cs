@@ -474,7 +474,7 @@ namespace gametop
                             int damage = 0;
                             if ((string)image2.Tag == "sphere")
                             {
-                                damage = 500;
+                                damage = 100;
                                 if (foxyball == true)
                                 {
                                     image3.Source = new BitmapImage(new Uri("charecter\\afk.png", UriKind.RelativeOrAbsolute));
@@ -520,7 +520,7 @@ namespace gametop
 
                             else if ((string)image2.Tag == "sword")
                             {
-                                damage = 25;
+                                damage = 85;
                                 if (poisonsworf == true)
                                 {
                                     DispatcherTimer poisonTimer = new DispatcherTimer();
@@ -584,11 +584,11 @@ namespace gametop
 
                             else if ((string)image2.Tag == "bullet")
                             {
-                                damage = 15;
+                                damage = 65;
 
                                 if (bullet_ice)
                                 {
-                                    damage = 25;
+                                    damage = 95;
                                     bossSpeed = 1;
 
                                     Application.Current.Dispatcher.Invoke(() =>

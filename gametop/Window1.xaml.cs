@@ -40,7 +40,7 @@ namespace gametop
             { "cookie3", ("Вы получили \"Шоколадное печенье\", который увеличивает ваш максимальный запас здоровья на 70 единиц", 70) }
         };
 
-        int cookieCount = 0;
+        public static int cookieCount = 0;
 
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -124,16 +124,19 @@ namespace gametop
                 {
                     MakeBoss.bullet_ice = true;
                     MakeMobe.bullet_ice = true;
+                    FinalBoss.bullet_ice = true;
                 }) },
                 { "baf2.png", ("Вы получили бафф \"Лисьи духи\". Теперь ваша атака по площади превращает врагов в безобидных лисичек, но всего на 3 секунды", () =>
                 {
                     MakeBoss.foxyball = true;
                     MakeMobe.foxyball = true;
+                    FinalBoss.foxyball = true;
                 }) },
                 { "baf3.png", ("Вы получили бафф \"Змеиный укус\", который делает ваш клинок ядовитым. Теперь вы можете отравляете врагов и им на протяжении 3 секунд наносится постоянный урон в размере 25", () =>
                 {
                     MakeBoss.poisonsworf = true;
                     MakeMobe.poisonsworf = true;
+                    FinalBoss.poisonsworf = true;
                 }) }
             };
 
@@ -154,8 +157,7 @@ namespace gametop
                         Player.goUp = false;
                         Player.goDown = false;
 
-                        cookieCount++;
-                        if (cookieCount == 3)
+                        if (isBani1Opened)
                         {
                             int vospoln = Convert.ToInt16(Player.playerhealthBar.Maximum);
                             Player.playerHealth += vospoln - Player.playerHealth;
